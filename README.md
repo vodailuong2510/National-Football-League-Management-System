@@ -30,12 +30,12 @@
 
 ## THÀNH VIÊN NHÓM
 <a name="thanhvien"></a>
-| STT    | MSSV          | Họ và Tên              | Github                                               | Email                   |
-| ------ |:-------------:| ----------------------:|-----------------------------------------------------:|-------------------------:
-| 1      | 22520834      | Võ Đại Lượng           |                                                      |22520834@gm.uit.edu.vn   |
-| 2      | 22520891      | Trần Tiến Minh         |                                                      |22520891@gm.uit.edu.vn   | 
-| 3      | 22520833      | Trần Xuân Lương        |                                                      |22520833@gm.uit.edu.vn   | 
-| 4      | 22520808      | Hoàng Phạm Bảo Long    |                                                      |22520808@gm.uit.edu.vn   |
+| STT | MSSV     | Họ và Tên            | Github | Email                  |
+| --- | -------- | --------------------- | ------ | ---------------------- |
+| 1   | 22520834 | Võ Đại Lượng         |        | 22520834@gm.uit.edu.vn |
+| 2   | 22520891 | Trần Tiến Minh       |        | 22520891@gm.uit.edu.vn |
+| 3   | 22520833 | Trần Xuân Lương      |        | 22520833@gm.uit.edu.vn |
+| 4   | 22520808 | Hoàng Phạm Bảo Long |        | 22520808@gm.uit.edu.vn |
 
 ## ĐỒ ÁN MÔN HỌC
 <a name="doan"></a>
