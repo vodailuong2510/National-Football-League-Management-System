@@ -26,7 +26,7 @@
 <a name ="quatrinh"></a>
 ## GIẢNG VIÊN HƯỚNG DẪN
 <a name="giangvien"></a>
-* PGS.TS. **Đỗ Văn Tiến** - *tiendv@uit.edu.vn*
+* **Đỗ Văn Tiến** - *tiendv@uit.edu.vn*
 
 ## THÀNH VIÊN NHÓM
 <a name="thanhvien"></a>
