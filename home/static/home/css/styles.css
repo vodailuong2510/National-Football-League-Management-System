@@ -8,6 +8,7 @@ body {
     display: flex; /* Sử dụng flexbox để bố cục */
     flex-direction: column; /* Các phần tử con xếp theo cột */
     min-height: 100vh; /* Chiều cao tối thiểu là 100% chiều cao của viewport */
+    font-family: 'Times New Roman', Times, serif;
 }
 
 /* CSS cho phần header */
@@ -19,6 +20,13 @@ header {
     padding: 10px 0; /* Khoảng cách trên dưới */
 }
 
+.header-container {
+    display: flex; /* Sử dụng flexbox layout */
+    align-items: center; /* Căn các phần tử con theo trục dọc */
+    width: 100%; /* Chiều rộng của container */
+    max-width: 1000px; /* Đặt chiều rộng tối đa cho container */
+    margin: 10 auto; /* Canh giữa container */
+}
 /* CSS cho thanh điều hướng */
 nav {
     display: inline-block; /* Hiển thị dạng inline-block để dễ canh chỉnh */
@@ -33,6 +41,7 @@ nav a {
     text-decoration: none; /* Loại bỏ gạch chân */
     font-weight: bold; /* Chữ đậm */
     padding: 10px; /* Khoảng cách bên trong */
+    font-size: 20px;
 }
 
 /* Đổi màu chữ khi di chuột vào liên kết */
@@ -56,26 +65,32 @@ nav .dropdown:hover {
     font-size: 14px; /* Kích thước chữ */
 }
 
-/* CSS cho phần chứa logo và tên miền */
-.logo-and-domain {
-    display: flex; /* Sử dụng flexbox để bố cục */
-    align-items: center; /* Căn giữa theo chiều dọc */
-}
-
 /* CSS cho logo */
 .logo {
-    height: 50px; /* Chiều cao */
-    width: 50px; /* Chiều rộng */
+    max-height: 50px; /* Chiều cao */
+    max-width: 50px; /* Chiều rộng */
     border-radius: 50%; /* Làm tròn logo */
     overflow: hidden; /* Ẩn phần ngoài khung logo */
     margin-right: 10px; /* Khoảng cách phải */
     margin-left: 10px; /* Khoảng cách trái */
 }
 
+/* CSS cho phần chứa logo và tên miền */
+.logo-and-domain {
+    display: flex; /* Sử dụng flexbox để bố cục */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    
+}
+
 /* CSS cho tên miền */
 .domain p {
     margin: 0; /* Xóa margin mặc định của đoạn văn */
     color: #fff; /* Màu chữ */
+}
+
+.domain a {
+    text-decoration: none; /* Loại bỏ gạch chân */
+    font-size: 20px;
 }
 
 /* CSS cho hình ảnh bên trong logo */
@@ -106,13 +121,41 @@ nav .dropdown:hover {
 }
 
 /* CSS cho văn bản trên banner */
-.banner-text {
-    position: absolute; /* Đặt vị trí tuyệt đối */
-    top: 50%; /* Căn giữa theo chiều dọc */
-    left: 50%; /* Căn giữa theo chiều ngang */
-    transform: translate(-50%, -50%); /* Dịch chuyển văn bản để căn giữa chính xác */
-    text-align: center; /* Căn giữa văn bản */
-    color: #000000; /* Màu chữ */
+.banner-content {
+    position: relative;
+    z-index: 1;
+    color : white;
+    text-align: center;
+    max-width: 50%; /* Giới hạn độ rộng của nội dung để tránh tràn ra ngoài */
+    margin: 0 auto;
+    margin-top: 10px;
+}
+.banner-content h1 {
+    font-size: 35px; /* Tăng kích thước chữ cho tiêu đề */
+    margin-bottom: 20px;
+}
+.banner-content p {
+    font-size: 30px;
+    margin-bottom: 20px; /* Tạo khoảng cách giữa đoạn văn và các nút */
+}
+.banner-buttons {
+    display: flex;
+    flex-wrap: wrap; /* Để các nút xuống dòng nếu không đủ chỗ */
+    gap: 20px; /* Tạo khoảng cách giữa các nút */
+    justify-content: center;
+}
+.banner-buttons a {
+    padding: 15px 15px;
+    background-color: #620deb; /* Màu nền của nút */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 15px; /* Tăng kích thước chữ của nút */
+    text-align: center; /* Căn giữa nội dung nút */
+    flex: 1 1 calc(5% - 5px); /* Đảm bảo các nút có kích thước đều nhau và đủ chỗ để xuống dòng */
+}
+.banner-buttons a:hover {
+    background-color: #45a049; /* Màu nền khi hover */
 }
 
 /* CSS cho các phần section */

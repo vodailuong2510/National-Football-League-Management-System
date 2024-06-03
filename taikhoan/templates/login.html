@@ -4,50 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %} <!-- Tải các tệp tĩnh từ Django -->
-    <title>Trang chủ</title>
+    <title>Đăng nhập</title>
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
 </head>
 <body>
     <!-- Phần Header -->
     <header>
-        <!-- Container chứa logo -->
-        <div class="logo-and-domain">
+        <!-- Container chứa logo và phần trang chủ, giải đấu -->
+        <div class="header-container">
             <!-- Logo -->
             <div class="logo">
-                <a href = ""><img src="{% static 'home/images/logo.png' %}" alt="Logo"></a>
+                <a href=""><img src="{% static 'home/images/logo.png' %}" alt="Logo"></a>
             </div>
             <!-- Tên miền -->
             <div class="domain">
-                <a href=""> <p>CadobongdaSE104</p></a>
+                <a href=""><p>MyLeagueUIT</p></a>
             </div>
+            <!-- Thanh điều hướng -->
+            <nav>
+                <a href="/" class="dropdown">Trang chủ</a>
+                <a href="#" class="dropdown">Giải đấu</a>
+                <a href="#" class="dropdown">Đội thi đấu</a>
+                <a href="#" class="dropdown">Giới thiệu</a>
+                <!-- Các liên kết xác thực -->
+                <div class="auth-links">
+                    {% if user.username %}
+                        <a href='#'>Xin chào {{user.username}}</a>
+                        <a href='#'>Xin chào {{user.username}}  <a href="{% url 'logout' %}">Đăng Xuất</a></a>
+                        <p><a href = '{% url "change_password" %}'>Bạn muốn đổi mật khẩu?</a></p>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="dropdown">Đăng nhập</a>
+                        <a href="{% url 'register' %}" class="dropdown">Đăng ký</a>
+                    {% endif %}
+                </div>
+            </nav>
         </div>
-        <!-- Thanh điều hướng -->
-        <nav>
-            <a href="" class="dropdown">Trang chủ</a>
-            <a href="#" class="dropdown">Giải đấu</a>
-            <a href="#" class="dropdown">Đội thi đấu</a>
-            <a href="#" class="dropdown">Giới thiệu</a>
-            <!-- Các liên kết xác thực -->
-            <div class="auth-links">
-                {% if user.username %}
-                    <a href = '#'>Xin chào {{user.username}}</a>
-                    <a href = "{% url 'logout' %}">Đăng Xuất</a>
-                {% else %}
-                    <a href="{% url 'login' %}" class="dropdown">Đăng nhập</a>
-                    <a href="{% url 'register' %}" class="dropdown">Đăng ký</a> 
-                {% endif %}
-            </div>
-        </nav>
     </header>
     <!-- Phần banner chính -->
     <div class="main-banner">
         <div class="banner-overlay"> <!-- Lớp phủ đen -->
             <div class="login-container" style="text-align: center">
+                <h1>Đăng nhập</h1>
                 <form method = "POST">
                     {% csrf_token %}
-                    {% for key, value in form.errors.items %}
-                        {{value}}
-                    {% endfor %}
+                    {% if form.errors %}
+                            <p style="color: red;">Tên tài khoản hoặc mật khẩu của bạn không đúng!</p>
+                    {% endif %}
                     <p><label>Tài khoản:</label>{{form.username}}</p>
                     <p><label>Mật khẩu:</label>{{form.password}}</p>
                     <input type = 'hidden' name = 'next' value = '/'/>
@@ -65,8 +67,8 @@
     </main>
     <!-- Phần Footer -->
     <footer>
-        <p>Giới thiệu về trang web: Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
-        <p>&copy; 2024 CadobongdaSE104. All rights reserved.</p>
+        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
+        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
     </footer>
 </body>
 </html>
