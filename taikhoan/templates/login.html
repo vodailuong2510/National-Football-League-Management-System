@@ -29,7 +29,6 @@
                 <!-- Các liên kết xác thực -->
                 <div class="auth-links">
                     {% if user.username %}
-                        <a href='#'>Xin chào {{user.username}}</a>
                         <a href='#'>Xin chào {{user.username}}  <a href="{% url 'logout' %}">Đăng Xuất</a></a>
                         <p><a href = '{% url "change_password" %}'>Bạn muốn đổi mật khẩu?</a></p>
                     {% else %}

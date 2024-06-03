@@ -2,22 +2,24 @@
 
 /* CSS cho phần thân trang */
 body {
-    font-family: Arial, sans-serif; /* Đặt font chữ cho phần thân trang */
+    font-family: 'Times New Roman', Times, serif;
     margin: 0; /* Xóa margin mặc định */
     padding: 0; /* Xóa padding mặc định */
     display: flex; /* Sử dụng flexbox để bố cục */
     flex-direction: column; /* Các phần tử con xếp theo cột */
     min-height: 100vh; /* Chiều cao tối thiểu là 100% chiều cao của viewport */
-    font-family: 'Times New Roman', Times, serif;
 }
 
 /* CSS cho phần header */
 header {
+    display : flex;
     position: relative; /* Đặt vị trí tương đối cho header */
     text-align: center; /* Căn giữa nội dung */
     background-color: #00264D; /* Màu nền */
     color: #fff; /* Màu chữ */
-    padding: 10px 0; /* Khoảng cách trên dưới */
+    padding: 15px 15px; /* Khoảng cách trên dưới */
+    justify-content: space-between;
+    
 }
 
 .header-container {
@@ -132,17 +134,20 @@ nav .dropdown:hover {
 }
 .banner-content h1 {
     font-size: 35px; /* Tăng kích thước chữ cho tiêu đề */
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 .banner-content p {
     font-size: 30px;
-    margin-bottom: 20px; /* Tạo khoảng cách giữa đoạn văn và các nút */
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 .banner-buttons {
     display: flex;
     flex-wrap: wrap; /* Để các nút xuống dòng nếu không đủ chỗ */
     gap: 20px; /* Tạo khoảng cách giữa các nút */
     justify-content: center;
+    margin-top: 20px;
 }
 .banner-buttons a {
     padding: 15px 15px;
@@ -229,4 +234,39 @@ footer p {
 /* CSS cho nút submit khi hover */
 .login-container input[type="submit"]:hover {
     background-color: #45a049; /* Màu nền xanh lá đậm hơn khi hover */
+}
+
+/* Thêm CSS cho dropdown menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    z-index: 10; /* Đảm bảo dropdown menu nằm trên các phần tử khác */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #00264D;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(255, 255, 255, 0.2);
+    z-index: 10; /* Đảm bảo dropdown menu nằm trên các phần tử khác */
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #45a049;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: red;
 }

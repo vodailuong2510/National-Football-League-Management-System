@@ -24,7 +24,7 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user) 
             messages.success(request, 'Mật khẩu của bạn đã được thay đổi thành công!')
-            return redirect('login') 
+            return redirect('/') 
         else:
             messages.error(request, 'Vui lòng kiểm tra lại thông tin.')
     else:
