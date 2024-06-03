@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %} <!-- Tải các tệp tĩnh từ Django -->
-    <title>Trang chủ</title>
+    <title>Đăng Ký</title>
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
 </head>
 <body>
@@ -41,7 +41,15 @@
     </header>
     <!-- Phần banner chính -->
     <div class="main-banner">
-        <div class="banner-overlay"></div> <!-- Lớp phủ đen -->
+        <div class="banner-overlay">
+            <div class="login-container" style="text-align: center">
+                <form action="." method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Đăng ký"/>
+                </form>
+            </div>
+        </div> <!-- Lớp phủ đen -->
     </div> <!-- Sử dụng một div thay vì thẻ img cho banner -->
     <!-- Phần chính -->
     <main>

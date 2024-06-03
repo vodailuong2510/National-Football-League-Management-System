@@ -5,9 +5,9 @@ body {
     font-family: Arial, sans-serif; /* Đặt font chữ cho phần thân trang */
     margin: 0; /* Xóa margin mặc định */
     padding: 0; /* Xóa padding mặc định */
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    display: flex; /* Sử dụng flexbox để bố cục */
+    flex-direction: column; /* Các phần tử con xếp theo cột */
+    min-height: 100vh; /* Chiều cao tối thiểu là 100% chiều cao của viewport */
 }
 
 /* CSS cho phần header */
@@ -16,35 +16,36 @@ header {
     text-align: center; /* Căn giữa nội dung */
     background-color: #00264D; /* Màu nền */
     color: #fff; /* Màu chữ */
-    padding: 10px 0; /* Padding */
+    padding: 10px 0; /* Khoảng cách trên dưới */
 }
 
 /* CSS cho thanh điều hướng */
 nav {
-    display: inline-block; /* Cho phép hiển thị dạng inline-block */
-    vertical-align: middle; /* Canh giữa theo chiều dọc */
-    gap: 15px; /* Khoảng cách giữa các phần tử */
-    margin-left: auto; /* Di chuyển thanh điều hướng về bên phải */
+    display: inline-block; /* Hiển thị dạng inline-block để dễ canh chỉnh */
+    vertical-align: middle; /* Căn giữa theo chiều dọc */
+    gap: 15px; /* Khoảng cách giữa các phần tử con */
+    margin-left: auto; /* Đẩy thanh điều hướng về bên phải */
 }
 
 /* CSS cho các liên kết trong thanh điều hướng */
 nav a {
     color: #fff; /* Màu chữ */
     text-decoration: none; /* Loại bỏ gạch chân */
-    font-weight: bold; /* Độ đậm */
-    padding: 10px; /* Padding */
+    font-weight: bold; /* Chữ đậm */
+    padding: 10px; /* Khoảng cách bên trong */
 }
 
+/* Đổi màu chữ khi di chuột vào liên kết */
 nav .dropdown:hover {
-    color: rgba(255, 255, 255, 0.7); /* Đổi màu chữ khi di chuột vào */
-    transition: color 0.3s ease; /* Hiệu ứng chuyển đổi màu sắc */
+    color: rgba(255, 255, 255, 0.7); /* Màu chữ thay đổi với độ mờ 70% */
+    transition: color 0.3s ease; /* Hiệu ứng chuyển màu trong 0.3 giây */
 }
 
-/* CSS cho các liên kết xác thực */
+/* CSS cho các liên kết xác thực (login, signup) */
 .auth-links {
-    position: absolute; /* Đặt vị trí tuyệt đối */
-    top: 10px; /* Vị trí top */
-    right: 10px; /* Vị trí right */
+    position: absolute; /* Đặt vị trí tuyệt đối trong header */
+    top: 10px; /* Cách phía trên 10px */
+    right: 10px; /* Cách bên phải 10px */
 }
 
 /* CSS cho các liên kết xác thực */
@@ -55,62 +56,72 @@ nav .dropdown:hover {
     font-size: 14px; /* Kích thước chữ */
 }
 
-/* CSS cho phần chứa logo */
-
+/* CSS cho phần chứa logo và tên miền */
 .logo-and-domain {
-    display: flex;
-    align-items: center; /* Canh giữa theo chiều dọc */
+    display: flex; /* Sử dụng flexbox để bố cục */
+    align-items: center; /* Căn giữa theo chiều dọc */
 }
+
 /* CSS cho logo */
 .logo {
     height: 50px; /* Chiều cao */
     width: 50px; /* Chiều rộng */
-    border-radius: 50%; /* Làm cho hình tròn */
-    overflow: hidden; /* Ẩn phần nằm ngoài khung */
-    margin-right: 10px; 
-    margin-left: 10px;
+    border-radius: 50%; /* Làm tròn logo */
+    overflow: hidden; /* Ẩn phần ngoài khung logo */
+    margin-right: 10px; /* Khoảng cách phải */
+    margin-left: 10px; /* Khoảng cách trái */
 }
 
 /* CSS cho tên miền */
 .domain p {
-    margin: 0; /* Xóa margin mặc định của đoạn văn bản */
+    margin: 0; /* Xóa margin mặc định của đoạn văn */
     color: #fff; /* Màu chữ */
 }
 
-/* CSS cho hình logo */
+/* CSS cho hình ảnh bên trong logo */
 .logo img {
-    width: 100%; /* Lấp đầy phần tử cha */
+    width: 100%; /* Chiều rộng 100% của phần tử cha */
     height: auto; /* Giữ tỷ lệ khung hình */
 }
 
 /* CSS cho banner chính */
 .main-banner {
-    position: relative; /* Đặt vị trí tương đối để lớp phủ có thể đặt chính xác */
-    width: 100%; /* Lấp đầy chiều rộng */
+    position: relative; /* Đặt vị trí tương đối */
+    width: 100%; /* Chiều rộng 100% */
     height: 100vh; /* Chiều cao bằng chiều cao của trình duyệt */
     background-image: url("/static/home/images/banner.png"); /* Hình nền */
-    background-size: cover; /* Hiển thị hình ảnh mà không bị vỡ */
+    background-size: cover; /* Kích thước bao phủ toàn bộ */
     background-position: center; /* Canh giữa */
     background-repeat: no-repeat; /* Không lặp lại */
 }
 
-/* CSS cho lớp phủ đen */
+/* CSS cho lớp phủ đen trên banner */
 .banner-overlay {
-    position: relative; /* Đặt vị trí tuyệt đối để nằm trên banner */
+    position: absolute; /* Đặt vị trí tuyệt đối trên banner */
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100%; /* Chiều rộng 100% */
+    height: 100%; /* Chiều cao 100% */
     background-color: rgba(0, 0, 0, 0.5); /* Lớp phủ đen với độ mờ 50% */
 }
 
-/* CSS cho các phần */
+/* CSS cho văn bản trên banner */
+.banner-text {
+    position: absolute; /* Đặt vị trí tuyệt đối */
+    top: 50%; /* Căn giữa theo chiều dọc */
+    left: 50%; /* Căn giữa theo chiều ngang */
+    transform: translate(-50%, -50%); /* Dịch chuyển văn bản để căn giữa chính xác */
+    text-align: center; /* Căn giữa văn bản */
+    color: #000000; /* Màu chữ */
+}
+
+/* CSS cho các phần section */
 section {
-    width: 50%; /* Chiều rộng */
-    margin: 20px auto; /* Margin */
+    width: 50%; /* Chiều rộng 50% */
+    margin: 20px auto; /* Căn giữa với khoảng cách trên dưới 20px */
     background-color: #f4f4f4; /* Màu nền */
-    padding: 20px; /* Padding */
-    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Shadow */
+    padding: 20px; /* Khoảng cách bên trong */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Đổ bóng nhẹ */
     text-align: center; /* Căn giữa nội dung */
 }
 
@@ -119,12 +130,60 @@ footer {
     background-color: #333; /* Màu nền */
     color: #fff; /* Màu chữ */
     text-align: center; /* Căn giữa nội dung */
-    padding: 20px 0; /* Padding */
-    width: 100%; /* Chiều rộng đầy đủ */
+    padding: 20px 0; /* Khoảng cách trên dưới */
+    width: 100%; /* Chiều rộng 100% */
     margin-top: auto; /* Đẩy footer xuống dưới */
 }
 
+/* CSS cho đoạn văn trong footer */
 footer p {
     margin: 0; /* Xóa margin */
 }
 
+/* CSS cho khung đăng nhập */
+.login-container {
+    background-color: #fff; /* Màu nền trắng */
+    padding: 20px; /* Khoảng cách bên trong */
+    border-radius: 8px; /* Bo tròn các góc */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    max-width: 400px; /* Chiều rộng tối đa 400px */
+    margin: 0 auto; /* Căn giữa khung */
+}
+
+/* CSS cho form đăng nhập */
+.login-container form {
+    display: flex; /* Sử dụng flexbox để bố cục */
+    flex-direction: column; /* Xếp các phần tử theo cột */
+}
+
+/* CSS cho nhãn trong form đăng nhập */
+.login-container label {
+    margin-bottom: 5px; /* Khoảng cách dưới 5px */
+    font-weight: bold; /* Chữ đậm */
+    color: #000000;
+}
+
+/* CSS cho các ô input trong form đăng nhập */
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    margin-bottom: 15px; /* Khoảng cách dưới 15px */
+    padding: 10px; /* Khoảng cách bên trong */
+    font-size: 14px; /* Kích thước chữ */
+    border: 1px solid #ccc; /* Viền xám */
+    border-radius: 4px; /* Bo tròn các góc */
+}
+
+/* CSS cho nút submit trong form đăng nhập */
+.login-container input[type="submit"] {
+    background-color: #4CAF50; /* Màu nền xanh lá */
+    color: white; /* Màu chữ trắng */
+    padding: 10px 20px; /* Khoảng cách bên trong */
+    border: none; /* Không viền */
+    border-radius: 4px; /* Bo tròn các góc */
+    cursor: pointer; /* Con trỏ dạng tay khi hover */
+}
+
+/* CSS cho nút submit khi hover */
+.login-container input[type="submit"]:hover {
+    background-color: #45a049; /* Màu nền xanh lá đậm hơn khi hover */
+}
