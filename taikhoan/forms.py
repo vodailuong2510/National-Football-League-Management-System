@@ -26,7 +26,7 @@ class RegistrationForm(forms.Form):
         
     def clean_username(self):
         username = self.cleaned_data['username']
-        if not username.isdigit():
+        if not username.isdigit() or username[0] != 0:
             raise forms.ValidationError('Tên tài khoản phải là số điện thoại')
         if len(username) != 10: 
             raise forms.ValidationError('Tên tài khoản phải có đúng 10 chữ số')
