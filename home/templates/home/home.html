@@ -33,11 +33,17 @@
                         <a href="#">Tìm đội</a>
                     </div>
                 </div>
-                <a href="#" class="dropdown">Giới thiệu</a>
+                <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>
                 <div class="auth-links">
                     {% if user.username %}
-                        <a href='#'>Xin chào {{ user.username }} <a href="{% url 'logout' %}">Đăng Xuất</a></a>
-                        <p><a href='{% url "change_password" %}'>Bạn muốn đổi mật khẩu?</a></p>
+                        <div class="dropdown">
+                            <a href="#" class="dropdown">Xin chào {{ user.username }}</a>
+                            <div class="dropdown-content">
+                                <a href='{% url "edit_profile" %}'>Sửa thông tin</a>
+                                <a href='{% url "change_password" %}'>Đổi mật khẩu</a>
+                                <a href="{% url 'logout' %}">Đăng Xuất</a>
+                            </div>
+                        </div>
                     {% else %}
                         <a href="{% url 'login' %}" class="dropdown">Đăng nhập</a>
                         <a href="{% url 'register' %}" class="dropdown">Đăng ký</a>
@@ -49,15 +55,15 @@
     <!-- Phần banner chính -->
     <div class="main-banner">
         <div class="banner-overlay"></div>
-        <div class="banner-content">
-            <h1>MyLeagueUIT.com</h1>
-            <p>Tổ chức giải đấu dễ dàng</p>
-            <p>Quản lý đội thể thao đơn giản</p>
-            <div class="banner-buttons">
-                <a href="#">Tạo giải đấu</a>
-                <a href="#">Tìm giải đấu</a>
-                <a href="#">Tạo đội</a>
-                <a href="#">Tìm đội</a>
+            <div class="banner-content">
+                <h1>MyLeagueUIT.com</h1>
+                <p>Tổ chức giải đấu dễ dàng</p>
+                <p>Quản lý đội thể thao đơn giản</p>
+                <div class="banner-buttons">
+                    <a href="#">Tạo giải đấu</a>
+                    <a href="#">Tìm giải đấu</a>
+                    <a href="#">Tạo đội</a>
+                    <a href="#">Tìm đội</a>
             </div>
         </div>
     </div>

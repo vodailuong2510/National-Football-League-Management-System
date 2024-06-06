@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
+    <title>Trang chủ</title>
+    <style>
+        .banner-content {
+        position: relative;
+        z-index: 1;
+        color : black;
+        text-align: center;
+        max-width: 100%; /* Giới hạn độ rộng của nội dung để tránh tràn ra ngoài */
+        margin: 0 auto;
+        margin-top: 5px;
+    }   
+    .banner-content h1 {
+        font-size: 20px; /* Tăng kích thước chữ cho tiêu đề */
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+    .banner-content p {
+        font-size: 16px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        text-align: justify;
+    }
+    .banner-content ul {
+        font-size: 16px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        text-align: justify;
+    }
+    </style>
+</head>
+<body>
+    <!-- Phần Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href=""><img src="{% static 'home/images/logo.png' %}" alt="Logo"></a>
+            </div>
+            <div class="domain">
+                <a href=""><p>MyLeagueUIT</p></a>
+            </div>
+            <nav>
+                <a href="/" class="dropdown">Trang chủ</a>
+                <div class="dropdown">
+                    <a href="#" class="dropdown">Giải đấu</a>
+                    <div class="dropdown-content">
+                        <a href="#">Tạo giải đấu</a>
+                        <a href="#">Tìm giải đấu</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#" class="dropdown">Đội thi đấu</a>
+                    <div class="dropdown-content">
+                        <a href="#">Tạo đội</a>
+                        <a href="#">Tìm đội</a>
+                    </div>
+                </div>
+                <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>
+                <div class="auth-links">
+                    {% if user.username %}
+                        <div class="dropdown">
+                            <a href="#" class="dropdown">Xin chào {{ user.username }}</a>
+                            <div class="dropdown-content">
+                                <a href='{% url "edit_profile" %}'>Sửa thông tin</a>
+                                <a href='{% url "change_password" %}'>Đổi mật khẩu</a>
+                                <a href="{% url 'logout' %}">Đăng Xuất</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="dropdown">Đăng nhập</a>
+                        <a href="{% url 'register' %}" class="dropdown">Đăng ký</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- Phần banner chính -->
+    <div class="main-banner">
+        <div class="banner-overlay"></div>
+            <div class="banner-content">
+                <section>
+                    <h1>Chào mừng đến với trang quản lý giải đấu bóng đá</h1>
+                    Đây là nơi bạn có thể theo dõi và quản lý các giải đấu bóng đá một cách dễ dàng và hiệu quả.
+                </section>
+
+                <!-- Phần Giới thiệu -->
+                <section id="about">
+                    <h2>Giới Thiệu</h2>
+                    <p>Chào mừng bạn đến với MyLeagueUIT - nền tảng quản lý giải đấu bóng đá chuyên nghiệp và hiện đại!</p>
+                    <p>Tại MyLeagueUIT, chúng tôi cam kết mang đến trải nghiệm tuyệt vời cho tất cả các đội bóng, huấn luyện viên và người hâm mộ. Với giao diện thân thiện và dễ sử dụng, bạn có thể dễ dàng tổ chức, quản lý và theo dõi các giải đấu bóng đá ở mọi cấp độ, từ nghiệp dư đến chuyên nghiệp.</p>
+                    <h3>Các tính năng nổi bật của chúng tôi bao gồm:</h3>
+                    <ul>
+                        <li><strong>Quản lý Đội Bóng:</strong> Thêm, chỉnh sửa thông tin đội bóng, cầu thủ dễ dàng. Theo dõi kết quả và thống kê cá nhân của từng cầu thủ.</li>
+                        <li><strong>Lịch Thi Đấu:</strong> Lập lịch thi đấu tự động, thông minh, phù hợp với thời gian và địa điểm của từng trận đấu.</li>
+                        <li><strong>Kết Quả & Thống Kê:</strong> Cập nhật kết quả trận đấu ngay lập tức, cung cấp các thống kê chi tiết về bàn thắng, thẻ phạt, và nhiều hơn nữa.</li>
+                        <li><strong>Bảng Xếp Hạng:</strong> Xây dựng bảng xếp hạng chính xác và minh bạch dựa trên kết quả các trận đấu.</li>
+                        <li><strong>Tin Tức & Sự Kiện:</strong> Cập nhật tin tức mới nhất về các giải đấu, thông tin cầu thủ, và những sự kiện bóng đá nổi bật.</li>
+                        <li><strong>Giao Diện Người Dùng Thân Thiện:</strong> Thiết kế đơn giản, dễ sử dụng, giúp người dùng dễ dàng truy cập và tìm kiếm thông tin.</li>
+                    </ul>
+                    <p>Chúng tôi hiểu rằng bóng đá không chỉ là một môn thể thao mà còn là niềm đam mê và sự gắn kết cộng đồng. Với MyLeagueUIT, chúng tôi mong muốn tạo ra một sân chơi công bằng, chuyên nghiệp và đầy hứng khởi cho tất cả những ai yêu thích bóng đá.</p>
+                    <p>Hãy cùng chúng tôi xây dựng và phát triển những giải đấu bóng đá hấp dẫn và thành công. Cảm ơn bạn đã tin tưởng và sử dụng MyLeagueUIT!</p>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- Phần Footer -->
+    <footer>
+        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
+        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
+    </footer>
+</body>
+</html>

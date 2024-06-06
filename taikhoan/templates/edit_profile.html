@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %} <!-- Tải các tệp tĩnh từ Django -->
-    <title>Đổi mật khẩu</title>
+    <title>Trang chủ</title>
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
 </head>
 <body>
@@ -56,12 +56,9 @@
     <div class="main-banner">
         <div class="banner-overlay"> <!-- Lớp phủ đen -->
             <div class="login-container" style="text-align: center">
-                <h1>Đổi mật khẩu</h1>
+                <h1>Sửa thông tin</h1>
                 <form method = "POST">
                     {% csrf_token %}
-                    {% for key, value in form.errors.items %}
-                        {{value}}
-                    {% endfor %}
                     {% if messages %}
                         {% for message in messages %}
                             <div class="alert alert-{{ message.tags }}">
@@ -69,21 +66,12 @@
                             </div>
                         {% endfor %}
                     {% endif %}
-
                     {{ form.as_p }}
-                    <input type = 'hidden' name = 'next' value = '/'/>
-                    <input type = 'submit' value = 'Đổi mật khẩu'/>
+                    <input type = 'submit' value = 'Cập nhật'/>
                 </form>
             </div>
         </div>
-    </div> <!-- Sử dụng một div thay vì thẻ img cho banner -->
-    <!-- Phần chính -->
-    <main>
-        <section>
-            <h1>Chào mừng đến với trang quản lý giải đấu bóng đá</h1>
-            <p>Đây là nơi bạn có thể theo dõi và quản lý các giải đấu bóng đá một cách dễ dàng và hiệu quả.</p>
-        </section>
-    </main>
+    </div> 
     <!-- Phần Footer -->
     <footer>
         <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>

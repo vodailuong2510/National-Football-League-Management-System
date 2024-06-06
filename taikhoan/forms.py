@@ -1,5 +1,4 @@
 from django import forms
-import re
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.html import format_html
@@ -26,7 +25,7 @@ class RegistrationForm(forms.Form):
         
     def clean_username(self):
         username = self.cleaned_data['username']
-        if not username.isdigit() or username[0] != 0:
+        if not username.isdigit() or username[0] != '0':
             raise forms.ValidationError('Tên tài khoản phải là số điện thoại')
         if len(username) != 10: 
             raise forms.ValidationError('Tên tài khoản phải có đúng 10 chữ số')
@@ -54,3 +53,23 @@ class CustomPasswordChangeForm(PasswordChangeForm):
         label='Nhập lại mật khẩu mới',
         widget=forms.PasswordInput(attrs={'placeholder': 'Mật khẩu mới'}),
     )
+class UserUpdateForm(forms.ModelForm):
+    username = forms.CharField(required=False)
+    class Meta:
+        model = User
+        fields = [ 'username','first_name',  'email', 'date_joined']
+
+    def __init__(self, *args, **kwargs):
+        super(UserUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['username'].disabled = True
+        self.fields['username'].label = format_html('Tên tài khoản{}', nbsp(8))
+
+        self.fields['date_joined'].disabled = True
+        self.fields['date_joined'].label = format_html('Ngày tham gia{}', nbsp(8))
+
+        self.fields['email'].widget.attrs.update({'style': 'width: 190px; height: 35px'})
+        self.fields['email'].label = format_html('Email{}', nbsp(23))
+
+        self.fields['first_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['first_name'].label = format_html('Họ và tên{}', nbsp(16))
+
