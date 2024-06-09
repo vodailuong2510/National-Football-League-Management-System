@@ -38,9 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
-    'taikhoan',
+    'account',
     'coach',
     'player',
+
 ]
 
 MIDDLEWARE = [

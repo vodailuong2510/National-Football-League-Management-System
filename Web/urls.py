@@ -20,9 +20,10 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
-    path('taikhoan/', include('taikhoan.urls')),
-    path('', include('coach.urls')),
+    path('account/', include('account.urls')),
+    path('coach/', include('coach.urls')),
     path('', include('player.urls')),
+
 ]
 
 from django.conf import settings
