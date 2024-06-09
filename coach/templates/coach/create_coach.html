@@ -3,19 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %} <!-- Tải các tệp tĩnh từ Django -->
-    <title>Đăng nhập</title>
+    {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
+    <link href="{% static 'coach/css/bootstrap.min.css' %}">
+    <title>Create Coach</title>
+    <style>
+        body {
+            background-color: #FFFFFF;
+        }
+        
+        .form-container {
+            display: flex;
+        }
+
+        .image-input {
+            padding-left: 50px;
+            flex: 1;
+        }
+        
+        .other-inputs {
+            flex: 1;
+            margin-left: -10px;
+            padding-left: 10px;
+        }
+        
+        /* Styling for the input fields */
+        .my-input {
+            width: 40%;
+            padding: 12px 20px;
+            margin-left: 8px auto;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            padding-left: 50px;
+        }
+    </style>
 </head>
 <body>
     <!-- Phần Header -->
     <header>
         <div class="header-container">
             <div class="logo">
-                <a href="/"><img src="{% static 'home/images/logo.png' %}" alt="Logo"></a>
+                <a href=""><img src="{% static 'home/images/logo.png' %}" alt="Logo"></a>
             </div>
             <div class="domain">
-                <a href="/"><p>MyLeagueUIT</p></a>
+                <a href=""><p>MyLeagueUIT</p></a>
             </div>
             <nav>
                 <a href="/" class="dropdown">Trang chủ</a>
@@ -60,37 +93,28 @@
         </div>
     </header>
     <!-- Phần banner chính -->
-    <div class="main-banner">
-        <div class="banner-overlay"> <!-- Lớp phủ đen -->
-            <div class="login-container" style="text-align: center">
-                <h1>Đăng nhập</h1>
-                <form method = "POST">
-                    {% csrf_token %}
-                    {% if form.errors %}
-                            <p style="color: red;">Tên tài khoản hoặc mật khẩu của bạn không đúng!</p>
-                    {% endif %}
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }}">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                    <p><label>Tài khoản:</label>{{form.username}}</p>
-                    <p><label>Mật khẩu:</label>{{form.password}}</p>
-                    <input type = 'hidden' name = 'next' value = '/'/>
-                    <input type = 'submit' value = 'Đăng nhập'/>
-                </form>
+    <h1>Create Coach</h1>
+    
+    <form method="POST" enctype="multipart/form-data" class="mt-4">
+        {% csrf_token %}
+        <div class="login-container">
+            <div class="image-input">
+                {{ form.IMAGE }}
             </div>
+            <div class="other-inputs">
+                <p>ID: {{ form.COACHID }}</p>
+                <p>Name: {{ form.COACHNAME }}</p>
+                <p>Birthday: {{ form.BIRTHDAY }}</p>
+                <p>Nationality: {{ form.NATIONALITY }}</p>
+                <p>Club: {{ form.CLUB }}</p>
+                <p>Cards: {{ form.CARDS }}</p>
+            </div>
+            <input type = 'submit' value = 'Tạo'/>
         </div>
-    </div> <!-- Sử dụng một div thay vì thẻ img cho banner -->
+    </form>
     <!-- Phần chính -->
-    <main>
-        <section>
-            <h1>Chào mừng đến với trang quản lý giải đấu bóng đá</h1>
-            <p>Đây là nơi bạn có thể theo dõi và quản lý các giải đấu bóng đá một cách dễ dàng và hiệu quả.</p>
-        </section>
-    </main>
+    
+
     <!-- Phần Footer -->
     <footer>
         <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>

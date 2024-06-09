@@ -33,6 +33,13 @@
                         <a href="#">Tìm đội</a>
                     </div>
                 </div>
+                <div class="dropdown">
+                    <a href='{% url "coach" %}'  class="dropdown">HLV</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_coach" %}'>Tạo HLV</a>
+                        <a href='{% url "coach_list" %}'>Tìm HLV</a>
+                    </div>
+                </div>
                 <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>
                 <div class="auth-links">
                     {% if user.username %}
