@@ -5,10 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
+    <link href="{% static 'coach/css/bootstrap.min.css' %}">
     <title>Create Coach</title>
     <style>
         body {
             background-color: #FFFFFF;
+        }
+        
+        .form-container {
+            display: flex;
+        }
+
+        .image-input {
+            padding-left: 50px;
+            flex: 1;
+        }
+        
+        .other-inputs {
+            flex: 1;
+            margin-left: -10px;
+            padding-left: 10px;
+        }
+        
+        /* Styling for the input fields */
+        .my-input {
+            width: 40%;
+            padding: 12px 20px;
+            margin-left: 8px auto;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            padding-left: 50px;
         }
     </style>
 </head>
@@ -66,10 +94,23 @@
     </header>
     <!-- Phần banner chính -->
     <h1>Create Coach</h1>
-    <form method="POST" enctype="multipart/form-data">
+    
+    <form method="POST" enctype="multipart/form-data" class="mt-4">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
+        <div class="login-container">
+            <div class="image-input">
+                {{ form.IMAGE }}
+            </div>
+            <div class="other-inputs">
+                <p>ID: {{ form.COACHID }}</p>
+                <p>Name: {{ form.COACHNAME }}</p>
+                <p>Birthday: {{ form.BIRTHDAY }}</p>
+                <p>Nationality: {{ form.NATIONALITY }}</p>
+                <p>Club: {{ form.CLUB }}</p>
+                <p>Cards: {{ form.CARDS }}</p>
+            </div>
+            <input type = 'submit' value = 'Tạo'/>
+        </div>
     </form>
     <!-- Phần chính -->
     

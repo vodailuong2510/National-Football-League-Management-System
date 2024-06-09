@@ -7,5 +7,6 @@ class CoachForm(forms.ModelForm):
         fields = ['COACHID', 'COACHNAME', 'BIRTHDAY', 'NATIONALITY', 'CLUB', 'IMAGE', 'CARDS']
     
     def __init__(self, *args, **kwargs):
-        super(CoachForm, self).__init__(*args, **kwargs)
-        self.fields['COACHID'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Mã HLV'})
+            super(CoachForm, self).__init__(*args, **kwargs)
+            for field_name in self.fields:
+                self.fields[field_name].widget.attrs.update({'class': 'my-input'})
