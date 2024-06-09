@@ -302,3 +302,51 @@ form button {
 form button:hover {
     background-color: #555;
 }
+
+/* Player List Styles */
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #333;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+ul li img {
+    margin-right: 20px;
+    border-radius: 5px;
+}
+
+ul li h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+ul li p {
+    margin: 5px 0;
+    color: #555;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #007BFF;
+    margin-right: 10px;
+}
+
+ul li a:hover {
+    text-decoration: underline;
+}

@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %} <!-- Tải các tệp tĩnh từ Django -->
-    <title>Trang chủ</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'player/css/styles.css' %}">
 </head>
 <body>
     <!-- Phần Header -->
@@ -39,12 +38,12 @@
                         <a href='{% url "create_coach" %}'>Tạo HLV</a>
                         <a href='{% url "coach_list" %}'>Tìm HLV</a>
                     </div>
-                    <div class="dropdown">
-                        <a href='{% url "player" %}'  class="dropdown">Cầu thủ</a>
-                        <div class="dropdown-content">
-                            <a href='{% url "create_player" %}'>Tạo Cầu thủ</a>
-                            <a href='{% url "player_list" %}'>Tìm Cầu thủ</a>
-                        </div>
+                </div>
+                <div class="dropdown">
+                    <a href='{% url "player" %}'  class="dropdown">Cầu thủ</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_player" %}'>Tạo Cầu thủ</a>
+                        <a href='{% url "player_list" %}'>Tìm Cầu thủ</a>
                     </div>
                 </div>
                 <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>
@@ -66,21 +65,33 @@
             </nav>
         </div>
     </header>
-    <!-- Phần banner chính -->
-    <div class="main-banner">
-        <div class="banner-overlay"></div> <!-- Lớp phủ đen -->
-    </div> <!-- Sử dụng một div thay vì thẻ img cho banner -->
-    <!-- Phần chính -->
-    <main>
-        <section>
-            <h1>Chào mừng đến với trang quản lý giải đấu bóng đá</h1>
-            <p>Đây là nơi bạn có thể theo dõi và quản lý các giải đấu bóng đá một cách dễ dàng và hiệu quả.</p>
-        </section>
-    </main>
-    <!-- Phần Footer -->
-    <footer>
-        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
-        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
-    </footer>
+    <!-- Form tìm kiếm -->
+    <form method="GET" action="{% url 'player_list' %}">
+        <input type="text" name="search" placeholder="Search by name...">
+        <button type="submit">Search</button>
+    </form>
+
+    
+    <!-- Danh sách cau thu -->
+    <ul>
+        {% for player in players %}
+            <li>
+                {% if player.IMAGE %}
+                    <img src="{{ player.IMAGE.url }}" alt="{{ player.PLAYERNAME }}" width="150">
+                {% endif %}
+                <h2>{{ player.PLAYERNAME }}</h2>
+                <p>Birthday: {{ player.BIRTHDAY }}</p>
+                <p>Nationality: {{ player.NATIONALITY }}</p>
+                <p>Club: {{ player.CLUB }}</p>
+                <p>Card: {{ player.CARDS }}</p>
+            </li>
+        {% empty %}
+            <li>No players found.</li>
+        {% endfor %}
+    </ul>
 </body>
+<footer>
+    <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
+    <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
+</footer>
 </html>
