@@ -22,7 +22,7 @@ urlpatterns = [
     path('', include('home.urls')),
     path('account/', include('account.urls')),
     path('coach/', include('coach.urls')),
-    path('', include('player.urls')),
+    path('player/', include('player.urls')),
 
 ]
 
