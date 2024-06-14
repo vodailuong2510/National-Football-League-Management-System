@@ -92,6 +92,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            transition: background-color 0.3s ease;
         }
 
         input[type="submit"]:hover {
@@ -163,10 +164,13 @@
     <div class="main-banner">
         <div class="banner-overlay"> 
             <div class="banner-content">
-                <h1>Tạo Huấn luyện viên</h1>
+                <h1>Tạo huấn luyện viên</h1>
             </div>
             <form method="POST" enctype="multipart/form-data" class="mt-4">
                 {% csrf_token %}
+                {% if form.errors %}
+                    <p style="color: red;">ID huấn luyện viên đã tồn tại</p>
+                {% endif %}
                 <div class="form-container">
                     <div class = "dash-line-box">
                         <div class="image-input">
@@ -187,8 +191,6 @@
                             <div>{{ form.NATIONALITY }}</div>
                             <label for="club">Đội tuyển:</label>
                             <div>{{ form.CLUB }}</div>
-                            <label for="cards">Thẻ:</label>
-                            <div>{{ form.CARDS }}</div>
                             <input type='submit' value='Tạo'/>
                         </div>
                     </div>

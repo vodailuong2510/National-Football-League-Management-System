@@ -10,6 +10,63 @@
         body {
             background-color: #FFFFFF;
         }
+        
+        .body-container {
+            color: #000;
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px;
+        }
+
+        .background {
+            flex: 0 0 auto;
+            margin: 10px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .image-container {
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            border: 2px solid #000; /* Màu viền khung ảnh */
+            border-radius: 5px; /* Bo góc viền khung ảnh */
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .button {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #00264D;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: 100px;
+            margin: 5px;
+        }
+        
+        .button:hover {
+            background-color: grey;
+        }
+        
+        .info p {
+            display: flex;
+            justify-content: space-between;
+        }        
+
     </style>
 </head>
 <body>
@@ -72,23 +129,35 @@
         </div>
     </header>
     <!-- Phần banner chính -->
+    <div class="main-banner">
+        <div class="banner-overlay"> 
+            <div class="banner-content">
+                <h1>Danh sách huấn luyện viên</h1>
+            </div>
+            <div class="body-container">
+                {% for coach in coaches %}
+                    <div class=background>
+                        <h2>{{ coach.COACHNAME }}</h2>
 
-    <!-- Phần chính -->
-    <h1>Coach List</h1>
-    <ul>
-        {% for coach in coaches %}
-            <li>
-                {% if coach.IMAGE %}
-                    <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}" width="150">
-                {% endif %}
-                <h2>{{ coach.COACHNAME }}</h2>
-                <p>Club: {{ coach.CLUB }}</p>
-            </li>
-            <a href="{% url 'coach_edit' coach.COACHID %}"> Edit </a>
-            <br>
-            <a href="{% url 'coach_delete' coach.COACHID %}"> Delete </a>
-        {% endfor %}
-    </ul>
+                        <div class="image-container">
+                            <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}">
+                        </div>
+                        
+                        <div class="info">
+                            <p><b>Age:</b> {{ coach.BIRTHDAY }}</p>
+                            <p><b>Nationality:</b> {{ coach.NATIONALITY }}</p>
+                            <p><b>Club:</b> {{ coach.CLUB }}</p>
+                        </div>
+                                               
+
+                        <a href="{% url 'coach_edit' coach.COACHID %}" class="button"> Edit </a>
+                        <br>
+                        <a href="{% url 'coach_delete' coach.COACHID %}" class="button"> Delete </a>                        
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
     <!-- Phần Footer -->
     <footer>

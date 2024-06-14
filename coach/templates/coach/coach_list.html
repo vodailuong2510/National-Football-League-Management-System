@@ -10,6 +10,73 @@
         body {
             background-color: #FFFFFF;
         }
+        
+        .body-container {
+            color: #000;
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px;
+        }
+
+        .background {
+            flex: 0 0 auto;
+            margin: 10px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .image-container {
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            border: 2px solid #000; /* Màu viền khung ảnh */
+            border-radius: 5px; /* Bo góc viền khung ảnh */
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .no-results {
+            color: red;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    
+        .search-bar input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+    
+        .search-bar button {
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+    
+        .search-bar button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
@@ -71,31 +138,41 @@
             </nav>
         </div>
     </header>
-    <!-- Form tìm kiếm -->
-    <form method="GET" action="{% url 'coach_list' %}">
-        <input type="text" name="search" placeholder="Search by name...">
-        <button type="submit">Search</button>
-    </form>
 
-    
     <!-- Danh sách huấn luyện viên -->
-    <ul>
-        {% for coach in coaches %}
-            <li>
-                {% if coach.IMAGE %}
-                    <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}" width="150">
-                {% endif %}
-                <h2>{{ coach.COACHNAME }}</h2>
-                <p>Birthday: {{ coach.BIRTHDAY }}</p>
-                <p>Nationality: {{ coach.NATIONALITY }}</p>
-                <p>Club: {{ coach.CLUB }}</p>
-                <p>Card: {{ coach.CARDS }}</p>
-            </li>
-        {% empty %}
-            <li>No coaches found.</li>
-        {% endfor %}
-    </ul>
-</body>
+    <div class="main-banner">
+        <div class="banner-overlay"> 
+            <div class="banner-content">
+                <h1>Tìm kiếm huấn luyện viên</h1>
+            </div>
+
+            <form method="GET" action="{% url 'coach_list' %}" class="search-bar">
+                <input type="text" name="search" placeholder="Search by name...">
+                <button type="submit">Search</button>
+            </form>
+
+            <div class="body-container">
+                {% for coach in coaches %}
+                    <div class=background>
+                        <h2>{{ coach.COACHNAME }}</h2>
+
+                        <div class="image-container">
+                            <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}">
+                        </div>
+                        
+                        <div class="info">
+                            <p><b>Age:</b> {{ coach.BIRTHDAY }}</p>
+                            <p><b>Nationality:</b> {{ coach.NATIONALITY }}</p>
+                            <p><b>Club:</b> {{ coach.CLUB }}</p>
+                        </div>                      
+                    </div>
+
+                    {% empty %}
+                        <p class="no-results">Không tìm thấy kết quả!</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 <footer>
     <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
     <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
