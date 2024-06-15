@@ -270,35 +270,3 @@ footer p {
 .dropdown:hover .dropbtn {
     background-color: red;
 }
-
-/* Main Content Styles */
-h1 {
-    text-align: center;
-    margin-top: 20px;
-    color: #333;
-}
-
-form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-form button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-form button:hover {
-    background-color: #555;
-}
