@@ -8,4 +8,4 @@ class Player(models.Model):
     NATIONALITY = models.CharField(max_length=20)
     CLUB = models.CharField(max_length=30)
     IMAGE = models.ImageField(upload_to='images/')
-    CARDS = models.CharField(max_length=6, default='')
+    CARDS = models.CharField(max_length=6, default='None', null=True, blank=True)
