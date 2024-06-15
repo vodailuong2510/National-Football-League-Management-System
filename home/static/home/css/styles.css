@@ -26,7 +26,7 @@ header {
     display: flex; /* Sử dụng flexbox layout */
     align-items: center; /* Căn các phần tử con theo trục dọc */
     width: 100%; /* Chiều rộng của container */
-    max-width: 1000px; /* Đặt chiều rộng tối đa cho container */
+    max-width: 1050px; /* Đặt chiều rộng tối đa cho container */
     margin: 10 auto; /* Canh giữa container */
 }
 /* CSS cho thanh điều hướng */

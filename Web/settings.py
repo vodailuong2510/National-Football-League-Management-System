@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
-    'taikhoan',
     'club',
+    'account',
+    'coach',
+    'player',
 ]
 
 MIDDLEWARE = [
@@ -124,5 +126,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'home/static')]
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

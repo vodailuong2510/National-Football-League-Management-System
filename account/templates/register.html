@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %} <!-- Tải các tệp tĩnh từ Django -->
+    <title>Đăng Ký</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
+</head>
+<body>
+    <!-- Phần Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="/"><img src="{% static 'home/images/logo.png' %}" alt="Logo"></a>
+            </div>
+            <div class="domain">
+                <a href="/"><p>MyLeagueUIT</p></a>
+            </div>
+            <nav>
+                <a href="/" class="dropdown">Trang chủ</a>
+                <div class="dropdown">
+                    <a href="#" class="dropdown">Giải đấu</a>
+                    <div class="dropdown-content">
+                        <a href="#">Tạo giải đấu</a>
+                        <a href="#">Tìm giải đấu</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#" class="dropdown">Đội thi đấu</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_club" %}'>Tạo đội</a>
+                        <a href='{% url "club_list" %}'>Tìm đội</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href='{% url "coach" %}'  class="dropdown">HLV</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_coach" %}'>Tạo HLV</a>
+                        <a href='{% url "coach_list" %}'>Tìm HLV</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href='{% url "player" %}'  class="dropdown">Cầu thủ</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_player" %}'>Tạo Cầu thủ</a>
+                        <a href='{% url "player_list" %}'>Tìm Cầu thủ</a>
+                    </div>
+                </div>
+                <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>
+                <div class="auth-links">
+                    {% if user.username %}
+                        <div class="dropdown">
+                            <a href="#" class="dropdown">Xin chào {{ user.username }}</a>
+                            <div class="dropdown-content">
+                                <a href='{% url "edit_profile" %}'>Sửa thông tin</a>
+                                <a href='{% url "change_password" %}'>Đổi mật khẩu</a>
+                                <a href="{% url 'logout' %}">Đăng Xuất</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="dropdown">Đăng nhập</a>
+                        <a href="{% url 'register' %}" class="dropdown">Đăng ký</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- Phần banner chính -->
+    <div class="main-banner">
+        <div class="banner-overlay">
+            <div class="login-container" style="text-align: center">
+                <h1>Đăng ký</h1>
+                <form action="." method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Đăng ký"/>
+                </form>
+            </div>
+        </div> <!-- Lớp phủ đen -->
+    </div> <!-- Sử dụng một div thay vì thẻ img cho banner -->
+    <!-- Phần chính -->
+    <main>
+        <section>
+            <h1>Chào mừng đến với trang quản lý giải đấu bóng đá</h1>
+            <p>Đây là nơi bạn có thể theo dõi và quản lý các giải đấu bóng đá một cách dễ dàng và hiệu quả.</p>
+        </section>
+    </main>
+    <!-- Phần Footer -->
+    <footer>
+        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
+        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
+    </footer>
+</body>
+</html>

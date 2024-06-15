@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
+    <title>Coach</title>
+    <style>
+        body {
+            background-color: #FFFFFF;
+        }
+        
+        .body-container {
+            color: #000;
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px;
+        }
+
+        .background {
+            flex: 0 0 auto;
+            margin: 10px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .image-container {
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            border: 2px solid #000; /* Màu viền khung ảnh */
+            border-radius: 5px; /* Bo góc viền khung ảnh */
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .button {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #00264D;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: 100px;
+            margin: 5px;
+        }
+        
+        .button:hover {
+            background-color: grey;
+        }
+        
+        .info p {
+            display: flex;
+            justify-content: space-between;
+        }        
+
+    </style>
+</head>
+<body>
+    <!-- Phần Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="/"><img src="{% static 'home/images/logo.png' %}" alt="Logo"></a>
+            </div>
+            <div class="domain">
+                <a href="/"><p>MyLeagueUIT</p></a>
+            </div>
+            <nav>
+                <a href="/" class="dropdown">Trang chủ</a>
+                <div class="dropdown">
+                    <a href="#" class="dropdown">Giải đấu</a>
+                    <div class="dropdown-content">
+                        <a href="#">Tạo giải đấu</a>
+                        <a href="#">Tìm giải đấu</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#" class="dropdown">Đội thi đấu</a>
+                    <div class="dropdown-content">
+                        <a href="#">Tạo đội</a>
+                        <a href="#">Tìm đội</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href='{% url "coach" %}'  class="dropdown">HLV</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_coach" %}'>Tạo HLV</a>
+                        <a href='{% url "coach_list" %}'>Tìm HLV</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href='{% url "player" %}'  class="dropdown">Cầu thủ</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_player" %}'>Tạo Cầu thủ</a>
+                        <a href='{% url "player_list" %}'>Tìm Cầu thủ</a>
+                    </div>
+                </div>
+                <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>
+                <div class="auth-links">
+                    {% if user.username %}
+                        <div class="dropdown">
+                            <a href="#" class="dropdown">Xin chào {{ user.username }}</a>
+                            <div class="dropdown-content">
+                                <a href='{% url "edit_profile" %}'>Sửa thông tin</a>
+                                <a href='{% url "change_password" %}'>Đổi mật khẩu</a>
+                                <a href="{% url 'logout' %}">Đăng Xuất</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="dropdown">Đăng nhập</a>
+                        <a href="{% url 'register' %}" class="dropdown">Đăng ký</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- Phần banner chính -->
+    <div class="main-banner">
+        <div class="banner-overlay"> 
+            <div class="banner-content">
+                <h1>Danh sách huấn luyện viên</h1>
+            </div>
+            <div class="body-container">
+                {% for coach in coaches %}
+                    <div class=background>
+                        <h2>{{ coach.COACHNAME }}</h2>
+
+                        <div class="image-container">
+                            <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}">
+                        </div>
+                        
+                        <div class="info">
+                            <p><b>Age:</b> {{ coach.BIRTHDAY }}</p>
+                            <p><b>Nationality:</b> {{ coach.NATIONALITY }}</p>
+                            <p><b>Club:</b> {{ coach.CLUB }}</p>
+                        </div>
+                                               
+
+                        <a href="{% url 'coach_edit' coach.COACHID %}" class="button"> Edit </a>
+                        <br>
+                        <a href="{% url 'coach_delete' coach.COACHID %}" class="button"> Delete </a>                        
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Phần Footer -->
+    <footer>
+        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
+        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
+    </footer>
+</body>
+</html>

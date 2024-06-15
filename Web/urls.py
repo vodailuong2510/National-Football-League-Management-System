@@ -22,6 +22,13 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
-    path('taikhoan/', include('taikhoan.urls')),
     path('club/', include('club.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('account/', include('account.urls')),
+    path('coach/', include('coach.urls')),
+    path('player/', include('player.urls')),
+]
+
+from django.conf import settings
+from django.conf.urls.static import static
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
