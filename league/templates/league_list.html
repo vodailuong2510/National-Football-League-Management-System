@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
-    <title>Tìm kiếm huấn luyện viên</title>
+    <title>Tìm kiếm giải đấu</title>
     <style>
         body {
             background-color: #FFFFFF;
@@ -34,14 +34,14 @@
         .form-container button:hover {
             background-color: #45a049;
         }
-        .coach-list {
+        .league-list {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
             padding: 20px;
         }
-        .coach-item {
+        .league-item {
             background-color: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 10px;
@@ -53,44 +53,42 @@
             flex-direction: column;
             align-items: center;
         }
-        .coach-item img {
+        .league-item img {
             width: 200px;
             height: 200px;
             object-fit: contain;
             border-radius: 10px;
             margin-bottom: 15px;
         }
-        .coach-item h2 {
+        .league-item h2 {
             font-size: 1.5em;
             margin: 10px 0;
         }
-        .coach-item p {
+        .league-item p {
             margin: 5px 0;
             color: #555;
         }
-        .coach-item .action-buttons {
+        .league-item .action-buttons {
             display: flex;
             gap: 10px;
             margin-top: 10px;
         }
-        .coach-item .edit-btn {
-            background-color: #4CAF50;
+        .league-item .action-buttons a {
             padding: 10px 15px;
             color: white;
             text-decoration: none;
             border-radius: 5px;
         }
-        .coach-item .edit-btn:hover {
+        .league-item .edit-btn {
+            background-color: #4CAF50;
+        }
+        .league-item .edit-btn:hover {
             background-color: #45a049;
         }
-        .coach-item .delete-btn {
+        .league-item .delete-btn {
             background-color: #f44336;
-            padding: 10px 15px;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
         }
-        .coach-item .delete-btn:hover {
+        .league-item .delete-btn:hover {
             background-color: #e53935;
         }
         footer {
@@ -163,30 +161,32 @@
     
     <!-- Form tìm kiếm -->
     <div class="form-container">
-        <form method="GET" action="{% url 'coach_list' %}">
-            <input type="text" name="search" placeholder="Nhập tên huấn luyện viên">
+        <form method="GET" action="{% url 'league_list' %}">
+            <input type="text" name="search" placeholder="Nhập tên giải đấu">
             <button type="submit">Tìm kiếm</button>
         </form>
     </div>
 
-    <!-- Danh sách huấn luyện viên -->
-    <div class="coach-list">
-        {% for coach in coaches %}
-            <div class="coach-item">
-                {% if coach.IMAGE %}
-                    <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}">
+    <!-- Danh sách giải đấu -->
+    <div class="league-list">
+        {% for league in leagues %}
+            <div class="league-item">
+                {% if league.LOGO %}
+                    <img src="{{ league.LOGO.url }}" alt="{{ league.LEAGUE_NAME }}">
                 {% endif %}
-                <h2>{{ coach.COACHNAME }}</h2>
-                <p>Tuổi: {{ coach.BIRTHDAY }}</p>
-                <p>Quốc tịch: {{ coach.NATIONALITY }}</p>
-                <p>CLB: {{ coach.CLUB }}</p>
+                <h2>{{ league.LEAGUE_NAME }}</h2>
+                <p>Tổng số câu lạc bộ: {{ league.TOTAL_CLUB }}</p>
+                <p>Hiệp hội: {{ league.ASSOCIATION }}</p>
+                <p>Ngày thành lập: {{ league.FOUNDED }}</p>
+                <p>Thời gian bắt đầu: {{ league.START_TIME }}</p>
+                <p>Thời gian kết thúc: {{ league.END_TIME }}</p>
                 <div class="action-buttons">
-                    <a href="{% url 'coach_edit' coach.id %}" class="edit-btn">Sửa</a>
-                    <a href="{% url 'coach_delete' coach.id %}" class="delete-btn">Xóa</a>
+                    <a href="{% url 'league_edit' league.LEAGUE_ID %}" class="edit-btn">Sửa</a>
+                    <a href="{% url 'league_delete' league.LEAGUE_ID %}" class="delete-btn">Xóa</a>
                 </div>
             </div>
         {% empty %}
-            <p>Không tìm thấy huấn luyện viên nào.</p>
+            <p>Không tìm thấy giải đấu nào.</p>
         {% endfor %}
     </div>
 

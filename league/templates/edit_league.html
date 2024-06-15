@@ -3,101 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa thông tin giải đấu</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
-    <title>Tìm kiếm huấn luyện viên</title>
     <style>
         body {
             background-color: #FFFFFF;
             margin: 0;
             padding: 0;
         }
-        .form-container {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        .form-container input[type="text"] {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px 0 0 5px;
-            width: 300px;
-        }
-        .form-container button {
-            padding: 10px;
-            border: 1px solid #4CAF50;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 0 5px 5px 0;
-            cursor: pointer;
-        }
-        .form-container button:hover {
-            background-color: #45a049;
-        }
-        .coach-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 50px auto;
             padding: 20px;
-        }
-        .coach-item {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 20px;
-            width: 300px;
-            text-align: center;
+            background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            margin-right: 30px;
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
-        .coach-item img {
-            width: 200px;
-            height: 200px;
-            object-fit: contain;
-            border-radius: 10px;
-            margin-bottom: 15px;
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
         }
-        .coach-item h2 {
-            font-size: 1.5em;
-            margin: 10px 0;
-        }
-        .coach-item p {
-            margin: 5px 0;
-            color: #555;
-        }
-        .coach-item .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .coach-item .edit-btn {
-            background-color: #4CAF50;
-            padding: 10px 15px;
-            color: white;
-            text-decoration: none;
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
             border-radius: 5px;
         }
-        .coach-item .edit-btn:hover {
+        .form-group input[type="file"] {
+            padding: 3px;
+        }
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .form-actions button, .form-actions a {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .form-actions .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .form-actions .btn-primary:hover {
             background-color: #45a049;
         }
-        .coach-item .delete-btn {
-            background-color: #f44336;
-            padding: 10px 15px;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
+        .form-actions .btn-secondary {
+            background-color: #ccc;
+            color: #333;
         }
-        .coach-item .delete-btn:hover {
-            background-color: #e53935;
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #333;
-            color: white;
+        .form-actions .btn-secondary:hover {
+            background-color: #bbb;
         }
     </style>
 </head>
@@ -160,34 +139,29 @@
             </nav>
         </div>
     </header>
-    
-    <!-- Form tìm kiếm -->
-    <div class="form-container">
-        <form method="GET" action="{% url 'coach_list' %}">
-            <input type="text" name="search" placeholder="Nhập tên huấn luyện viên">
-            <button type="submit">Tìm kiếm</button>
-        </form>
-    </div>
 
-    <!-- Danh sách huấn luyện viên -->
-    <div class="coach-list">
-        {% for coach in coaches %}
-            <div class="coach-item">
-                {% if coach.IMAGE %}
-                    <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}">
-                {% endif %}
-                <h2>{{ coach.COACHNAME }}</h2>
-                <p>Tuổi: {{ coach.BIRTHDAY }}</p>
-                <p>Quốc tịch: {{ coach.NATIONALITY }}</p>
-                <p>CLB: {{ coach.CLUB }}</p>
-                <div class="action-buttons">
-                    <a href="{% url 'coach_edit' coach.id %}" class="edit-btn">Sửa</a>
-                    <a href="{% url 'coach_delete' coach.id %}" class="delete-btn">Xóa</a>
-                </div>
+    <div class="container">
+        <h1>Chỉnh sửa thông tin giải đấu</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-grid">
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="error">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
             </div>
-        {% empty %}
-            <p>Không tìm thấy huấn luyện viên nào.</p>
-        {% endfor %}
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Lưu thay đổi</button>
+                <a href="{% url 'league_list' %}" class="btn-secondary">Hủy</a>
+            </div>
+        </form>
     </div>
 
     <!-- Phần Footer -->

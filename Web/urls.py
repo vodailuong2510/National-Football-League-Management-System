@@ -26,6 +26,7 @@ urlpatterns = [
     path('account/', include('account.urls')),
     path('coach/', include('coach.urls')),
     path('player/', include('player.urls')),
+    path('league/', include('league.urls')),
 ]
 
 from django.conf import settings

@@ -5,77 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
-    <title>Coach List</title>
+    <title>Tìm kiếm huấn luyện viên</title>
     <style>
         body {
             background-color: #FFFFFF;
+            margin: 0;
+            padding: 0;
         }
-        
-        .body-container {
-            color: #000;
-            display: flex;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 10px;
-        }
-
-        .background {
-            flex: 0 0 auto;
-            margin: 10px;
-            padding: 20px;
-            background-color: #f4f4f4;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            text-align: center;
-        }
-        
-        .image-container {
-            width: 200px;
-            height: 200px;
-            overflow: hidden;
-            border: 2px solid #000; /* Màu viền khung ảnh */
-            border-radius: 5px; /* Bo góc viền khung ảnh */
-        }
-
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .no-results {
-            color: red;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .search-bar {
+        .form-container {
             display: flex;
             justify-content: center;
-            align-items: center;
+            margin: 20px 0;
         }
-    
-        .search-bar input[type="text"] {
+        .form-container input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
             width: 300px;
-            padding: 10px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
         }
-    
-        .search-bar button {
+        .form-container button {
             padding: 10px;
-            border: none;
-            border-radius: 10px;
+            border: 1px solid #4CAF50;
             background-color: #4CAF50;
             color: white;
+            border-radius: 0 5px 5px 0;
             cursor: pointer;
-            font-size: 16px;
-            margin-left: 10px;
         }
-    
-        .search-bar button:hover {
+        .form-container button:hover {
             background-color: #45a049;
+        }
+        .coach-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .coach-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .coach-item img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .coach-item h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        .coach-item p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .coach-item .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .coach-item .edit-btn {
+            background-color: #4CAF50;
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .coach-item .edit-btn:hover {
+            background-color: #45a049;
+        }
+        .coach-item .delete-btn {
+            background-color: #f44336;
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .coach-item .delete-btn:hover {
+            background-color: #e53935;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
         }
     </style>
 </head>
@@ -92,14 +114,14 @@
             <nav>
                 <a href="/" class="dropdown">Trang chủ</a>
                 <div class="dropdown">
-                    <a href="#" class="dropdown">Giải đấu</a>
+                    <a href="{% url 'league' %}" class="dropdown">Giải đấu</a>
                     <div class="dropdown-content">
-                        <a href="#">Tạo giải đấu</a>
-                        <a href="#">Tìm giải đấu</a>
+                        <a href='{% url "create_league" %}'>Tạo giải đấu</a>
+                        <a href='{% url "league_list" %}'>Tìm giải đấu</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="#" class="dropdown">Đội thi đấu</a>
+                    <a href='{% url "club_list" %}' class="dropdown">Đội thi đấu</a>
                     <div class="dropdown-content">
                         <a href='{% url "create_club" %}'>Tạo đội</a>
                         <a href='{% url "club_list" %}'>Tìm đội</a>
@@ -138,43 +160,40 @@
             </nav>
         </div>
     </header>
+    
+    <!-- Form tìm kiếm -->
+    <div class="form-container">
+        <form method="GET" action="{% url 'coach_list' %}">
+            <input type="text" name="search" placeholder="Nhập tên huấn luyện viên">
+            <button type="submit">Tìm kiếm</button>
+        </form>
+    </div>
 
     <!-- Danh sách huấn luyện viên -->
-    <div class="main-banner">
-        <div class="banner-overlay"> 
-            <div class="banner-content">
-                <h1>Tìm kiếm huấn luyện viên</h1>
+    <div class="coach-list">
+        {% for coach in coaches %}
+            <div class="coach-item">
+                {% if coach.IMAGE %}
+                    <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}">
+                {% endif %}
+                <h2>{{ coach.COACHNAME }}</h2>
+                <p>Tuổi: {{ coach.BIRTHDAY }}</p>
+                <p>Quốc tịch: {{ coach.NATIONALITY }}</p>
+                <p>CLB: {{ coach.CLUB }}</p>
+                <div class="action-buttons">
+                    <a href="{% url 'coach_edit' coach.id %}" class="edit-btn">Sửa</a>
+                    <a href="{% url 'coach_delete' coach.id %}" class="delete-btn">Xóa</a>
+                </div>
             </div>
-
-            <form method="GET" action="{% url 'coach_list' %}" class="search-bar">
-                <input type="text" name="search" placeholder="Search by name...">
-                <button type="submit">Search</button>
-            </form>
-
-            <div class="body-container">
-                {% for coach in coaches %}
-                    <div class=background>
-                        <h2>{{ coach.COACHNAME }}</h2>
-
-                        <div class="image-container">
-                            <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}">
-                        </div>
-                        
-                        <div class="info">
-                            <p><b>Age:</b> {{ coach.BIRTHDAY }}</p>
-                            <p><b>Nationality:</b> {{ coach.NATIONALITY }}</p>
-                            <p><b>Club:</b> {{ coach.CLUB }}</p>
-                        </div>                      
-                    </div>
-
-                    {% empty %}
-                        <p class="no-results">Không tìm thấy kết quả!</p>
-                {% endfor %}
-            </div>
-        </div>
+        {% empty %}
+            <p>Không tìm thấy huấn luyện viên nào.</p>
+        {% endfor %}
     </div>
-<footer>
-    <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
-    <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
-</footer>
+
+    <!-- Phần Footer -->
+    <footer>
+        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
+        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
+    </footer>
+</body>
 </html>
