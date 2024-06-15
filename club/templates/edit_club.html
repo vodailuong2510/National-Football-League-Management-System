@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa thông tin đội bóng</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
+    <style>
+        body {
+            background-color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            margin-right: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group input[type="file"] {
+            padding: 3px;
+        }
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .form-actions button, .form-actions a {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .form-actions .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .form-actions .btn-primary:hover {
+            background-color: #45a049;
+        }
+        .form-actions .btn-secondary {
+            background-color: #ccc;
+            color: #333;
+        }
+        .form-actions .btn-secondary:hover {
+            background-color: #bbb;
+        }
+    </style>
+</head>
+<body>
+    <!-- Phần Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="/"><img src="{% static 'home/images/logo.png' %}" alt="Logo"></a>
+            </div>
+            <div class="domain">
+                <a href="/"><p>MyLeagueUIT</p></a>
+            </div>
+            <nav>
+                <a href="/" class="dropdown">Trang chủ</a>
+                <div class="dropdown">
+                    <a href="#" class="dropdown">Giải đấu</a>
+                    <div class="dropdown-content">
+                        <a href="#">Tạo giải đấu</a>
+                        <a href="#">Tìm giải đấu</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#" class="dropdown">Đội thi đấu</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_club" %}'>Tạo đội</a>
+                        <a href='{% url "club_list" %}'>Tìm đội</a>
+                    </div>
+                </div>
+                <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>
+                <div class="auth-links">
+                    {% if user.username %}
+                        <div class="dropdown">
+                            <a href="#" class="dropdown">Xin chào {{ user.username }}</a>
+                            <div class="dropdown-content">
+                                <a href='{% url "edit_profile" %}'>Sửa thông tin</a>
+                                <a href='{% url "change_password" %}'>Đổi mật khẩu</a>
+                                <a href="{% url 'logout' %}">Đăng Xuất</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="dropdown">Đăng nhập</a>
+                        <a href="{% url 'register' %}" class="dropdown">Đăng ký</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Chỉnh sửa thông tin đội bóng</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-grid">
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="error">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Lưu thay đổi</button>
+                <a href="{% url 'club_list' %}" class="btn-secondary">Hủy</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Phần Footer -->
+    <footer>
+        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
+        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
+    </footer>
+</body>
+</html>

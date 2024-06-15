@@ -57,8 +57,8 @@
                 <div class="dropdown">
                     <a href="#" class="dropdown">Đội thi đấu</a>
                     <div class="dropdown-content">
-                        <a href="#">Tạo đội</a>
-                        <a href="#">Tìm đội</a>
+                        <a href='{% url "create_club" %}'>Tạo đội</a>
+                        <a href='{% url "club_list" %}'>Tìm đội</a>
                     </div>
                 </div>
                 <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>

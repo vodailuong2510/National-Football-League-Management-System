@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
+    <style>
+        body {
+            background-color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: center;
+            padding: 20px 50px;
+        }
+
+        .form-box {
+            width: 100%;
+            max-width: 1000px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"], 
+        .form-group input[type="email"], 
+        .form-group input[type="tel"], 
+        .form-group input[type="date"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group input[type="file"] {
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 50px;
+            background-color: #333;
+            color: white;
+            margin-top: 20px;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .errorlist {
+            color: red;
+            list-style-type: none;
+        }
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .message-box .icon {
+            font-size: 50px;
+        }
+
+        .message-box .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: #3c763d;
+        }
+
+        .show {
+            display: block;
+            animation: fadeIn 0.5s, fadeOut 0.5s 4.5s;
+        }
+
+        @keyframes fadeIn {
+            from{opacity: 0;}
+            to{opacity: 1;}
+        }
+
+        @keyframes fadeOut {
+            from{opacity: 1;}
+            to{opacity: 0;}
+        }
+    </style>
+</head>
+<body>
+    <!-- Phần Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="/"><img src="{% static 'home/images/logo.png' %}" alt="Logo"></a>
+            </div>
+            <div class="domain">
+                <a href="/"><p>MyLeagueUIT</p></a>
+            </div>
+            <nav>
+                <a href="/" class="dropdown">Trang chủ</a>
+                <div class="dropdown">
+                    <a href="#" class="dropdown">Giải đấu</a>
+                    <div class="dropdown-content">
+                        <a href="#">Tạo giải đấu</a>
+                        <a href="#">Tìm giải đấu</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#" class="dropdown">Đội thi đấu</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_club" %}'>Tạo đội</a>
+                        <a href='{% url "club_list" %}'>Tìm đội</a>
+                    </div>
+                </div>
+                <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>
+                <div class="auth-links">
+                    {% if user.username %}
+                        <div class="dropdown">
+                            <a href="#" class="dropdown">Xin chào {{ user.username }}</a>
+                            <div class="dropdown-content">
+                                <a href='{% url "edit_profile" %}'>Sửa thông tin</a>
+                                <a href='{% url "change_password" %}'>Đổi mật khẩu</a>
+                                <a href="{% url 'logout' %}">Đăng Xuất</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="dropdown">Đăng nhập</a>
+                        <a href="{% url 'register' %}" class="dropdown">Đăng ký</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Phần banner chính -->
+    <h1 class="form-title">Thông tin đội bóng</h1>
+
+    <div class="form-container">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form method="POST" enctype="multipart/form-data" class="form-box">
+            {% csrf_token %}
+            {% if form.errors %}
+                <ul class="errorlist">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <div class="form-group">
+                <label for="id_clubid">ID</label>
+                {{ form.CLUBID }}
+            </div>
+            <div class="form-group">
+                <label for="id_clubname">Tên Đội Bóng</label>
+                {{ form.CLUBNAME }}
+            </div>
+            <div class="form-group">
+                <label for="id_logo">Logo</label>
+                {{ form.LOGO }}
+            </div>
+            <div class="form-group">
+                <label for="id_founded">Ngày Thành Lập</label>
+                {{ form.FOUNDED }}
+            </div>
+            <div class="form-group">
+                <label for="id_email">Email</label>
+                {{ form.EMAIL }}
+            </div>
+            <div class="form-group">
+                <label for="id_phone">SĐT</label>
+                {{ form.PHONE }}
+            </div>
+            <div class="form-group">
+                <label for="id_coach">Tên Huấn Luyện Viên</label>
+                {{ form.COACH }}
+            </div>
+            <div class="form-group">
+                <label for="id_captain">Tên Đội Trưởng</label>
+                {{ form.CAPTAIN }}
+            </div>
+            <div class="form-group">
+                <label for="id_stadium">Sân Vận Động</label>
+                {{ form.STADIUM }}
+            </div>
+            <div class="form-group">
+                <label for="id_capacity">Sức Chứa</label>
+                {{ form.CAPACITY }}
+                <small class="form-text text-muted">Sức chứa tối thiểu là 1000.</small>
+            </div>
+            <div class="form-group">
+                <label for="id_totalplayers">Số Lượng Cầu Thủ</label>
+                {{ form.TOTALPLAYERS }}
+                <small class="form-text text-muted">Yêu cầu đội bóng phải có tối thiểu 16 cầu thủ.</small>
+            </div>
+            <div class="form-group">
+                <label for="id_leagueplaying">Giải đấu tham gia</label>
+                {{ form.LEAGUEPLAYING }}
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Tạo đội">
+            </div>
+        </form>
+    </div>
+    
+    <div id="messageBox" class="message-box">
+        <div class="icon">✔</div>
+        <p>Thành công!</p>
+        <button class="close-btn" onclick="document.getElementById('messageBox').style.display='none'">&times;</button>
+    </div>
+    
+    <!-- Phần Footer -->
+    <footer>
+        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
+        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showMessage() {
+            var messageBox = document.getElementById('messageBox');
+            messageBox.classList.add('show');
+            setTimeout(function() {
+                messageBox.classList.remove('show');
+            }, 3000);
+        }
+
+        window.onload = function() {
+            {% if messages %}
+                showMessage();
+            {% endif %}
+        }
+    </script>
+</body>
+</html>
