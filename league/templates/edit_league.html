@@ -1,173 +1,141 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chỉnh sửa thông tin giải đấu</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Chỉnh sửa giải đấu{% endblock %}
+{% block styles %}
     <style>
-        body {
-            background-color: #FFFFFF;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 100%;
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-            margin-right: 30px;
+        .form-container {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
             display: flex;
-            flex-direction: column;
-        }
-        .form-group label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
             border-radius: 5px;
         }
-        .form-group input[type="file"] {
-            padding: 3px;
-        }
-        .form-actions {
+
+        .dash-line-box {
+            border: 2px dashed #00264D;
+            padding: 50px;
+            width: 200px;
+            height: 230px;
+            text-align: center;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            margin-top: 20px;
+            margin: 5px auto;
         }
-        .form-actions button, .form-actions a {
+        
+        .image-input {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .image-input img {
+            display: block;
+        }
+
+        .image-input input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .input {
+            font-size: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .form-grid label {
+            grid-column: 1 / 2;
+            margin: 7px;
+        }
+        
+        .form-grid div,
+        .form-grid input[type="submit"] {
+            grid-column: 2 / 3;
+        }
+
+        form {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #00264D;
+            color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            text-decoration: none;
-            text-align: center;
         }
-        .form-actions .btn-primary {
-            background-color: #4CAF50;
-            color: white;
+
+        input[type="submit"]:hover {
+            background-color: #003366;
         }
-        .form-actions .btn-primary:hover {
-            background-color: #45a049;
-        }
-        .form-actions .btn-secondary {
-            background-color: #ccc;
-            color: #333;
-        }
-        .form-actions .btn-secondary:hover {
-            background-color: #bbb;
-        }
+        
+        .form-grid input[type="text"], .form-grid select {
+            width: 88%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }    
     </style>
-</head>
-<body>
-    <!-- Phần Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <a href="/"><img src="{% static 'home/images/logo.png' %}" alt="Logo"></a>
+{% endblock %}
+
+{% block content %}
+    <div class="main-banner">
+        <div class="banner-overlay"> 
+            <div class="banner-content">
+                <h1>Chỉnh sửa giải đấu</h1>
             </div>
-            <div class="domain">
-                <a href="/"><p>MyLeagueUIT</p></a>
-            </div>
-            <nav>
-                <a href="/" class="dropdown">Trang chủ</a>
-                <div class="dropdown">
-                    <a href="{% url 'league' %}" class="dropdown">Giải đấu</a>
-                    <div class="dropdown-content">
-                        <a href='{% url "create_league" %}'>Tạo giải đấu</a>
-                        <a href='{% url "league_list" %}'>Tìm giải đấu</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <a href='{% url "club_list" %}' class="dropdown">Đội thi đấu</a>
-                    <div class="dropdown-content">
-                        <a href='{% url "create_club" %}'>Tạo đội</a>
-                        <a href='{% url "club_list" %}'>Tìm đội</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <a href='{% url "coach" %}'  class="dropdown">HLV</a>
-                    <div class="dropdown-content">
-                        <a href='{% url "create_coach" %}'>Tạo HLV</a>
-                        <a href='{% url "coach_list" %}'>Tìm HLV</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <a href='{% url "player" %}'  class="dropdown">Cầu thủ</a>
-                    <div class="dropdown-content">
-                        <a href='{% url "create_player" %}'>Tạo Cầu thủ</a>
-                        <a href='{% url "player_list" %}'>Tìm Cầu thủ</a>
-                    </div>
-                </div>
-                <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>
-                <div class="auth-links">
-                    {% if user.username %}
-                        <div class="dropdown">
-                            <a href="#" class="dropdown">Xin chào {{ user.username }}</a>
-                            <div class="dropdown-content">
-                                <a href='{% url "edit_profile" %}'>Sửa thông tin</a>
-                                <a href='{% url "change_password" %}'>Đổi mật khẩu</a>
-                                <a href="{% url 'logout' %}">Đăng Xuất</a>
-                            </div>
+            <form method="POST" enctype="multipart/form-data" class="mt-4">
+                {% csrf_token %}
+                <div class="form-container">
+                    <div class="dash-line-box">
+                        <div class="image-input">
+                            {{ form.IMAGE }}
                         </div>
-                    {% else %}
-                        <a href="{% url 'login' %}" class="dropdown">Đăng nhập</a>
-                        <a href="{% url 'register' %}" class="dropdown">Đăng ký</a>
-                    {% endif %}
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <div class="container">
-        <h1>Chỉnh sửa thông tin giải đấu</h1>
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="form-grid">
-                {% for field in form %}
-                    <div class="form-group">
-                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                        {{ field }}
-                        {% if field.errors %}
-                            <div class="error">
-                                {{ field.errors }}
-                            </div>
-                        {% endif %}
                     </div>
-                {% endfor %}
-            </div>
-            <div class="form-actions">
-                <button type="submit" class="btn-primary">Lưu thay đổi</button>
-                <a href="{% url 'league_list' %}" class="btn-secondary">Hủy</a>
-            </div>
-        </form>
-    </div>
 
-    <!-- Phần Footer -->
-    <footer>
-        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
-        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
-    </footer>
-</body>
-</html>
+                    <div class="input">
+                        <div class="form-grid">
+                            <label for="league_id">ID:</label>
+                            <div>{{ form.LEAGUE_ID }}</div>
+                            <label for="league_name">Tên giải đấu:</label>
+                            <div>{{ form.LEAGUE_NAME }}</div>
+                            <label for="total_club">Số câu lạc bộ:</label>
+                            <div>{{ form.TOTAL_CLUB }}</div>
+                            <label for="association">Hiệp hội:</label>
+                            <div>{{ form.ASSOCIATION }}</div>
+                            <label for="founded">Ngày thành lập:</label>
+                            <div>{{ form.FOUNDED }}</div>
+                            <label for="start_time">Thời gian bắt đầu:</label>
+                            <div>{{ form.START_TIME }}</div>
+                            <label for="end_time">Thời gian kết thúc:</label>
+                            <div>{{ form.END_TIME }}</div>
+                            <input type='submit' value='Chỉnh sửa'/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

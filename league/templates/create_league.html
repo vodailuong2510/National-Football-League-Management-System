@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
-    <link href="{% static 'coach/css/bootstrap.min.css' %}">
-    <title>Create Coach</title>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Tạo giải đấu{% endblock %}
+
+{% block styles %}
     <style>
-        body {
-            background-color: #FFFFFF;
-        }
-        
         .form-container {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
             display: flex;
@@ -104,70 +98,11 @@
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-        }
-        
+        }        
     </style>
-</head>
-<body>
-    <!-- Phần Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <a href="/"><img src="{% static 'home/images/logo.png' %}" alt="Logo"></a>
-            </div>
-            <div class="domain">
-                <a href="/"><p>MyLeagueUIT</p></a>
-            </div>
-            <nav>
-                <a href="/" class="dropdown">Trang chủ</a>
-                <div class="dropdown">
-                    <a href="{% url 'league' %}" class="dropdown">Giải đấu</a>
-                    <div class="dropdown-content">
-                        <a href='{% url "create_league" %}'>Tạo giải đấu</a>
-                        <a href='{% url "league_list" %}'>Tìm giải đấu</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <a href='{% url "club_list" %}' class="dropdown">Đội thi đấu</a>
-                    <div class="dropdown-content">
-                        <a href='{% url "create_club" %}'>Tạo đội</a>
-                        <a href='{% url "club_list" %}'>Tìm đội</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <a href='{% url "coach" %}'  class="dropdown">HLV</a>
-                    <div class="dropdown-content">
-                        <a href='{% url "create_coach" %}'>Tạo HLV</a>
-                        <a href='{% url "coach_list" %}'>Tìm HLV</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <a href='{% url "player" %}'  class="dropdown">Cầu thủ</a>
-                    <div class="dropdown-content">
-                        <a href='{% url "create_player" %}'>Tạo Cầu thủ</a>
-                        <a href='{% url "player_list" %}'>Tìm Cầu thủ</a>
-                    </div>
-                </div>
-                <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>
-                <div class="auth-links">
-                    {% if user.username %}
-                        <div class="dropdown">
-                            <a href="#" class="dropdown">Xin chào {{ user.username }}</a>
-                            <div class="dropdown-content">
-                                <a href='{% url "edit_profile" %}'>Sửa thông tin</a>
-                                <a href='{% url "change_password" %}'>Đổi mật khẩu</a>
-                                <a href="{% url 'logout' %}">Đăng Xuất</a>
-                            </div>
-                        </div>
-                    {% else %}
-                        <a href="{% url 'login' %}" class="dropdown">Đăng nhập</a>
-                        <a href="{% url 'register' %}" class="dropdown">Đăng ký</a>
-                    {% endif %}
-                </div>
-            </nav>
-        </div>
-    </header>
-    <!-- Phần banner chính -->
+{% endblock %}
+
+{% block content %}
     <div class="main-banner">
         <div class="banner-overlay"> 
             <div class="banner-content">
@@ -179,19 +114,21 @@
                     <p style="color: red;">ID giải đấu đã tồn tại</p>
                 {% endif %}
                 <div class="form-container">
-                    <div class="dash-line-box">
+                    <div class = "dash-line-box">
                         <div class="image-input">
                             <img src="{% static 'league/images/insert_image_icon.png' %}" alt="Chọn tệp" />
                             {{ form.IMAGE }}
                         </div>
                     </div>
 
-                    <div class="input">
+                    <div class = "input">
                         <div class="form-grid">
                             <label for="id">ID:</label>
                             <div>{{ form.LEAGUE_ID }}</div>
                             <label for="name">Tên giải đấu:</label>
                             <div>{{ form.LEAGUE_NAME }}</div>
+                            <label for="total_club">Số câu lạc bộ:</label>
+                            <div>{{ form.TOTAL_CLUB }}</div>
                             <label for="association">Hiệp hội:</label>
                             <div>{{ form.ASSOCIATION }}</div>
                             <label for="founded">Ngày thành lập:</label>
@@ -207,14 +144,4 @@
             </form>
         </div>
     </div>
-
-    <!-- Phần chính -->
-    
-
-    <!-- Phần Footer -->
-    <footer>
-        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
-        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
-    </footer>
-</body>
-</html>
+{% endblock %}

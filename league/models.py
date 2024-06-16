@@ -9,6 +9,7 @@ class League(models.Model):
     FOUNDED = models.DateField()
     START_TIME = models.DateField()
     END_TIME = models.DateField()
+    IMAGE = models.ImageField(upload_to='league_images/', null=True, blank=True)
 
     def __str__(self):
         return self.LEAGUE_NAME

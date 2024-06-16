@@ -49,5 +49,7 @@ def coach_edit_view(request, coach_id):
 
 def coach_delete_view(request, coach_id):
     coach = get_object_or_404(Coach, COACHID=coach_id)
-    coach.delete()
-    return redirect('coach_list')
+    if request.method == 'POST':
+        coach.delete()
+        return redirect('coach_list')
+    return render(request, 'coach/delete_coach.html', {'coach': coach})

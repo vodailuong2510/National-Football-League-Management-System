@@ -13,14 +13,10 @@
                 <p>Tổ chức giải đấu dễ dàng</p>
                 <p>Quản lý đội thể thao đơn giản</p>
                 <div class="banner-buttons">
-                    <a href="#">Tạo giải đấu</a>
-                    <a href="#">Tìm giải đấu</a>
+                    <a href='{% url "create_league" %}'>Tạo giải đấu</a>
+                    <a href='{% url "league_list" %}'>Tìm giải đấu</a>
                     <a href='{% url "create_club" %}'>Tạo đội</a>
                     <a href='{% url "club_list" %}'>Tìm đội</a>
-                    <a href='{% url "create_coach" %}'>Tạo HLV</a>
-                    <a href='{% url "coach_list" %}'>Tìm HLV</a>
-                    <a href='{% url "create_player" %}'>Tạo Cầu thủ</a>
-                    <a href='{% url "player_list" %}'>Tìm Cầu thủ</a>
             </div>
         </div>
     </div>

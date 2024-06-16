@@ -2,12 +2,16 @@
 
 {% load static %}
 
-{% block title %}Danh sách huấn luyện viên{% endblock %}
+{% block title %}Tìm kiếm huấn luyện viên{% endblock %}
 
 {% block styles %}
     <style>
-        .body-container {
-            color: #000;
+        body {
+            background-color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+        .form-container {
             display: flex;
             justify-content: center;
             margin: 20px 0;
@@ -51,7 +55,7 @@
         .coach-item img {
             width: 200px;
             height: 200px;
-            object-fit: contain;
+            object-fit: cover;
             border-radius: 10px;
             margin-bottom: 15px;
         }
@@ -68,22 +72,20 @@
             gap: 10px;
             margin-top: 10px;
         }
-        .coach-item .edit-btn {
-            background-color: #4CAF50;
+        .coach-item .action-buttons a {
             padding: 10px 15px;
             color: white;
             text-decoration: none;
             border-radius: 5px;
+        }
+        .coach-item .edit-btn {
+            background-color: #4CAF50;
         }
         .coach-item .edit-btn:hover {
             background-color: #45a049;
         }
         .coach-item .delete-btn {
             background-color: #f44336;
-            padding: 10px 15px;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
         }
         .coach-item .delete-btn:hover {
             background-color: #e53935;
@@ -98,15 +100,12 @@
 {% endblock %}
 
 {% block content %}
-    <div class="main-banner">
-        <div class="banner-overlay"> 
-            <div class="banner-content">
-                <h1>Danh sách huấn luyện viên</h1>
-            </div>
-            <div class="body-container">
-                {% for coach in coaches %}
-                    <div class=background>
-                        <h2>{{ coach.COACHNAME }}</h2>
+    <div class="form-container">
+        <form method="GET" action="{% url 'coach_list' %}">
+            <input type="text" name="search" placeholder="Nhập tên huấn luyện viên">
+            <button type="submit">Search</button>
+        </form>
+    </div>
 
     <!-- Danh sách huấn luyện viên -->
     <div class="coach-list">
@@ -118,10 +117,10 @@
                 <h2>{{ coach.COACHNAME }}</h2>
                 <p>Tuổi: {{ coach.BIRTHDAY }}</p>
                 <p>Quốc tịch: {{ coach.NATIONALITY }}</p>
-                <p>CLB: {{ coach.CLUB }}</p>
+                <p>Câu lạc bộ: {{ coach.CLUB }}</p>
                 <div class="action-buttons">
-                    <a href="{% url 'coach_edit' coach.id %}" class="edit-btn">Sửa</a>
-                    <a href="{% url 'coach_delete' coach.id %}" class="delete-btn">Xóa</a>
+                    <a href="{% url 'coach_edit' coach.COACHID %}" class="edit-btn">Sửa</a>
+                    <a href="{% url 'coach_delete' coach.COACHID %}" class="delete-btn">Xóa</a>
                 </div>
             </div>
         {% empty %}

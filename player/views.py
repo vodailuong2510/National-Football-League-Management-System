@@ -47,7 +47,11 @@ def player_edit_view(request, player_id):
 
     return render(request, 'player/edit_player.html', {'form': form})
 
-def player_delete_view(request, player_id):
+def player_delete(request, player_id):
     player = get_object_or_404(Player, PLAYERID=player_id)
-    player.delete()
-    return redirect('player_list')
+    
+    if request.method == 'POST':
+        player.delete()
+        return redirect('player_list')
+    
+    return render(request, 'player/delete_player.html', {'player': player})

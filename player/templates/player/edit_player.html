@@ -3,12 +3,135 @@
 {% load static %}
 
 {% block title %}Chỉnh sửa cầu thủ{% endblock %}
+{% block styles %}
+    <style>
+        .form-container {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+            display: flex;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
 
-{% block styles %}{% endblock %}
+        .dash-line-box {
+            border: 2px dashed #00264D;
+            padding: 50px;
+            width: 200px;
+            height: 230px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 5px auto;
+        }
+        
+        .image-input {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .image-input img {
+            display: block;
+        }
+
+        .image-input input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .input {
+            font-size: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .form-grid label {
+            grid-column: 1 / 2;
+            margin: 7px;
+        }
+        
+        .form-grid div,
+        .form-grid input[type="submit"] {
+            grid-column: 2 / 3;
+        }
+
+        form {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #00264D;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #003366;
+        }
+        
+        .form-grid input[type="text"], .form-grid select {
+            width: 88%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }    
+    </style>
+{% endblock %}
+
 {% block content %}
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-    </form>
+    <div class="main-banner">
+        <div class="banner-overlay"> 
+            <div class="banner-content">
+                <h1>Chỉnh sửa cầu thủ</h1>
+            </div>
+            <form method="POST" enctype="multipart/form-data" class="mt-4">
+                {% csrf_token %}
+                <div class="form-container">
+                    <div class="dash-line-box">
+                        <div class="image-input">
+                            {{ form.IMAGE }}
+                        </div>
+                    </div>
+
+                    <div class="input">
+                        <div class="form-grid">
+                            <label for="playername">Họ & Tên:</label>
+                            <div>{{ form.PLAYERNAME }}</div>
+                            <label for="birthday">Ngày sinh:</label>
+                            <div>{{ form.BIRTHDAY }}</div>
+                            <label for="nationality">Quốc tịch:</label>
+                            <div>{{ form.NATIONALITY }}</div>
+                            <label for="club">Đội tuyển:</label>
+                            <div>{{ form.CLUB }}</div>
+                            <label for="cards">Thẻ:</label>
+                            <div>{{ form.CARDS }}</div>
+                            <input type='submit' value='Chỉnh sửa'/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}

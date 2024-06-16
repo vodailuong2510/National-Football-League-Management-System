@@ -4,7 +4,7 @@ from .models import League
 class LeagueForm(forms.ModelForm):
     class Meta:
         model = League
-        fields = ['LEAGUE_ID', 'LEAGUE_NAME', 'ASSOCIATION', 'FOUNDED', 'START_TIME', 'END_TIME']
+        fields = ['LEAGUE_ID', 'LEAGUE_NAME', 'ASSOCIATION', 'FOUNDED', 'START_TIME', 'END_TIME', 'IMAGE']
     
     def __init__(self, *args, **kwargs):
         disable_league_id = kwargs.pop('disable_league_id', False)
