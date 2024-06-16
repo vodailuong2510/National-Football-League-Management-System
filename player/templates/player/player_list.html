@@ -119,6 +119,14 @@
                 <p>Quốc tịch: {{ player.NATIONALITY }}</p>
                 <p>Đội tuyển: {{ player.CLUB }}</p>
                 <p>Thẻ: {{ player.CARDS }}</p>
+                <p>Vị trí: {{ player.POSITION }}</p>
+                <p>Số áo: {{ player.SHIRTNUM }}</p>
+                <p>Bàn thắng: {{ player.GOALS }}</p>
+                <p>Kiến tạo: {{ player.ASSISTS }}</p>
+                <p>Tình trạng: {{ player.CONDITION }}</p>
+                <p>Chiều cao: {{ player.HEIGHT }}</p>
+                <p>Cân nặng: {{ player.WEIGHT }}</p>
+                <p>Chân thuận: {{ player.PREFERFOOT }}</p>
                 <div class="action-buttons">
                     <a href="{% url 'player_edit' player.PLAYERID %}" class="edit-btn">Sửa</a>
                     <a href="{% url 'player_delete' player.PLAYERID %}" class="delete-btn">Xóa</a>
