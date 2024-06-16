@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'player/css/styles.css' %}">   
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
 </head>
 <body>
     <!-- Phần Header -->
@@ -19,17 +19,17 @@
             <nav>
                 <a href="/" class="dropdown">Trang chủ</a>
                 <div class="dropdown">
-                    <a href="#" class="dropdown">Giải đấu</a>
+                    <a href="{% url 'league' %}" class="dropdown">Giải đấu</a>
                     <div class="dropdown-content">
-                        <a href="#">Tạo giải đấu</a>
-                        <a href="#">Tìm giải đấu</a>
+                        <a href='{% url "create_league" %}'>Tạo giải đấu</a>
+                        <a href='{% url "league_list" %}'>Tìm giải đấu</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="#" class="dropdown">Đội thi đấu</a>
+                    <a href='{% url "club_list" %}' class="dropdown">Đội thi đấu</a>
                     <div class="dropdown-content">
-                        <a href="#">Tạo đội</a>
-                        <a href="#">Tìm đội</a>
+                        <a href='{% url "create_club" %}'>Tạo đội</a>
+                        <a href='{% url "club_list" %}'>Tìm đội</a>
                     </div>
                 </div>
                 <div class="dropdown">

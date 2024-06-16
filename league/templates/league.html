@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
+    <title>Tìm kiếm giải đấu</title>
+    <style>
+        body {
+            background-color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .form-container input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+            width: 300px;
+        }
+        .form-container button {
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        .league-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .league-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .league-item img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .league-item h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        .league-item p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .league-item .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .league-item .action-buttons a {
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .league-item .edit-btn {
+            background-color: #4CAF50;
+        }
+        .league-item .edit-btn:hover {
+            background-color: #45a049;
+        }
+        .league-item .delete-btn {
+            background-color: #f44336;
+        }
+        .league-item .delete-btn:hover {
+            background-color: #e53935;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Phần Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="/"><img src="{% static 'home/images/logo.png' %}" alt="Logo"></a>
+            </div>
+            <div class="domain">
+                <a href="/"><p>MyLeagueUIT</p></a>
+            </div>
+            <nav>
+                <a href="/" class="dropdown">Trang chủ</a>
+                <div class="dropdown">
+                    <a href="{% url 'league' %}" class="dropdown">Giải đấu</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_league" %}'>Tạo giải đấu</a>
+                        <a href='{% url "league_list" %}'>Tìm giải đấu</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href='{% url "club_list" %}' class="dropdown">Đội thi đấu</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_club" %}'>Tạo đội</a>
+                        <a href='{% url "club_list" %}'>Tìm đội</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href='{% url "coach" %}'  class="dropdown">HLV</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_coach" %}'>Tạo HLV</a>
+                        <a href='{% url "coach_list" %}'>Tìm HLV</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href='{% url "player" %}'  class="dropdown">Cầu thủ</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_player" %}'>Tạo Cầu thủ</a>
+                        <a href='{% url "player_list" %}'>Tìm Cầu thủ</a>
+                    </div>
+                </div>
+                <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>
+                <div class="auth-links">
+                    {% if user.username %}
+                        <div class="dropdown">
+                            <a href="#" class="dropdown">Xin chào {{ user.username }}</a>
+                            <div class="dropdown-content">
+                                <a href='{% url "edit_profile" %}'>Sửa thông tin</a>
+                                <a href='{% url "change_password" %}'>Đổi mật khẩu</a>
+                                <a href="{% url 'logout' %}">Đăng Xuất</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="dropdown">Đăng nhập</a>
+                        <a href="{% url 'register' %}" class="dropdown">Đăng ký</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Form tìm kiếm -->
+    <div class="form-container">
+        <form method="GET" action="{% url 'league_list' %}">
+            <input type="text" name="search" placeholder="Nhập tên giải đấu">
+            <button type="submit">Tìm kiếm</button>
+        </form>
+    </div>
+
+    <!-- Danh sách giải đấu -->
+    <div class="league-list">
+        {% for league in leagues %}
+            <div class="league-item">
+                {% if league.LOGO %}
+                    <img src="{{ league.LOGO.url }}" alt="{{ league.LEAGUE_NAME }}">
+                {% endif %}
+                <h2>{{ league.LEAGUE_NAME }}</h2>
+                <p>Tổng số câu lạc bộ: {{ league.TOTAL_CLUB }}</p>
+                <p>Hiệp hội: {{ league.ASSOCIATION }}</p>
+                <p>Ngày thành lập: {{ league.FOUNDED }}</p>
+                <p>Thời gian bắt đầu: {{ league.START_TIME }}</p>
+                <p>Thời gian kết thúc: {{ league.END_TIME }}</p>
+                <div class="action-buttons">
+                    <a href="{% url 'league_edit' league.LEAGUE_ID %}" class="edit-btn">Sửa</a>
+                    <a href="{% url 'league_delete' league.LEAGUE_ID %}" class="delete-btn">Xóa</a>
+                </div>
+            </div>
+        {% empty %}
+            <p>Không tìm thấy giải đấu nào.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Phần Footer -->
+    <footer>
+        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
+        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
+    </footer>
+</body>
+</html>

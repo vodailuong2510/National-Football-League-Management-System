@@ -5,22 +5,209 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
-    <title>Edit Coach</title>
+    <link href="{% static 'coach/css/bootstrap.min.css' %}">
+    <title>Create Coach</title>
     <style>
         body {
             background-color: #FFFFFF;
         }
+        
+        .form-container {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+            display: flex;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .dash-line-box {
+            border: 2px dashed #00264D;
+            padding: 50px;
+            width: 200px;
+            height: 230px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 5px auto;
+        }
+        
+        .image-input {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .image-input img {
+            display: block;
+        }
+
+        .image-input input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .input {
+            font-size: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .form-grid label {
+            grid-column: 1 / 2;
+            margin: 7px;
+        }
+        
+        .form-grid div,
+        .form-grid input[type="submit"] {
+            grid-column: 2 / 3;
+        }
+
+        form {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #00264D;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #003366;
+        }
+        
+        .form-grid input[type="text"], .form-grid select {
+            width: 88%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
     </style>
 </head>
 <body>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-    </form>
+    <!-- Phần Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="/"><img src="{% static 'home/images/logo.png' %}" alt="Logo"></a>
+            </div>
+            <div class="domain">
+                <a href="/"><p>MyLeagueUIT</p></a>
+            </div>
+            <nav>
+                <a href="/" class="dropdown">Trang chủ</a>
+                <div class="dropdown">
+                    <a href="{% url 'league' %}" class="dropdown">Giải đấu</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_league" %}'>Tạo giải đấu</a>
+                        <a href='{% url "league_list" %}'>Tìm giải đấu</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href='{% url "club_list" %}' class="dropdown">Đội thi đấu</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_club" %}'>Tạo đội</a>
+                        <a href='{% url "club_list" %}'>Tìm đội</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href='{% url "coach" %}'  class="dropdown">HLV</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_coach" %}'>Tạo HLV</a>
+                        <a href='{% url "coach_list" %}'>Tìm HLV</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href='{% url "player" %}'  class="dropdown">Cầu thủ</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_player" %}'>Tạo Cầu thủ</a>
+                        <a href='{% url "player_list" %}'>Tìm Cầu thủ</a>
+                    </div>
+                </div>
+                <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>
+                <div class="auth-links">
+                    {% if user.username %}
+                        <div class="dropdown">
+                            <a href="#" class="dropdown">Xin chào {{ user.username }}</a>
+                            <div class="dropdown-content">
+                                <a href='{% url "edit_profile" %}'>Sửa thông tin</a>
+                                <a href='{% url "change_password" %}'>Đổi mật khẩu</a>
+                                <a href="{% url 'logout' %}">Đăng Xuất</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="dropdown">Đăng nhập</a>
+                        <a href="{% url 'register' %}" class="dropdown">Đăng ký</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- Phần banner chính -->
+    <div class="main-banner">
+        <div class="banner-overlay"> 
+            <div class="banner-content">
+                <h1>Tạo huấn luyện viên</h1>
+            </div>
+            <form method="POST" enctype="multipart/form-data" class="mt-4">
+                {% csrf_token %}
+                <div class="form-container">
+                    <div class = "dash-line-box">
+                        <div class="image-input">
+                            {{ form.IMAGE }}
+                        </div>
+                    </div>
+
+                    <div class = "input">
+                        <div class="form-grid">
+                            <label for="name">Họ & Tên:</label>
+                            <div>{{ form.COACHNAME }}</div>
+                            <label for="birthday">Ngày sinh:</label>
+                            <div>{{ form.BIRTHDAY }}</div>
+                            <label for="nationality">Quốc tịch:</label>
+                            <div>{{ form.NATIONALITY }}</div>
+                            <label for="club">Đội tuyển:</label>
+                            <div>{{ form.CLUB }}</div>
+                            <label for="cards">Thẻ:</label>
+                            <div>{{ form.CARDS }}</div>
+                            <input type='submit' value='Tạo'/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Phần chính -->
+    
+
+    <!-- Phần Footer -->
+    <footer>
+        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
+        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
+    </footer>
 </body>
-<footer>
-    <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
-    <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
-</footer>
 </html>

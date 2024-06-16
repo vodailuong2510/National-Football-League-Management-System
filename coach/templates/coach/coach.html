@@ -5,10 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
-    <title>Coach</title>
+    <title>Tìm kiếm huấn luyện viên</title>
     <style>
         body {
             background-color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .form-container input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+            width: 300px;
+        }
+        .form-container button {
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        .coach-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .coach-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .coach-item img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .coach-item h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        .coach-item p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .coach-item .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .coach-item .edit-btn {
+            background-color: #4CAF50;
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .coach-item .edit-btn:hover {
+            background-color: #45a049;
+        }
+        .coach-item .delete-btn {
+            background-color: #f44336;
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .coach-item .delete-btn:hover {
+            background-color: #e53935;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
         }
     </style>
 </head>
@@ -25,17 +114,17 @@
             <nav>
                 <a href="/" class="dropdown">Trang chủ</a>
                 <div class="dropdown">
-                    <a href="#" class="dropdown">Giải đấu</a>
+                    <a href="{% url 'league' %}" class="dropdown">Giải đấu</a>
                     <div class="dropdown-content">
-                        <a href="#">Tạo giải đấu</a>
-                        <a href="#">Tìm giải đấu</a>
+                        <a href='{% url "create_league" %}'>Tạo giải đấu</a>
+                        <a href='{% url "league_list" %}'>Tìm giải đấu</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="#" class="dropdown">Đội thi đấu</a>
+                    <a href='{% url "club_list" %}' class="dropdown">Đội thi đấu</a>
                     <div class="dropdown-content">
-                        <a href="#">Tạo đội</a>
-                        <a href="#">Tìm đội</a>
+                        <a href='{% url "create_club" %}'>Tạo đội</a>
+                        <a href='{% url "club_list" %}'>Tìm đội</a>
                     </div>
                 </div>
                 <div class="dropdown">
@@ -71,24 +160,35 @@
             </nav>
         </div>
     </header>
-    <!-- Phần banner chính -->
+    
+    <!-- Form tìm kiếm -->
+    <div class="form-container">
+        <form method="GET" action="{% url 'coach_list' %}">
+            <input type="text" name="search" placeholder="Nhập tên huấn luyện viên">
+            <button type="submit">Tìm kiếm</button>
+        </form>
+    </div>
 
-    <!-- Phần chính -->
-    <h1>Coach List</h1>
-    <ul>
+    <!-- Danh sách huấn luyện viên -->
+    <div class="coach-list">
         {% for coach in coaches %}
-            <li>
+            <div class="coach-item">
                 {% if coach.IMAGE %}
-                    <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}" width="150">
+                    <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}">
                 {% endif %}
                 <h2>{{ coach.COACHNAME }}</h2>
-                <p>Club: {{ coach.CLUB }}</p>
-            </li>
-            <a href="{% url 'coach_edit' coach.COACHID %}"> Edit </a>
-            <br>
-            <a href="{% url 'coach_delete' coach.COACHID %}"> Delete </a>
+                <p>Tuổi: {{ coach.BIRTHDAY }}</p>
+                <p>Quốc tịch: {{ coach.NATIONALITY }}</p>
+                <p>CLB: {{ coach.CLUB }}</p>
+                <div class="action-buttons">
+                    <a href="{% url 'coach_edit' coach.id %}" class="edit-btn">Sửa</a>
+                    <a href="{% url 'coach_delete' coach.id %}" class="delete-btn">Xóa</a>
+                </div>
+            </div>
+        {% empty %}
+            <p>Không tìm thấy huấn luyện viên nào.</p>
         {% endfor %}
-    </ul>
+    </div>
 
     <!-- Phần Footer -->
     <footer>

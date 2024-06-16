@@ -20,17 +20,17 @@
             <nav>
                 <a href="/" class="dropdown">Trang chủ</a>
                 <div class="dropdown">
-                    <a href="#" class="dropdown">Giải đấu</a>
+                    <a href="{% url 'league' %}" class="dropdown">Giải đấu</a>
                     <div class="dropdown-content">
-                        <a href="#">Tạo giải đấu</a>
-                        <a href="#">Tìm giải đấu</a>
+                        <a href='{% url "create_league" %}'>Tạo giải đấu</a>
+                        <a href='{% url "league_list" %}'>Tìm giải đấu</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="#" class="dropdown">Đội thi đấu</a>
+                    <a href='{% url "club_list" %}' class="dropdown">Đội thi đấu</a>
                     <div class="dropdown-content">
-                        <a href="#">Tạo đội</a>
-                        <a href="#">Tìm đội</a>
+                        <a href='{% url "create_club" %}'>Tạo đội</a>
+                        <a href='{% url "club_list" %}'>Tìm đội</a>
                     </div>
                 </div>
                 <div class="dropdown">
@@ -70,18 +70,14 @@
     <div class="main-banner">
         <div class="banner-overlay"></div>
             <div class="banner-content">
-                <h1>MyLeagueUIT.com</h1>
+                <a href = '/' >MyLeagueUIT.com</a>
                 <p>Tổ chức giải đấu dễ dàng</p>
                 <p>Quản lý đội thể thao đơn giản</p>
                 <div class="banner-buttons">
                     <a href="#">Tạo giải đấu</a>
                     <a href="#">Tìm giải đấu</a>
-                    <a href="#">Tạo đội</a>
-                    <a href="#">Tìm đội</a>
-                    <a href='{% url "create_coach" %}'>Tạo HLV</a>
-                    <a href='{% url "coach_list" %}'>Tìm HLV</a>
-                    <a href='{% url "create_player" %}'>Tạo Cầu thủ</a>
-                    <a href='{% url "player_list" %}'>Tìm Cầu thủ</a>
+                    <a href='{% url "create_club" %}'>Tạo đội</a>
+                    <a href='{% url "club_list" %}'>Tìm đội</a>
             </div>
         </div>
     </div>

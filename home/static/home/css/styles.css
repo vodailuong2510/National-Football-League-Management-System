@@ -137,6 +137,14 @@ nav .dropdown:hover {
     margin-bottom: 10px;
     margin-top: 10px;
 }
+
+.banner-content a {
+    color: white;
+    font-size: 35px; /* Tăng kích thước chữ cho tiêu đề */
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-decoration: none;
+}
 .banner-content p {
     font-size: 30px;
     margin-bottom: 10px;
@@ -147,7 +155,6 @@ nav .dropdown:hover {
     flex-wrap: wrap; /* Để các nút xuống dòng nếu không đủ chỗ */
     gap: 20px; /* Tạo khoảng cách giữa các nút */
     justify-content: center;
-    margin-top: 20px;
 }
 .banner-buttons a {
     padding: 15px 15px;
@@ -157,7 +164,7 @@ nav .dropdown:hover {
     border-radius: 5px;
     font-size: 15px; /* Tăng kích thước chữ của nút */
     text-align: center; /* Căn giữa nội dung nút */
-    flex: 1 1 calc(5% - 5px); /* Đảm bảo các nút có kích thước đều nhau và đủ chỗ để xuống dòng */
+    flex: 1 1 calc(5% - 5px); /*Đảm bảo các nút có kích thước đều nhau và đủ chỗ để xuống dòng*/
 }
 .banner-buttons a:hover {
     background-color: #45a049; /* Màu nền khi hover */
@@ -269,36 +276,4 @@ footer p {
 
 .dropdown:hover .dropbtn {
     background-color: red;
-}
-
-/* Main Content Styles */
-h1 {
-    text-align: center;
-    margin-top: 20px;
-    color: #333;
-}
-
-form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-form button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-form button:hover {
-    background-color: #555;
 }
