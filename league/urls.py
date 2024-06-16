@@ -7,4 +7,5 @@ urlpatterns = [
     path('league_list/', views.league_list_view, name='league_list'),
     path('league_edit/<str:league_id>/', views.league_edit, name='league_edit'),
     path('league_delete/<str:league_id>/', views.league_delete, name='league_delete'),
+    path('league_reject/', views.league_reject, name='league_reject'),
 ]

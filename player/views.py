@@ -2,17 +2,21 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PlayerForm
 from .models import Player
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 
-# Create your views here.
 def player_view(request):
     players = Player.objects.all()
     return render(request, 'player/player.html', {'players': players})
 
+@login_required
 def player_create(request):
     if request.method == 'POST':
         form = PlayerForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            player = form.save(commit=False)
+            player.owner = request.user  # Lưu người dùng hiện tại là chủ sở hữu
+            player.save()
             messages.success(request, 'Đăng ký thành công.')
             return redirect('player_list')
     else:
@@ -29,29 +33,38 @@ def player_list_view(request):
 
     return render(request, 'player/player_list.html', {'players': players})
 
+@login_required
 def player_edit_view(request, player_id):
-    if player_id:
-        player = get_object_or_404(Player, PLAYERID=player_id)
-        disable_playerid = True
-    else:
-        player = None
-        disable_playerid = False
+    player = get_object_or_404(Player, PLAYERID=player_id)
+
+    # Kiểm tra xem người dùng hiện tại có phải là chủ sở hữu không
+    if player.owner != request.user:
+        return redirect('player_reject')
 
     if request.method == 'POST':
-        form = PlayerForm(request.POST, request.FILES, instance=player, disable_playerid=disable_playerid)
+        form = PlayerForm(request.POST, request.FILES, instance=player)
         if form.is_valid():
             form.save()
             return redirect('player_list')
     else:
-        form = PlayerForm(instance=player, disable_playerid=disable_playerid)
+        form = PlayerForm(instance=player)
 
     return render(request, 'player/edit_player.html', {'form': form})
 
+@login_required
 def player_delete(request, player_id):
     player = get_object_or_404(Player, PLAYERID=player_id)
-    
+
+    # Kiểm tra xem người dùng hiện tại có phải là chủ sở hữu không
+    if player.owner != request.user:
+        return redirect('player_reject')
+
     if request.method == 'POST':
         player.delete()
         return redirect('player_list')
-    
+
     return render(request, 'player/delete_player.html', {'player': player})
+
+@login_required
+def player_reject(request):
+    return render(request, 'player/player_reject.html')

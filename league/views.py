@@ -2,17 +2,22 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import LeagueForm
 from .models import League
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 
 # Create your views here.
 def league_view(request):
     leagues = League.objects.all() 
     return render(request, 'league.html', {'leagues': leagues})
 
+@login_required
 def create_league(request):
     if request.method == 'POST':
         form = LeagueForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            league = form.save(commit=False)
+            league.owner = request.user  # Lưu người dùng hiện tại là chủ sở hữu
+            league.save()
             messages.success(request, 'Bạn đã đăng ký giải đấu thành công.')
             return redirect('league_list')
     else:
@@ -29,8 +34,13 @@ def league_list_view(request):
 
     return render(request, 'league_list.html', {'leagues': leagues})
 
+@login_required
 def league_edit(request, league_id):
     league = get_object_or_404(League, LEAGUE_ID=league_id)
+    
+    # Kiểm tra xem người dùng hiện tại có phải là chủ sở hữu không
+    if league.owner != request.user:
+        return redirect('league_reject')
     
     if request.method == 'POST':
         form = LeagueForm(request.POST, request.FILES, instance=league)
@@ -48,11 +58,19 @@ def league_edit(request, league_id):
     
     return render(request, 'edit_league.html', {'form': form})
 
+@login_required
 def league_delete(request, league_id):
     league = get_object_or_404(League, LEAGUE_ID=league_id)
+    
+    # Kiểm tra xem người dùng hiện tại có phải là chủ sở hữu không
+    if league.owner != request.user:
+        return redirect('league_reject')
     
     if request.method == 'POST':
         league.delete()
         return redirect('league_list')
     
     return render(request, 'delete_league.html', {'league': league})
+
+def league_reject(request):
+    return render(request, 'league_reject.html')

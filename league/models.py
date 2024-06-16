@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 class League(models.Model):
     LEAGUE_ID = models.CharField(primary_key=True, max_length=3)
@@ -9,7 +9,8 @@ class League(models.Model):
     FOUNDED = models.DateField()
     START_TIME = models.DateField()
     END_TIME = models.DateField()
-    IMAGE = models.ImageField(upload_to='league_images/', null=True, blank=True)
+    IMAGE = models.ImageField(upload_to='league/', null=True, blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.LEAGUE_NAME

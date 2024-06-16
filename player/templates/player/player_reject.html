@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xác nhận xóa huấn luyện viên</title>
+    <title>Từ chối quyền truy cập</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
     <style>
@@ -67,13 +67,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>Xác nhận xóa</h1>
-        <p>Bạn có chắc chắn muốn xóa huấn luyện viên <strong>{{ coach.COACHNAME }}</strong> không?</p>
+        <h1>Từ chối truy cập</h1>
+        <p>Bạn không có quyền truy cập vào <strong>{{ player.PLAYERNAME }}</strong></p>
         <form method="POST">
             {% csrf_token %}
             <div class="form-actions">
-                <button type="submit" class="btn-danger">Xóa</button>
-                <a href="{% url 'coach_list' %}" class="btn-secondary">Hủy</a>
+                <a href="{% url 'player_list' %}" class="btn-secondary">Hủy</a>
             </div>
         </form>
     </div>

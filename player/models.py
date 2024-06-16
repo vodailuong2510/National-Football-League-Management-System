@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 class Player(models.Model):
     PLAYERID = models.CharField(primary_key=True, max_length=3)
     PLAYERNAME = models.CharField(max_length=30)
@@ -30,6 +30,7 @@ class Player(models.Model):
         ('B', 'Cả hai chân'),
     ]
     PREFERFOOT = models.CharField(max_length=1, choices=FOOT_CHOICES, default='R')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return f"{self.PLAYERNAME} ({self.PLAYERID})"
