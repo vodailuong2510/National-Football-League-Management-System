@@ -18,7 +18,7 @@
             <div class="domain">
                 <a href="/"><p>MyLeagueUIT</p></a>
             </div>
-            <nav>
+            <nav class="nav-home">
                 <a href="/" class="dropdown">Trang chủ</a>
                 <div class="dropdown">
                     <a href="{% url 'league' %}" class="dropdown">Giải đấu</a>
@@ -49,6 +49,8 @@
                     </div>
                 </div>
                 <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>
+            </nav>
+            <nav>
                 <div class="auth-links">
                     {% if user.username %}
                         <div class="dropdown">
