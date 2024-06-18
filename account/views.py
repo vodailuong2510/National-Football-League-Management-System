@@ -51,12 +51,13 @@ def edit_profile(request):
         form = UserUpdateForm(instance=request.user)
     return render(request, 'edit_profile.html', {'form': form})
 
+@login_required
 def profile(request):
     players = Player.objects.all()
     leagues = League.objects.all()
     coaches = Coach.objects.all()
     clubs = Club.objects.all()
-    return render(request, 'profile.html', {'players': players, 'leagues': leagues, 'coaches': coaches, 'clubs': clubs})
+    return render(request, 'profile/profile.html', {'players': players, 'leagues': leagues, 'coaches': coaches, 'clubs': clubs})
 
 @login_required
 def toggle_follow_player_profile(request, player_id):
@@ -68,7 +69,7 @@ def toggle_follow_player_profile(request, player_id):
     else:
         player.followers.add(user)
 
-    return redirect('profile')
+    return redirect('followed_player')
 
 @login_required
 def toggle_follow_league_profile(request, league_id):
@@ -80,7 +81,7 @@ def toggle_follow_league_profile(request, league_id):
     else:
         league.followers.add(user)
 
-    return redirect('profile')
+    return redirect('followed_league')
 
 @login_required
 def toggle_follow_club_profile(request, club_id):
@@ -92,7 +93,7 @@ def toggle_follow_club_profile(request, club_id):
     else:
         club.followers.add(user)
 
-    return redirect('profile')
+    return redirect('followed_club')
 
 @login_required
 def toggle_follow_coach_profile(request, coach_id):
@@ -104,4 +105,24 @@ def toggle_follow_coach_profile(request, coach_id):
     else:
         coach.followers.add(user)
 
-    return redirect('profile')
+    return redirect('followed_coach')
+
+@login_required
+def followed_league(request):
+    leagues = League.objects.all()
+    return render(request, 'profile/followed_league.html', {'leagues': leagues})
+
+@login_required
+def followed_coach(request):
+    coaches = Coach.objects.all()
+    return render(request, 'profile/followed_coach.html', {'coaches': coaches})
+
+@login_required
+def followed_player(request):
+    players = Player.objects.all()
+    return render(request, 'profile/followed_player.html', {'players': players})
+
+@login_required
+def followed_club(request):
+    clubs = Club.objects.all()
+    return render(request, 'profile/followed_club.html', {'clubs': clubs})

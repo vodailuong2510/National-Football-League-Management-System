@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Danh sách yêu thích{% endblock %}
+
+{% block styles %}
+    <style>
+        body {
+            background-color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .form-container input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+            width: 300px;
+        }
+        .form-container button {
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        .profile-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .profile-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .profile-item img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .profile-item h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        .profile-item p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .profile-item .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .profile-item .action-buttons a {
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .profile-item .edit-btn {
+            background-color: #4CAF50;
+        }
+        .profile-item .edit-btn:hover {
+            background-color: #45a049;
+        }
+        .profile-item .delete-btn {
+            background-color: #f44336;
+        }
+        .profile-item .delete-btn:hover {
+            background-color: #e53935;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+        .follow-btn {
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            background-color: #4CAF50; /* Default color for Follow button */
+        }
+
+        .follow-btn:hover {
+            background-color: #45a049;
+        }
+
+        .followed {
+            background-color: #f44336; /* Color for Unfollow button */
+        }
+
+        .followed:hover {
+            background-color: #e53935;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .form-title-1 {
+            margin-left: 20px;
+        }
+
+        .banner-buttons {
+            display: flex;
+            flex-wrap: wrap; /* Để các nút xuống dòng nếu không đủ chỗ */
+            gap: 20px; /* Tạo khoảng cách giữa các nút */
+            justify-content: center;
+            margin-top: 20px;
+            width: 80%;
+            align-self: center;
+        }
+        .banner-buttons a {
+            padding: 15px 15px;
+            background-color: #620deb; /* Màu nền của nút */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 20px; /* Tăng kích thước chữ của nút */
+            text-align: center; /* Căn giữa nội dung nút */
+            flex: 1 1 calc(5% - 5px); /* Đảm bảo các nút có kích thước đều nhau và đủ chỗ để xuống dòng */
+        }
+        .banner-buttons a:hover {
+            background-color: #45a049; /* Màu nền khi hover */
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1 class="form-title">Danh sách yêu thích</h1>
+
+    <div class="banner-buttons">
+        <a href="{% url 'followed_league' %}" >Giải đấu yêu thích</a>
+        <a href="{% url 'followed_club' %}" >Đội bóng yêu thích</a>
+        <a href="{% url 'followed_player' %}" >Cầu thủ yêu thích</a>
+    </div>
+
+    <h1 class="form-title-1">Huấn luyện viên yêu thích</h1>
+    <div class="profile-list">
+        {% for coach in coaches %}
+            {% if request.user in coach.followers.all %}
+                <div class="profile-item">
+                    {% if coach.IMAGE %}
+                        <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}">
+                    {% endif %}
+                    <h2>{{ coach.COACHNAME }}</h2>
+                    <p>Tuổi: {{ coach.BIRTHDAY }}</p>
+                    <p>Quốc tịch: {{ coach.NATIONALITY }}</p>
+                    <p>Câu lạc bộ: {{ coach.CLUB }}</p>
+                    <div class="action-buttons">
+                        {% if request.user.is_authenticated %}
+                            {% if request.user in coach.followers.all %}
+                                <a href="{% url 'toggle_follow_coach_profile' coach.COACHID %}" class="follow-btn">Unfollow</a>
+                            {% else %}
+                                <a href="{% url 'toggle_follow_coach_profile' coach.COACHID %}" class="follow-btn">Follow</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock%}
