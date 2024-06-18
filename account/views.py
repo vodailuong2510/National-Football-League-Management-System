@@ -110,19 +110,31 @@ def toggle_follow_coach_profile(request, coach_id):
 @login_required
 def followed_league(request):
     leagues = League.objects.all()
+    search_query = request.GET.get('search')
+    if search_query:
+        leagues = leagues.filter(LEAGUE_NAME__icontains=search_query)
     return render(request, 'profile/followed_league.html', {'leagues': leagues})
 
 @login_required
 def followed_coach(request):
     coaches = Coach.objects.all()
+    search_query = request.GET.get('search')
+    if search_query:
+        coaches = coaches.filter(COACHNAME__icontains=search_query)
     return render(request, 'profile/followed_coach.html', {'coaches': coaches})
 
 @login_required
 def followed_player(request):
     players = Player.objects.all()
+    search_query = request.GET.get('search')
+    if search_query:
+        players = players.filter(PLAYERNAME__icontains=search_query)
     return render(request, 'profile/followed_player.html', {'players': players})
 
 @login_required
 def followed_club(request):
     clubs = Club.objects.all()
+    search_query = request.GET.get('search')
+    if search_query:
+        clubs = clubs.filter(CLUBNAME__icontains=search_query)
     return render(request, 'profile/followed_club.html', {'clubs': clubs})

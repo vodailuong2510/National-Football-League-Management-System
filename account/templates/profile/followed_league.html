@@ -150,21 +150,27 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="form-title">Danh sách yêu thích</h1>
 
     <div class="banner-buttons">
+        <a href="{% url 'followed_league' %}" >Giải đấu yêu thích</a>
         <a href="{% url 'followed_club' %}" >Đội bóng yêu thích</a>
         <a href="{% url 'followed_player' %}" >Cầu thủ yêu thích</a>
         <a href="{% url 'followed_coach' %}" >Huấn luyện viên yêu thích</a>
     </div>
 
     <h1 class="form-title-1">Giải đấu yêu thích</h1>
+    <div class="form-container">
+        <form method="GET" action="{% url 'followed_league' %}">
+            <input type="text" name="search" placeholder="Nhập tên giải đấu">
+            <button type="submit">Search</button>
+        </form>
+    </div>
     <div class="profile-list">
         {% for league in leagues %}
             {% if request.user in league.followers.all %}
                 <div class="profile-item">
-                    {% if league.IMAGE %}
-                        <img src="{{ league.IMAGE.url }}" alt="{{ league.LEAGUE_NAME }}">
+                    {% if league.LOGO %}
+                        <img src="{{ league.LOGO.url }}" alt="{{ league.LEAGUE_NAME }}">
                     {% endif %}
                     <h2>{{ league.LEAGUE_NAME }}</h2>
                     <p>Số câu lạc bộ: {{ league.TOTAL_CLUB }}</p>

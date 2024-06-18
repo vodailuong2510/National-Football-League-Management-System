@@ -96,6 +96,25 @@
             background-color: #333;
             color: white;
         }
+        .follow-btn {
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            background-color: #4CAF50; /* Default color for Follow button */
+        }
+
+        .follow-btn:hover {
+            background-color: #45a049;
+        }
+
+        .followed {
+            background-color: #f44336; /* Color for Unfollow button */
+        }
+
+        .followed:hover {
+            background-color: #e53935;
+        }
     </style>
 </head>
 {% endblock %}
@@ -128,6 +147,13 @@
                 <div class="action-buttons">
                     <a href="{% url 'club_edit' club.CLUBID %}" class="edit-btn">Sửa</a>
                     <a href="{% url 'club_delete' club.CLUBID %}" class="delete-btn">Xóa</a>
+                    {% if request.user.is_authenticated %}
+                        {% if request.user in club.followers.all %}
+                            <a href="{% url 'toggle_follow_club' club.CLUBID %}" class="follow-btn">Unfollow</a>
+                        {% else %}
+                            <a href="{% url 'toggle_follow_club' club.CLUBID %}" class="follow-btn">Follow</a>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         {% empty %}

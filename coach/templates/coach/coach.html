@@ -138,6 +138,8 @@
                 <p>Quốc tịch: {{ coach.NATIONALITY }}</p>
                 <p>Câu lạc bộ: {{ coach.CLUB }}</p>
                 <div class="action-buttons">
+                    <a href="{% url 'coach_edit' coach.COACHID %}" class="edit-btn">Sửa</a>
+                    <a href="{% url 'coach_delete' coach.COACHID %}" class="delete-btn">Xóa</a>
                     {% if request.user.is_authenticated %}
                         {% if request.user in coach.followers.all %}
                             <a href="{% url 'toggle_follow_coach' coach.COACHID %}" class="follow-btn">Unfollow</a>

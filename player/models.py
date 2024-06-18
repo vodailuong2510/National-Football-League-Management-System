@@ -7,7 +7,6 @@ class Player(models.Model):
     NATIONALITY = models.CharField(max_length=20)
     CLUB = models.CharField(max_length=30)
     IMAGE = models.ImageField(upload_to='images/')
-    CARDS = models.CharField(max_length=6, default='None', null=True, blank=True)
     
     # Additional fields
     POSITION_CHOICES = [
@@ -18,9 +17,6 @@ class Player(models.Model):
     ]
     POSITION = models.CharField(max_length=2, choices=POSITION_CHOICES, default='GK')
     SHIRTNUM = models.PositiveIntegerField(null = True, blank = True)
-    GOALS = models.PositiveIntegerField(default=0, null=True, blank=True)
-    ASSISTS = models.PositiveIntegerField(default=0, null=True, blank=True)
-    CONDITION = models.CharField(max_length=20, default='Tốt')
     HEIGHT = models.DecimalField(max_digits=5, decimal_places=2, default=0.)  # in centimeters
     WEIGHT = models.DecimalField(max_digits=5, decimal_places=2, default=0.)  # in kilograms
     

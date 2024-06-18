@@ -4,7 +4,7 @@ from .models import Coach
 class CoachForm(forms.ModelForm):
     class Meta:
         model = Coach
-        fields = ['COACHID', 'COACHNAME', 'BIRTHDAY', 'NATIONALITY', 'CLUB', 'IMAGE', 'CARDS']
+        fields = ['COACHID', 'COACHNAME', 'BIRTHDAY', 'NATIONALITY', 'CLUB', 'IMAGE']
     
     def __init__(self, *args, **kwargs):
         disable_coachid = kwargs.pop('disable_coachid', False)

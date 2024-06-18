@@ -4,7 +4,7 @@ from .models import Player
 class PlayerForm(forms.ModelForm):
     class Meta:
         model = Player
-        fields = ['PLAYERID', 'PLAYERNAME', 'BIRTHDAY', 'NATIONALITY', 'CLUB', 'IMAGE', 'CARDS', 'POSITION', 'SHIRTNUM', 'GOALS', 'ASSISTS', 'CONDITION', 'HEIGHT', 'WEIGHT', 'PREFERFOOT']
+        fields = ['PLAYERID', 'PLAYERNAME', 'BIRTHDAY', 'NATIONALITY', 'CLUB', 'IMAGE', 'POSITION', 'SHIRTNUM', 'HEIGHT', 'WEIGHT', 'PREFERFOOT']
 
     def __init__(self, *args, **kwargs):
         disable_playerid = kwargs.pop('disable_playerid', False)

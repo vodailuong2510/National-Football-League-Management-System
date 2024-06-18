@@ -103,41 +103,35 @@
 {% endblock %}
 
 {% block content %}
-    <div class="main-banner">
-        <div class="banner-overlay"> 
-            <div class="banner-content">
-                <h1>Tạo huấn luyện viên</h1>
-            </div>
-            <form method="POST" enctype="multipart/form-data" class="mt-4">
-                {% csrf_token %}
-                {% if form.errors %}
-                    <p style="color: red;">ID huấn luyện viên đã tồn tại</p>
-                {% endif %}
-                <div class="form-container">
-                    <div class = "dash-line-box">
-                        <div class="image-input">
-                            <img src="{% static 'home/images/insert_image_icon.png' %}" alt="Chọn tệp" />
-                            {{ form.IMAGE }}
-                        </div>
-                    </div>
-
-                    <div class = "input">
-                        <div class="form-grid">
-                            <label for="id">ID:</label>
-                            <div>{{ form.COACHID }}</div>
-                            <label for="name">Họ & Tên:</label>
-                            <div>{{ form.COACHNAME }}</div>
-                            <label for="birthday">Ngày sinh:</label>
-                            <div>{{ form.BIRTHDAY }}</div>
-                            <label for="nationality">Quốc tịch:</label>
-                            <div>{{ form.NATIONALITY }}</div>
-                            <label for="club">Đội tuyển:</label>
-                            <div>{{ form.CLUB }}</div>
-                            <input type='submit' value='Tạo'/>
-                        </div>
-                    </div>
+    <center><h1>Tạo huấn luyện viên</h1></center>
+    <form method="POST" enctype="multipart/form-data" class="mt-4">
+        {% csrf_token %}
+        {% if form.errors %}
+            <p style="color: red;">ID huấn luyện viên đã tồn tại</p>
+        {% endif %}
+        <div class="form-container">
+            <div class = "dash-line-box">
+                <div class="image-input">
+                    <img src="{% static 'home/images/insert_image_icon.png' %}" alt="Chọn tệp" />
+                    {{ form.IMAGE }}
                 </div>
-            </form>
+            </div>
+
+            <div class = "input">
+                <div class="form-grid">
+                    <label for="id">ID:</label>
+                    <div>{{ form.COACHID }}</div>
+                    <label for="name">Họ & Tên:</label>
+                    <div>{{ form.COACHNAME }}</div>
+                    <label for="birthday">Ngày sinh:</label>
+                    <div>{{ form.BIRTHDAY }}</div>
+                    <label for="nationality">Quốc tịch:</label>
+                    <div>{{ form.NATIONALITY }}</div>
+                    <label for="club">Đội tuyển:</label>
+                    <div>{{ form.CLUB }}</div>
+                    <input type='submit' value='Tạo'/>
+                </div>
+            </div>
         </div>
-    </div>
+    </form>
 {% endblock %}

@@ -147,6 +147,8 @@
                 <p>Cân nặng: {{ player.WEIGHT }}</p>
                 <p>Chân thuận: {{ player.PREFERFOOT }}</p>
                 <div class="action-buttons">
+                    <a href="{% url 'player_edit' player.PLAYERID %}" class="edit-btn">Sửa</a>
+                    <a href="{% url 'player_delete' player.PLAYERID %}" class="delete-btn">Xóa</a>
                     {% if request.user.is_authenticated %}
                         {% if request.user in player.followers.all %}
                             <a href="{% url 'toggle_follow_player' player.PLAYERID %}" class="follow-btn">Unfollow</a>

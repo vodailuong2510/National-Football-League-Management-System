@@ -96,6 +96,25 @@
             background-color: #333;
             color: white;
         }
+        .follow-btn {
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            background-color: #4CAF50; /* Default color for Follow button */
+        }
+
+        .follow-btn:hover {
+            background-color: #45a049;
+        }
+
+        .followed {
+            background-color: #f44336; /* Color for Unfollow button */
+        }
+
+        .followed:hover {
+            background-color: #e53935;
+        }
     </style>
 {% endblock %}
 
@@ -130,6 +149,13 @@
                 <div class="action-buttons">
                     <a href="{% url 'player_edit' player.PLAYERID %}" class="edit-btn">Sửa</a>
                     <a href="{% url 'player_delete' player.PLAYERID %}" class="delete-btn">Xóa</a>
+                    {% if request.user.is_authenticated %}
+                        {% if request.user in player.followers.all %}
+                            <a href="{% url 'toggle_follow_player' player.PLAYERID %}" class="follow-btn">Unfollow</a>
+                        {% else %}
+                            <a href="{% url 'toggle_follow_player' player.PLAYERID %}" class="follow-btn">Follow</a>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         {% empty %}

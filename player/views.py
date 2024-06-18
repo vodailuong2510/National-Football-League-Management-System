@@ -7,6 +7,11 @@ from django.http import HttpResponseForbidden
 
 def player_view(request):
     players = Player.objects.all()
+
+    # Xử lý yêu cầu tìm kiếm
+    search_query = request.GET.get('search')
+    if search_query:
+        players = players.filter(PLAYERNAME__icontains=search_query)
     return render(request, 'player/player.html', {'players': players})
 
 @login_required

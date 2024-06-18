@@ -8,6 +8,11 @@ from .models import Coach
 
 def coach_view(request):
     coaches = Coach.objects.all()
+
+    # Xử lý yêu cầu tìm kiếm
+    search_query = request.GET.get('search')
+    if search_query:
+        coaches = coaches.filter(COACHNAME__icontains=search_query)
     return render(request, 'coach/coach.html', {'coaches': coaches})
 
 @login_required

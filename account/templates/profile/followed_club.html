@@ -151,15 +151,20 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="form-title">Danh sách yêu thích</h1>
-
     <div class="banner-buttons">
         <a href="{% url 'followed_league' %}" >Giải đấu yêu thích</a>
+        <a href="{% url 'followed_club' %}" >Đội bóng yêu thích</a>
         <a href="{% url 'followed_player' %}" >Cầu thủ yêu thích</a>
         <a href="{% url 'followed_coach' %}" >Huấn luyện viên yêu thích</a>
     </div>
 
     <h1 class="form-title-1">Đội bóng yêu thích</h1>
+    <div class="form-container">
+        <form method="GET" action="{% url 'followed_club' %}">
+            <input type="text" name="search" placeholder="Nhập tên đội bóng">
+            <button type="submit">Search</button>
+        </form>
+    </div>
     <div class="profile-list">
         {% for club in clubs %}
             {% if request.user in club.followers.all %}

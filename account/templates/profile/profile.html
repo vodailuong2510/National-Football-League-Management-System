@@ -124,7 +124,6 @@
         .form-title-1 {
             margin-left: 20px;
         }
-
         .banner-buttons {
             display: flex;
             flex-wrap: wrap; /* Để các nút xuống dòng nếu không đủ chỗ */
@@ -151,12 +150,45 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="form-title">Danh sách yêu thích</h1>
 
     <div class="banner-buttons">
         <a href="{% url 'followed_league' %}" >Giải đấu yêu thích</a>
         <a href="{% url 'followed_club' %}" >Đội bóng yêu thích</a>
         <a href="{% url 'followed_player' %}" >Cầu thủ yêu thích</a>
         <a href="{% url 'followed_coach' %}" >Huấn luyện viên yêu thích</a>
+    </div>
+
+    <h1 class="form-title-1">Giải đấu yêu thích</h1>
+    <div class="form-container">
+        <form method="GET" action="{% url 'followed_league' %}">
+            <input type="text" name="search" placeholder="Nhập tên giải đấu">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div class="profile-list">
+        {% for league in leagues %}
+            {% if request.user in league.followers.all %}
+                <div class="profile-item">
+                    {% if league.LOGO %}
+                        <img src="{{ league.LOGO.url }}" alt="{{ league.LEAGUE_NAME }}">
+                    {% endif %}
+                    <h2>{{ league.LEAGUE_NAME }}</h2>
+                    <p>Số câu lạc bộ: {{ league.TOTAL_CLUB }}</p>
+                    <p>Hiệp hội: {{ league.ASSOCIATION }}</p>
+                    <p>Ngày thành lập: {{ league.FOUNDED }}</p>
+                    <p>Thời gian bắt đầu: {{ league.START_TIME }}</p>
+                    <p>Thời gian kết thúc: {{ league.END_TIME }}</p>
+                    <div class="action-buttons">
+                        {% if request.user.is_authenticated %}
+                            {% if request.user in league.followers.all %}
+                                <a href="{% url 'toggle_follow_league_profile' league.LEAGUE_ID %}" class="follow-btn">Unfollow</a>
+                            {% else %}
+                                <a href="{% url 'toggle_follow_league_profile' league.LEAGUE_ID %}" class="follow-btn">Follow</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
 {% endblock%}

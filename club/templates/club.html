@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Danh sách đội bóng{% endblock %}
+{% block title %}Tìm kiếm đội bóng{% endblock %}
 
 {% block styles %}
     <style>
@@ -121,7 +121,7 @@
 
 {% block content %}
     <div class="form-container">
-        <form method="GET" action="{% url 'club' %}">
+        <form method="GET" action="{% url 'club_list' %}">
             <input type="text" name="search" placeholder="Nhập tên đội bóng">
             <button type="submit">Search</button>
         </form>
@@ -145,6 +145,8 @@
                 <p>Số Lượng Cầu Thủ: {{ club.TOTALPLAYERS }}</p>
                 <p>Giải đấu tham gia: {{ club.LEAGUEPLAYING }}</p>
                 <div class="action-buttons">
+                    <a href="{% url 'club_edit' club.CLUBID %}" class="edit-btn">Sửa</a>
+                    <a href="{% url 'club_delete' club.CLUBID %}" class="delete-btn">Xóa</a>
                     {% if request.user.is_authenticated %}
                         {% if request.user in club.followers.all %}
                             <a href="{% url 'toggle_follow_club' club.CLUBID %}" class="follow-btn">Unfollow</a>
