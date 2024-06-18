@@ -124,7 +124,28 @@
         .form-title-1 {
             margin-left: 20px;
         }
-
+        .banner-buttons {
+            display: flex;
+            flex-wrap: wrap; /* Để các nút xuống dòng nếu không đủ chỗ */
+            gap: 20px; /* Tạo khoảng cách giữa các nút */
+            justify-content: center;
+            margin-top: 20px;
+            width: 80%;
+            align-self: center;
+        }
+        .banner-buttons a {
+            padding: 15px 15px;
+            background-color: #620deb; /* Màu nền của nút */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 20px; /* Tăng kích thước chữ của nút */
+            text-align: center; /* Căn giữa nội dung nút */
+            flex: 1 1 calc(5% - 5px); /* Đảm bảo các nút có kích thước đều nhau và đủ chỗ để xuống dòng */
+        }
+        .banner-buttons a:hover {
+            background-color: #45a049; /* Màu nền khi hover */
+        }
     </style>
 {% endblock %}
 
@@ -132,10 +153,9 @@
     <h1 class="form-title">Danh sách yêu thích</h1>
 
     <div class="banner-buttons">
-        <a href>Giải đấu yêu thích</a>
-        <a>Câu lạc bộ yêu thích</a>
-        <a>Cầu thủ yêu thích</a>
-        <a>Huấn luyện viên yêu thích</a>
+        <a href="{% url 'followed_club' %}" >Đội bóng yêu thích</a>
+        <a href="{% url 'followed_player' %}" >Cầu thủ yêu thích</a>
+        <a href="{% url 'followed_coach' %}" >Huấn luyện viên yêu thích</a>
     </div>
 
     <h1 class="form-title-1">Giải đấu yêu thích</h1>

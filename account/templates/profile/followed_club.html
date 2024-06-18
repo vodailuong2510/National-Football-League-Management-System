@@ -125,6 +125,28 @@
             margin-left: 20px;
         }
 
+        .banner-buttons {
+            display: flex;
+            flex-wrap: wrap; /* Để các nút xuống dòng nếu không đủ chỗ */
+            gap: 20px; /* Tạo khoảng cách giữa các nút */
+            justify-content: center;
+            margin-top: 20px;
+            width: 80%;
+            align-self: center;
+        }
+        .banner-buttons a {
+            padding: 15px 15px;
+            background-color: #620deb; /* Màu nền của nút */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 20px; /* Tăng kích thước chữ của nút */
+            text-align: center; /* Căn giữa nội dung nút */
+            flex: 1 1 calc(5% - 5px); /* Đảm bảo các nút có kích thước đều nhau và đủ chỗ để xuống dòng */
+        }
+        .banner-buttons a:hover {
+            background-color: #45a049; /* Màu nền khi hover */
+        }
     </style>
 {% endblock %}
 
@@ -132,73 +154,9 @@
     <h1 class="form-title">Danh sách yêu thích</h1>
 
     <div class="banner-buttons">
-        <a>Giải đấu yêu thích</a>
-        <a>Câu lạc bộ yêu thích</a>
-        <a>Cầu thủ yêu thích</a>
-        <a>Huấn luyện viên yêu thích</a>
-    </div>
-
-    <h1 class="form-title-1">Cầu thủ yêu thích</h1>
-    <div class="profile-list">
-        {% for player in players %}
-            {% if request.user in player.followers.all %}
-                <div class="profile-item">
-                    {% if player.IMAGE %}
-                        <img src="{{ player.IMAGE.url }}" alt="{{ player.PLAYERNAME }}">
-                    {% endif %}
-                    <h2>{{ player.PLAYERNAME }}</h2>
-                    <p>Ngày sinh: {{ player.BIRTHDAY }}</p>
-                    <p>Quốc tịch: {{ player.NATIONALITY }}</p>
-                    <p>Đội tuyển: {{ player.CLUB }}</p>
-                    <p>Thẻ: {{ player.CARDS }}</p>
-                    <p>Vị trí: {{ player.POSITION }}</p>
-                    <p>Số áo: {{ player.SHIRTNUM }}</p>
-                    <p>Bàn thắng: {{ player.GOALS }}</p>
-                    <p>Kiến tạo: {{ player.ASSISTS }}</p>
-                    <p>Tình trạng: {{ player.CONDITION }}</p>
-                    <p>Chiều cao: {{ player.HEIGHT }}</p>
-                    <p>Cân nặng: {{ player.WEIGHT }}</p>
-                    <p>Chân thuận: {{ player.PREFERFOOT }}</p>
-                    <div class="action-buttons">
-                        {% if request.user.is_authenticated %}
-                            {% if request.user in player.followers.all %}
-                                <a href="{% url 'toggle_follow_player_profile' player.PLAYERID %}" class="follow-btn">Unfollow</a>
-                            {% else %}
-                                <a href="{% url 'toggle_follow_player_profile' player.PLAYERID %}" class="follow-btn">Follow</a>
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-
-    <h1 class="form-title-1">Giải đấu yêu thích</h1>
-    <div class="profile-list">
-        {% for league in leagues %}
-            {% if request.user in league.followers.all %}
-                <div class="profile-item">
-                    {% if league.IMAGE %}
-                        <img src="{{ league.IMAGE.url }}" alt="{{ league.LEAGUE_NAME }}">
-                    {% endif %}
-                    <h2>{{ league.LEAGUE_NAME }}</h2>
-                    <p>Số câu lạc bộ: {{ league.TOTAL_CLUB }}</p>
-                    <p>Hiệp hội: {{ league.ASSOCIATION }}</p>
-                    <p>Ngày thành lập: {{ league.FOUNDED }}</p>
-                    <p>Thời gian bắt đầu: {{ league.START_TIME }}</p>
-                    <p>Thời gian kết thúc: {{ league.END_TIME }}</p>
-                    <div class="action-buttons">
-                        {% if request.user.is_authenticated %}
-                            {% if request.user in league.followers.all %}
-                                <a href="{% url 'toggle_follow_league_profile' league.LEAGUE_ID %}" class="follow-btn">Unfollow</a>
-                            {% else %}
-                                <a href="{% url 'toggle_follow_league_profile' league.LEAGUE_ID %}" class="follow-btn">Follow</a>
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
+        <a href="{% url 'followed_league' %}" >Giải đấu yêu thích</a>
+        <a href="{% url 'followed_player' %}" >Cầu thủ yêu thích</a>
+        <a href="{% url 'followed_coach' %}" >Huấn luyện viên yêu thích</a>
     </div>
 
     <h1 class="form-title-1">Đội bóng yêu thích</h1>
@@ -233,29 +191,4 @@
         {% endfor %}
     </div>
 
-    <h1 class="form-title-1">Huấn luyện viên yêu thích</h1>
-    <div class="profile-list">
-        {% for coach in coaches %}
-            {% if request.user in coach.followers.all %}
-                <div class="profile-item">
-                    {% if coach.IMAGE %}
-                        <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}">
-                    {% endif %}
-                    <h2>{{ coach.COACHNAME }}</h2>
-                    <p>Tuổi: {{ coach.BIRTHDAY }}</p>
-                    <p>Quốc tịch: {{ coach.NATIONALITY }}</p>
-                    <p>Câu lạc bộ: {{ coach.CLUB }}</p>
-                    <div class="action-buttons">
-                        {% if request.user.is_authenticated %}
-                            {% if request.user in coach.followers.all %}
-                                <a href="{% url 'toggle_follow_coach_profile' coach.COACHID %}" class="follow-btn">Unfollow</a>
-                            {% else %}
-                                <a href="{% url 'toggle_follow_coach_profile' coach.COACHID %}" class="follow-btn">Follow</a>
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
 {% endblock%}
