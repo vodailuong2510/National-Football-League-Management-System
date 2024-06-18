@@ -6,140 +6,217 @@
 
 {% block styles %}
     <style>
-        .form-container {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-            display: flex;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        body {
+            background-color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .dash-line-box {
-            border: 2px dashed #00264D;
-            padding: 50px;
-            width: 200px;
-            height: 230px;
-            text-align: center;
+        .form-container {
             display: flex;
             justify-content: center;
-            align-items: center;
-            margin: 5px auto;
-        }
-        
-        .image-input {
-            display: inline-block;
-            position: relative;
-            cursor: pointer;
+            padding: 20px 50px;
         }
 
-        .image-input img {
-            display: block;
-        }
-
-        .image-input input[type="file"] {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .input {
-            font-size: 30px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        
-        .form-grid label {
-            grid-column: 1 / 2;
-            margin: 7px;
-        }
-        
-        .form-grid div,
-        .form-grid input[type="submit"] {
-            grid-column: 2 / 3;
-        }
-
-        form {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+        .form-box {
+            width: 30%;
+            max-width: 900px;
             background-color: #f9f9f9;
-            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
             border-radius: 5px;
         }
 
-        input[type="submit"] {
-            background-color: #00264D;
+        .form-group input[type="file"] {
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
+            width: 100%;
         }
 
-        input[type="submit"]:hover {
-            background-color: #003366;
+        .form-group input[type="submit"]:hover {
+            background-color: #45a049;
         }
-        
-        .form-grid input[type="text"], .form-grid select {
-            width: 88%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }        
+
+        footer {
+            text-align: center;
+            padding: 20px 50px;
+            background-color: #333;
+            color: white;
+            margin-top: 20px;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .errorlist {
+            color: red;
+            list-style-type: none;
+        }
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .message-box .icon {
+            font-size: 50px;
+        }
+
+        .message-box .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: #3c763d;
+        }
+
+        .show {
+            display: block;
+            animation: fadeIn 0.5s, fadeOut 0.5s 4.5s;
+        }
+
+        @keyframes fadeIn {
+            from{opacity: 0;}
+            to{opacity: 1;}
+        }
+
+        @keyframes fadeOut {
+            from{opacity: 1;}
+            to{opacity: 0;}
+        }
     </style>
 {% endblock %}
 
 {% block content %}
-    <div class="main-banner">
-        <div class="banner-overlay"> 
-            <div class="banner-content">
-                <h1>Tạo giải đấu</h1>
-            </div>
-            <form method="POST" enctype="multipart/form-data" class="mt-4">
-                {% csrf_token %}
-                {% if form.errors %}
-                    <p style="color: red;">ID giải đấu đã tồn tại</p>
-                {% endif %}
-                <div class="form-container">
-                    <div class = "dash-line-box">
-                        <div class="image-input">
-                            <img src="{% static 'home/images/insert_image_icon.png' %}" alt="Chọn tệp" />
-                            {{ form.IMAGE }}
-                        </div>
-                    </div>
+    <h1 class="form-title">Thông tin giải đấu</h1>
 
-                    <div class = "input">
-                        <div class="form-grid">
-                            <label for="id">ID:</label>
-                            <div>{{ form.LEAGUE_ID }}</div>
-                            <label for="name">Tên giải đấu:</label>
-                            <div>{{ form.LEAGUE_NAME }}</div>
-                            <label for="association">Hiệp hội:</label>
-                            <div>{{ form.ASSOCIATION }}</div>
-                            <label for="founded">Ngày thành lập:</label>
-                            <div>{{ form.FOUNDED }}</div>
-                            <label for="start_time">Thời gian bắt đầu:</label>
-                            <div>{{ form.START_TIME }}</div>
-                            <label for="end_time">Thời gian kết thúc:</label>
-                            <div>{{ form.END_TIME }}</div>
-                            <input type='submit' value='Tạo'/>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
+    <div class="form-container">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form method="POST" enctype="multipart/form-data" class="form-box">
+            {% csrf_token %}
+            {% if form.errors %}
+                <ul class="errorlist">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <div class="form-group">
+                <label for="leagueid">ID</label>
+                {{ form.LEAGUE_ID }}
+            </div>
+            <div class="form-group">
+                <label for="leaguename">Tên Giải Đấu</label>
+                {{ form.LEAGUE_NAME }}
+            </div>
+            <div class="form-group">
+                <label for="logo">Logo</label>
+                {{ form.LOGO }}
+            </div>
+            <div class="form-group">
+                <label for="totalclub">Số Đội Thi Đấu</label>
+                {{ form.TOTAL_CLUB }}
+            </div>
+            <div class="form-group">
+                <label for="association">Hiệp Hội</label>
+                {{ form.ASSOCIATION }}
+            </div>
+            <div class="form-group">
+                <label for="founded">Ngày Thành Lập</label>
+                {{ form.FOUNDED }}
+            </div>
+            <div class="form-group">
+                <label for="starttime">Thời Gian Bắt Đầu</label>
+                {{ form.START_TIME }}
+            </div>
+            <div class="form-group">
+                <label for="endtime">Thời Gian Kết Thúc</label>
+                {{ form.END_TIME }}
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Tạo giải đấu">
+            </div>
+        </form>
     </div>
+    
+    <div id="messageBox" class="message-box">
+        <div class="icon">✔</div>
+        <p>Thành công!</p>
+        <button class="close-btn" onclick="document.getElementById('messageBox').style.display='none'">&times;</button>
+    </div>
+    
+    <!-- Phần Footer -->
+    <footer>
+        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
+        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showMessage() {
+            var messageBox = document.getElementById('messageBox');
+            messageBox.classList.add('show');
+            setTimeout(function() {
+                messageBox.classList.remove('show');
+            }, 3000);
+        }
+
+        window.onload = function() {
+            {% if messages %}
+                showMessage();
+            {% endif %}
+        }
+    </script>
 {% endblock %}

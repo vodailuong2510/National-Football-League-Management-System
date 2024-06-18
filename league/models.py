@@ -4,14 +4,20 @@ from django.contrib.auth.models import User
 class League(models.Model):
     LEAGUE_ID = models.CharField(primary_key=True, max_length=3)
     LEAGUE_NAME = models.CharField(max_length=30)
+    LOGO = models.ImageField(upload_to='league/', null=True, blank=True)
     TOTAL_CLUB = models.IntegerField(default=0)
-    ASSOCIATION = models.CharField(max_length=20)
+    ASSOCIATION = models.CharField(max_length=50)
     FOUNDED = models.DateField()
     START_TIME = models.DateField()
     END_TIME = models.DateField()
-    IMAGE = models.ImageField(upload_to='league/', null=True, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     followers = models.ManyToManyField(User, related_name='following_league', blank=True)
 
     def __str__(self):
         return self.LEAGUE_NAME
+    def formatted_founded(self):
+        return self.FOUNDED.strftime('%d/%m/%Y')
+    def formatted_start_time(self):
+        return self.START_TIME.strftime('%d/%m/%Y')
+    def formatted_end_time(self):
+        return self.END_TIME.strftime('%d/%m/%Y')

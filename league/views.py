@@ -7,7 +7,13 @@ from django.http import HttpResponseForbidden
 
 # Create your views here.
 def league_view(request):
-    leagues = League.objects.all() 
+    leagues = League.objects.all()
+
+    # Xử lý yêu cầu tìm kiếm
+    search_query = request.GET.get('search')
+    if search_query:
+        leagues = leagues.filter(LEAGUE_NAME__icontains=search_query)
+
     return render(request, 'league.html', {'leagues': leagues})
 
 @login_required
@@ -20,6 +26,8 @@ def create_league(request):
             league.save()
             messages.success(request, 'Bạn đã đăng ký giải đấu thành công.')
             return redirect('league_list')
+        else:
+            print(form.errors)
     else:
         form = LeagueForm()
     return render(request, 'create_league.html', {'form': form})

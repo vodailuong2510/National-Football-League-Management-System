@@ -16,3 +16,8 @@ class Club(models.Model):
     LEAGUEPLAYING = models.CharField(max_length=100)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     followers = models.ManyToManyField(User, related_name='following_club', blank=True)
+
+    def __str__(self):
+        return self.CLUBNAME
+    def formatted_founded(self):
+        return self.FOUNDED.strftime('%d/%m/%Y')
