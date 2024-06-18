@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Danh sách yêu thích{% endblock %}
+
+{% block styles %}
+    <style>
+        body {
+            background-color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .form-container input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+            width: 300px;
+        }
+        .form-container button {
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        .profile-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .profile-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .profile-item img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .profile-item h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        .profile-item p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .profile-item .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .profile-item .action-buttons a {
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .profile-item .edit-btn {
+            background-color: #4CAF50;
+        }
+        .profile-item .edit-btn:hover {
+            background-color: #45a049;
+        }
+        .profile-item .delete-btn {
+            background-color: #f44336;
+        }
+        .profile-item .delete-btn:hover {
+            background-color: #e53935;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+        .follow-btn {
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            background-color: #4CAF50; /* Default color for Follow button */
+        }
+
+        .follow-btn:hover {
+            background-color: #45a049;
+        }
+
+        .followed {
+            background-color: #f44336; /* Color for Unfollow button */
+        }
+
+        .followed:hover {
+            background-color: #e53935;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .form-title-1 {
+            margin-left: 20px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1 class="form-title">Danh sách yêu thích</h1>
+
+    <h1 class="form-title-1">Cầu thủ yêu thích</h1>
+    <div class="profile-list">
+        {% for player in players %}
+            {% if request.user in player.followers.all %}
+                <div class="profile-item">
+                    {% if player.IMAGE %}
+                        <img src="{{ player.IMAGE.url }}" alt="{{ player.PLAYERNAME }}">
+                    {% endif %}
+                    <h2>{{ player.PLAYERNAME }}</h2>
+                    <p>Ngày sinh: {{ player.BIRTHDAY }}</p>
+                    <p>Quốc tịch: {{ player.NATIONALITY }}</p>
+                    <p>Đội tuyển: {{ player.CLUB }}</p>
+                    <p>Thẻ: {{ player.CARDS }}</p>
+                    <p>Vị trí: {{ player.POSITION }}</p>
+                    <p>Số áo: {{ player.SHIRTNUM }}</p>
+                    <p>Bàn thắng: {{ player.GOALS }}</p>
+                    <p>Kiến tạo: {{ player.ASSISTS }}</p>
+                    <p>Tình trạng: {{ player.CONDITION }}</p>
+                    <p>Chiều cao: {{ player.HEIGHT }}</p>
+                    <p>Cân nặng: {{ player.WEIGHT }}</p>
+                    <p>Chân thuận: {{ player.PREFERFOOT }}</p>
+                    <div class="action-buttons">
+                        {% if request.user.is_authenticated %}
+                            {% if request.user in player.followers.all %}
+                                <a href="{% url 'toggle_follow_player_profile' player.PLAYERID %}" class="follow-btn">Unfollow</a>
+                            {% else %}
+                                <a href="{% url 'toggle_follow_player_profile' player.PLAYERID %}" class="follow-btn">Follow</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <h1 class="form-title-1">Giải đấu yêu thích</h1>
+    <div class="profile-list">
+        {% for league in leagues %}
+            {% if request.user in league.followers.all %}
+                <div class="profile-item">
+                    {% if league.IMAGE %}
+                        <img src="{{ league.IMAGE.url }}" alt="{{ league.LEAGUE_NAME }}">
+                    {% endif %}
+                    <h2>{{ league.LEAGUE_NAME }}</h2>
+                    <p>Số câu lạc bộ: {{ league.TOTAL_CLUB }}</p>
+                    <p>Hiệp hội: {{ league.ASSOCIATION }}</p>
+                    <p>Ngày thành lập: {{ league.FOUNDED }}</p>
+                    <p>Thời gian bắt đầu: {{ league.START_TIME }}</p>
+                    <p>Thời gian kết thúc: {{ league.END_TIME }}</p>
+                    <div class="action-buttons">
+                        {% if request.user.is_authenticated %}
+                            {% if request.user in league.followers.all %}
+                                <a href="{% url 'toggle_follow_league_profile' league.LEAGUE_ID %}" class="follow-btn">Unfollow</a>
+                            {% else %}
+                                <a href="{% url 'toggle_follow_league_profile' league.LEAGUE_ID %}" class="follow-btn">Follow</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <h1 class="form-title-1">Đội bóng yêu thích</h1>
+    <div class="profile-list">
+        {% for club in clubs %}
+            {% if request.user in club.followers.all %}
+                <div class="profile-item">
+                    {% if club.LOGO %}
+                        <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBNAME }}">
+                    {% endif %}
+                    <h2>{{ club.CLUBNAME }}</h2>
+                    <p>Ngày Thành Lập: {{ club.FOUNDED }}</p>
+                    <p>Email: {{ club.EMAIL }}</p>
+                    <p>SĐT: {{ club.PHONE }}</p>
+                    <p>Huấn Luyện Viên: {{ club.COACH }}</p>
+                    <p>Đội Trưởng: {{ club.CAPTAIN }}</p>
+                    <p>Sân Vận Động: {{ club.STADIUM }}</p>
+                    <p>Sức Chứa: {{ club.CAPACITY }}</p>
+                    <p>Số Lượng Cầu Thủ: {{ club.TOTALPLAYERS }}</p>
+                    <p>Giải đấu tham gia: {{ club.LEAGUEPLAYING }}</p>
+                    <div class="action-buttons">
+                        {% if request.user.is_authenticated %}
+                            {% if request.user in club.followers.all %}
+                                <a href="{% url 'toggle_follow_club_profile' club.CLUBID %}" class="follow-btn">Unfollow</a>
+                            {% else %}
+                                <a href="{% url 'toggle_follow_club_profile' club.CLUBID %}" class="follow-btn">Follow</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <h1 class="form-title-1">Huấn luyện viên yêu thích</h1>
+    <div class="profile-list">
+        {% for coach in coaches %}
+            {% if request.user in coach.followers.all %}
+                <div class="profile-item">
+                    {% if coach.IMAGE %}
+                        <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}">
+                    {% endif %}
+                    <h2>{{ coach.COACHNAME }}</h2>
+                    <p>Tuổi: {{ coach.BIRTHDAY }}</p>
+                    <p>Quốc tịch: {{ coach.NATIONALITY }}</p>
+                    <p>Câu lạc bộ: {{ coach.CLUB }}</p>
+                    <div class="action-buttons">
+                        {% if request.user.is_authenticated %}
+                            {% if request.user in coach.followers.all %}
+                                <a href="{% url 'toggle_follow_coach_profile' coach.COACHID %}" class="follow-btn">Unfollow</a>
+                            {% else %}
+                                <a href="{% url 'toggle_follow_coach_profile' coach.COACHID %}" class="follow-btn">Follow</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock%}

@@ -10,3 +10,4 @@ class Coach(models.Model):
     IMAGE = models.ImageField(upload_to='images/')
     CARDS = models.CharField(max_length=6, default='None', null=True, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    followers = models.ManyToManyField(User, related_name='following_coach', blank=True)

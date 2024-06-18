@@ -5,6 +5,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 
+def club_view(request):
+    clubs = Club.objects.all()
+    return render(request, 'club.html', {'clubs': clubs})
+
 @login_required()
 def create_club(request):
     if request.method == 'POST':
@@ -67,3 +71,15 @@ def club_delete(request, club_id):
         club.delete()
         return redirect('club_list')
     return render(request, 'delete_club.html', {'club': club})
+
+@login_required
+def toggle_follow_club(request, club_id):
+    club = get_object_or_404(Club, pk=club_id)
+    user = request.user
+
+    if user in club.followers.all():
+        club.followers.remove(user)
+    else:
+        club.followers.add(user)
+
+    return redirect('club')

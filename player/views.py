@@ -68,8 +68,9 @@ def player_delete(request, player_id):
 @login_required
 def player_reject(request):
     return render(request, 'player/player_reject.html')
+
 @login_required
-def toggle_follow(request, player_id):
+def toggle_follow_player(request, player_id):
     player = get_object_or_404(Player, pk=player_id)
     user = request.user
 

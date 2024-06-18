@@ -11,6 +11,7 @@ class League(models.Model):
     END_TIME = models.DateField()
     IMAGE = models.ImageField(upload_to='league/', null=True, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    followers = models.ManyToManyField(User, related_name='following_league', blank=True)
 
     def __str__(self):
         return self.LEAGUE_NAME

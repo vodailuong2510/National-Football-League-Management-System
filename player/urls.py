@@ -8,5 +8,5 @@ urlpatterns = [
     path('edit/<str:player_id>', views.player_edit_view, name='player_edit'),
     path('delete/<str:player_id>', views.player_delete, name='player_delete'),
     path('player_reject/', views.player_reject, name='player_reject'),
-    path('toggle_follow/<int:player_id>/', views.toggle_follow, name='toggle_follow'),
+    path('toggle_follow/<int:player_id>/', views.toggle_follow_player, name='toggle_follow_player'),
 ]

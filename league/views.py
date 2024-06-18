@@ -74,3 +74,15 @@ def league_delete(request, league_id):
 
 def league_reject(request):
     return render(request, 'league_reject.html')
+
+@login_required
+def toggle_follow_league(request, league_id):
+    league = get_object_or_404(League, pk=league_id)
+    user = request.user
+
+    if user in league.followers.all():
+        league.followers.remove(user)
+    else:
+        league.followers.add(user)
+
+    return redirect('league')

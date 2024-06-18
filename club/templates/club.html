@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Tìm kiếm cầu thủ{% endblock %}
+{% block title %}Danh sách đội bóng{% endblock %}
 
 {% block styles %}
     <style>
@@ -33,14 +33,14 @@
         .form-container button:hover {
             background-color: #45a049;
         }
-        .player-list {
+        .club-list {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
             padding: 20px;
         }
-        .player-item {
+        .club-item {
             background-color: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 10px;
@@ -52,42 +52,42 @@
             flex-direction: column;
             align-items: center;
         }
-        .player-item img {
+        .club-item img {
             width: 200px;
             height: 200px;
             object-fit: contain;
             border-radius: 10px;
             margin-bottom: 15px;
         }
-        .player-item h2 {
+        .club-item h2 {
             font-size: 1.5em;
             margin: 10px 0;
         }
-        .player-item p {
+        .club-item p {
             margin: 5px 0;
             color: #555;
         }
-        .player-item .action-buttons {
+        .club-item .action-buttons {
             display: flex;
             gap: 10px;
             margin-top: 10px;
         }
-        .player-item .action-buttons a {
+        .club-item .action-buttons a {
             padding: 10px 15px;
             color: white;
             text-decoration: none;
             border-radius: 5px;
         }
-        .player-item .edit-btn {
+        .club-item .edit-btn {
             background-color: #4CAF50;
         }
-        .player-item .edit-btn:hover {
+        .club-item .edit-btn:hover {
             background-color: #45a049;
         }
-        .player-item .delete-btn {
+        .club-item .delete-btn {
             background-color: #f44336;
         }
-        .player-item .delete-btn:hover {
+        .club-item .delete-btn:hover {
             background-color: #e53935;
         }
         footer {
@@ -116,48 +116,46 @@
             background-color: #e53935;
         }
     </style>
+</head>
 {% endblock %}
 
 {% block content %}
     <div class="form-container">
-        <form method="GET" action="{% url 'player_list' %}">
-            <input type="text" name="search" placeholder="Nhập tên cầu thủ">
+        <form method="GET" action="{% url 'club' %}">
+            <input type="text" name="search" placeholder="Nhập tên đội bóng">
             <button type="submit">Search</button>
         </form>
     </div>
 
-    <!-- Danh sách cầu thủ -->
-    <div class="player-list">
-        {% for player in players %}
-            <div class="player-item">
-                {% if player.IMAGE %}
-                    <img src="{{ player.IMAGE.url }}" alt="{{ player.PLAYERNAME }}">
+    <!-- Danh sách đội bóng -->
+    <div class="club-list">
+        {% for club in clubs %}
+            <div class="club-item">
+                {% if club.LOGO %}
+                    <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBNAME }}">
                 {% endif %}
-                <h2>{{ player.PLAYERNAME }}</h2>
-                <p>Ngày sinh: {{ player.BIRTHDAY }}</p>
-                <p>Quốc tịch: {{ player.NATIONALITY }}</p>
-                <p>Đội tuyển: {{ player.CLUB }}</p>
-                <p>Thẻ: {{ player.CARDS }}</p>
-                <p>Vị trí: {{ player.POSITION }}</p>
-                <p>Số áo: {{ player.SHIRTNUM }}</p>
-                <p>Bàn thắng: {{ player.GOALS }}</p>
-                <p>Kiến tạo: {{ player.ASSISTS }}</p>
-                <p>Tình trạng: {{ player.CONDITION }}</p>
-                <p>Chiều cao: {{ player.HEIGHT }}</p>
-                <p>Cân nặng: {{ player.WEIGHT }}</p>
-                <p>Chân thuận: {{ player.PREFERFOOT }}</p>
+                <h2>{{ club.CLUBNAME }}</h2>
+                <p>Ngày Thành Lập: {{ club.FOUNDED }}</p>
+                <p>Email: {{ club.EMAIL }}</p>
+                <p>SĐT: {{ club.PHONE }}</p>
+                <p>Huấn Luyện Viên: {{ club.COACH }}</p>
+                <p>Đội Trưởng: {{ club.CAPTAIN }}</p>
+                <p>Sân Vận Động: {{ club.STADIUM }}</p>
+                <p>Sức Chứa: {{ club.CAPACITY }}</p>
+                <p>Số Lượng Cầu Thủ: {{ club.TOTALPLAYERS }}</p>
+                <p>Giải đấu tham gia: {{ club.LEAGUEPLAYING }}</p>
                 <div class="action-buttons">
                     {% if request.user.is_authenticated %}
-                        {% if request.user in player.followers.all %}
-                            <a href="{% url 'toggle_follow_player' player.PLAYERID %}" class="follow-btn">Unfollow</a>
+                        {% if request.user in club.followers.all %}
+                            <a href="{% url 'toggle_follow_club' club.CLUBID %}" class="follow-btn">Unfollow</a>
                         {% else %}
-                            <a href="{% url 'toggle_follow_player' player.PLAYERID %}" class="follow-btn">Follow</a>
+                            <a href="{% url 'toggle_follow_club' club.CLUBID %}" class="follow-btn">Follow</a>
                         {% endif %}
                     {% endif %}
                 </div>
             </div>
         {% empty %}
-            <p>Không tìm thấy cầu thủ nào.</p>
+            <p>Không tìm thấy đội bóng nào.</p>
         {% endfor %}
     </div>
 {% endblock %}

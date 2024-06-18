@@ -15,3 +15,4 @@ class Club(models.Model):
     TOTALPLAYERS = models.PositiveIntegerField()
     LEAGUEPLAYING = models.CharField(max_length=100)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    followers = models.ManyToManyField(User, related_name='following_club', blank=True)

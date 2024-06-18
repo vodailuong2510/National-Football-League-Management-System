@@ -31,7 +31,7 @@ class Player(models.Model):
     ]
     PREFERFOOT = models.CharField(max_length=1, choices=FOOT_CHOICES, default='R')
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    followers = models.ManyToManyField(User, related_name='following', blank=True)
+    followers = models.ManyToManyField(User, related_name='following_player', blank=True)
 
     def __str__(self):
         return f"{self.PLAYERNAME} ({self.PLAYERID})"

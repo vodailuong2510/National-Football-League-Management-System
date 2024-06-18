@@ -70,3 +70,15 @@ def coach_delete_view(request, coach_id):
         return redirect('coach_list')
     
     return render(request, 'coach/delete_coach.html', {'coach': coach})
+
+@login_required
+def toggle_follow_coach(request, coach_id):
+    coach = get_object_or_404(Coach, pk=coach_id)
+    user = request.user
+
+    if user in coach.followers.all():
+        coach.followers.remove(user)
+    else:
+        coach.followers.add(user)
+
+    return redirect('coach')
