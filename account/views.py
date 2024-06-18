@@ -54,9 +54,9 @@ def edit_profile(request):
 def profile(request):
     players = Player.objects.all()
     leagues = League.objects.all()
-    coachs = Coach.objects.all()
+    coaches = Coach.objects.all()
     clubs = Club.objects.all()
-    return render(request, 'profile.html', {'players': players, 'leagues': leagues, 'coachs': coachs, 'clubs': clubs})
+    return render(request, 'profile.html', {'players': players, 'leagues': leagues, 'coaches': coaches, 'clubs': clubs})
 
 @login_required
 def toggle_follow_player_profile(request, player_id):
