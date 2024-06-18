@@ -13,4 +13,5 @@ urlpatterns = [
     path('toggle_follow_league/<int:league_id>/', views.toggle_follow_league_profile, name='toggle_follow_league_profile'),
     path('toggle_follow_club/<int:club_id>/', views.toggle_follow_club_profile, name='toggle_follow_club_profile'),
     path('toggle_follow_coach/<int:coach_id>/', views.toggle_follow_coach_profile, name='toggle_follow_coach_profile'),
+    path('profile/followed_league', views.followed_league, name='followed_league'),
 ]

@@ -51,12 +51,13 @@ def edit_profile(request):
         form = UserUpdateForm(instance=request.user)
     return render(request, 'edit_profile.html', {'form': form})
 
+@login_required
 def profile(request):
     players = Player.objects.all()
     leagues = League.objects.all()
-    coachs = Coach.objects.all()
+    coaches = Coach.objects.all()
     clubs = Club.objects.all()
-    return render(request, 'profile.html', {'players': players, 'leagues': leagues, 'coachs': coachs, 'clubs': clubs})
+    return render(request, 'profile/profile.html', {'players': players, 'leagues': leagues, 'coachs': coaches, 'clubs': clubs})
 
 @login_required
 def toggle_follow_player_profile(request, player_id):
@@ -105,3 +106,8 @@ def toggle_follow_coach_profile(request, coach_id):
         coach.followers.add(user)
 
     return redirect('profile')
+
+@login_required
+def followed_league(request):
+    leagues = League.objects.all()
+    return render(request, 'profile/followed_league.html', {'leagues': leagues})

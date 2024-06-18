@@ -131,39 +131,11 @@
 {% block content %}
     <h1 class="form-title">Danh sách yêu thích</h1>
 
-    <h1 class="form-title-1">Cầu thủ yêu thích</h1>
-    <div class="profile-list">
-        {% for player in players %}
-            {% if request.user in player.followers.all %}
-                <div class="profile-item">
-                    {% if player.IMAGE %}
-                        <img src="{{ player.IMAGE.url }}" alt="{{ player.PLAYERNAME }}">
-                    {% endif %}
-                    <h2>{{ player.PLAYERNAME }}</h2>
-                    <p>Ngày sinh: {{ player.BIRTHDAY }}</p>
-                    <p>Quốc tịch: {{ player.NATIONALITY }}</p>
-                    <p>Đội tuyển: {{ player.CLUB }}</p>
-                    <p>Thẻ: {{ player.CARDS }}</p>
-                    <p>Vị trí: {{ player.POSITION }}</p>
-                    <p>Số áo: {{ player.SHIRTNUM }}</p>
-                    <p>Bàn thắng: {{ player.GOALS }}</p>
-                    <p>Kiến tạo: {{ player.ASSISTS }}</p>
-                    <p>Tình trạng: {{ player.CONDITION }}</p>
-                    <p>Chiều cao: {{ player.HEIGHT }}</p>
-                    <p>Cân nặng: {{ player.WEIGHT }}</p>
-                    <p>Chân thuận: {{ player.PREFERFOOT }}</p>
-                    <div class="action-buttons">
-                        {% if request.user.is_authenticated %}
-                            {% if request.user in player.followers.all %}
-                                <a href="{% url 'toggle_follow_player_profile' player.PLAYERID %}" class="follow-btn">Unfollow</a>
-                            {% else %}
-                                <a href="{% url 'toggle_follow_player_profile' player.PLAYERID %}" class="follow-btn">Follow</a>
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
+    <div class="banner-buttons">
+        <a href>Giải đấu yêu thích</a>
+        <a>Câu lạc bộ yêu thích</a>
+        <a>Cầu thủ yêu thích</a>
+        <a>Huấn luyện viên yêu thích</a>
     </div>
 
     <h1 class="form-title-1">Giải đấu yêu thích</h1>
@@ -186,64 +158,6 @@
                                 <a href="{% url 'toggle_follow_league_profile' league.LEAGUE_ID %}" class="follow-btn">Unfollow</a>
                             {% else %}
                                 <a href="{% url 'toggle_follow_league_profile' league.LEAGUE_ID %}" class="follow-btn">Follow</a>
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-
-    <h1 class="form-title-1">Đội bóng yêu thích</h1>
-    <div class="profile-list">
-        {% for club in clubs %}
-            {% if request.user in club.followers.all %}
-                <div class="profile-item">
-                    {% if club.LOGO %}
-                        <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBNAME }}">
-                    {% endif %}
-                    <h2>{{ club.CLUBNAME }}</h2>
-                    <p>Ngày Thành Lập: {{ club.FOUNDED }}</p>
-                    <p>Email: {{ club.EMAIL }}</p>
-                    <p>SĐT: {{ club.PHONE }}</p>
-                    <p>Huấn Luyện Viên: {{ club.COACH }}</p>
-                    <p>Đội Trưởng: {{ club.CAPTAIN }}</p>
-                    <p>Sân Vận Động: {{ club.STADIUM }}</p>
-                    <p>Sức Chứa: {{ club.CAPACITY }}</p>
-                    <p>Số Lượng Cầu Thủ: {{ club.TOTALPLAYERS }}</p>
-                    <p>Giải đấu tham gia: {{ club.LEAGUEPLAYING }}</p>
-                    <div class="action-buttons">
-                        {% if request.user.is_authenticated %}
-                            {% if request.user in club.followers.all %}
-                                <a href="{% url 'toggle_follow_club_profile' club.CLUBID %}" class="follow-btn">Unfollow</a>
-                            {% else %}
-                                <a href="{% url 'toggle_follow_club_profile' club.CLUBID %}" class="follow-btn">Follow</a>
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-
-    <h1 class="form-title-1">Huấn luyện viên yêu thích</h1>
-    <div class="profile-list">
-        {% for coach in coaches %}
-            {% if request.user in coach.followers.all %}
-                <div class="profile-item">
-                    {% if coach.IMAGE %}
-                        <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}">
-                    {% endif %}
-                    <h2>{{ coach.COACHNAME }}</h2>
-                    <p>Tuổi: {{ coach.BIRTHDAY }}</p>
-                    <p>Quốc tịch: {{ coach.NATIONALITY }}</p>
-                    <p>Câu lạc bộ: {{ coach.CLUB }}</p>
-                    <div class="action-buttons">
-                        {% if request.user.is_authenticated %}
-                            {% if request.user in coach.followers.all %}
-                                <a href="{% url 'toggle_follow_coach_profile' coach.COACHID %}" class="follow-btn">Unfollow</a>
-                            {% else %}
-                                <a href="{% url 'toggle_follow_coach_profile' coach.COACHID %}" class="follow-btn">Follow</a>
                             {% endif %}
                         {% endif %}
                     </div>
