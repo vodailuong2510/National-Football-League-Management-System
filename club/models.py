@@ -14,3 +14,8 @@ class Club(models.Model):
     CAPACITY = models.PositiveIntegerField()
     TOTALPLAYERS = models.PositiveIntegerField()
     LEAGUEPLAYING = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.CLUBNAME
+    def formatted_founded(self):
+        return self.FOUNDED.strftime('%d/%m/%Y')

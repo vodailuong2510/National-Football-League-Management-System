@@ -112,7 +112,7 @@
             <nav>
                 <a href="/" class="dropdown">Trang chủ</a>
                 <div class="dropdown">
-                    <a href="{% url 'league' %}" class="dropdown">Giải đấu</a>
+                    <a href="{% url 'league_list' %}" class="dropdown">Giải đấu</a>
                     <div class="dropdown-content">
                         <a href='{% url "create_league" %}'>Tạo giải đấu</a>
                         <a href='{% url "league_list" %}'>Tìm giải đấu</a>
@@ -174,12 +174,12 @@
                 {% if league.LOGO %}
                     <img src="{{ league.LOGO.url }}" alt="{{ league.LEAGUE_NAME }}">
                 {% endif %}
-                <h2>{{ league.LEAGUE_NAME }}</h2>
+                <h2><a href="{% url 'league_detail' league.LEAGUE_ID %}">{{ league.LEAGUE_NAME }}</a></h2>
                 <p>Tổng số câu lạc bộ: {{ league.TOTAL_CLUB }}</p>
                 <p>Hiệp hội: {{ league.ASSOCIATION }}</p>
-                <p>Ngày thành lập: {{ league.FOUNDED }}</p>
-                <p>Thời gian bắt đầu: {{ league.START_TIME }}</p>
-                <p>Thời gian kết thúc: {{ league.END_TIME }}</p>
+                <p>Ngày thành lập: {{ league.FOUNDED|date:"d/m/Y" }}</p>
+                <p>Thời gian bắt đầu: {{ league.START_TIME|date:"d/m/Y" }}</p>
+                <p>Thời gian kết thúc: {{ league.END_TIME|date:"d/m/Y" }}</p>
                 <div class="action-buttons">
                     <a href="{% url 'league_edit' league.LEAGUE_ID %}" class="edit-btn">Sửa</a>
                     <a href="{% url 'league_delete' league.LEAGUE_ID %}" class="delete-btn">Xóa</a>

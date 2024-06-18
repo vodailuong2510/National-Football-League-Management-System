@@ -20,7 +20,7 @@
             <nav>
                 <a href="/" class="dropdown">Trang chủ</a>
                 <div class="dropdown">
-                    <a href="{% url 'league' %}" class="dropdown">Giải đấu</a>
+                    <a href="{% url 'league_list' %}" class="dropdown">Giải đấu</a>
                     <div class="dropdown-content">
                         <a href='{% url "create_league" %}'>Tạo giải đấu</a>
                         <a href='{% url "league_list" %}'>Tìm giải đấu</a>
@@ -74,8 +74,8 @@
                 <p>Tổ chức giải đấu dễ dàng</p>
                 <p>Quản lý đội thể thao đơn giản</p>
                 <div class="banner-buttons">
-                    <a href="#">Tạo giải đấu</a>
-                    <a href="#">Tìm giải đấu</a>
+                    <a href='{% url "create_league" %}'>Tạo giải đấu</a>
+                    <a href='{% url "league_list" %}'>Tìm giải đấu</a>
                     <a href='{% url "create_club" %}'>Tạo đội</a>
                     <a href='{% url "club_list" %}'>Tìm đội</a>
             </div>

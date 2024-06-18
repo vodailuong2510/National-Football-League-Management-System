@@ -4,29 +4,24 @@ from .models import League
 from django.contrib import messages
 
 # Create your views here.
-def league_view(request):
-    leagues = League.objects.all() 
-    return render(request, 'league.html', {'leagues': leagues})
-
 def create_league(request):
     if request.method == 'POST':
         form = LeagueForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Bạn đã đăng ký giải đấu thành công.')
-            return redirect('league_list')
+            messages.success(request, ' ')
+        else:
+            print(form.errors)
     else:
         form = LeagueForm()
     return render(request, 'create_league.html', {'form': form})
 
 def league_list_view(request):
     leagues = League.objects.all()
-
     # Xử lý yêu cầu tìm kiếm
     search_query = request.GET.get('search')
     if search_query:
         leagues = leagues.filter(LEAGUE_NAME__icontains=search_query)
-
     return render(request, 'league_list.html', {'leagues': leagues})
 
 def league_edit(request, league_id):

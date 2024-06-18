@@ -11,8 +11,7 @@ class ClubForm(forms.ModelForm):
         ]
     def __init__(self, *args, **kwargs):
         super(ClubForm, self).__init__(*args, **kwargs)
-        self.fields['CLUBID'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Mã đội bóng'})
-        super(ClubForm, self).__init__(*args, **kwargs)
+        self.fields['CLUBID'].widget.attrs.update({'class': 'form-control'})
         for field_name in self.fields:
             self.fields[field_name].widget.attrs.update({'class': 'my-input'})
             

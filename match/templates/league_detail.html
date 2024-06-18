@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
+    <title>Thông tin giải đấu</title>
+    <style>
+        body {
+            background-color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+        .league-detail-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+        .match-list, .ranking-list {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .league-detail {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+        .league-detail img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+        .club-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+        }
+        .club-item {
+            text-align: center;
+        }
+        .club-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+        .club-item h3 {
+            font-size: 1em;
+            margin: 5px 0;
+        }
+        .match-list-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .match-list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 120px;
+            width: 94%;
+        }
+        .match-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            width: 110%;
+        }
+        .create-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .create-btn:hover {
+            background-color: #45a049;
+        }
+        .edit-btn, .delete-btn {
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        .edit-btn {
+            background-color: #4CAF50;
+        }
+        .edit-btn:hover {
+            background-color: #45a049;
+        }
+        .delete-btn {
+            background-color: #f44336;
+        }
+        .delete-btn:hover {
+            background-color: #e53935;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .ranking-table th, .ranking-table td {
+            border: 1px solid #ddd;
+            padding: 5px;
+            text-align: center;
+        }
+        .ranking-table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Phần Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="/"><img src="{% static 'home/images/logo.png' %}" alt="Logo"></a>
+            </div>
+            <div class="domain">
+                <a href="/"><p>MyLeagueUIT</p></a>
+            </div>
+            <nav>
+                <a href="/" class="dropdown">Trang chủ</a>
+                <div class="dropdown">
+                    <a href="{% url 'league_list' %}" class="dropdown">Giải đấu</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_league" %}'>Tạo giải đấu</a>
+                        <a href='{% url "league_list" %}'>Tìm giải đấu</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href='{% url "club_list" %}' class="dropdown">Đội thi đấu</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_club" %}'>Tạo đội</a>
+                        <a href='{% url "club_list" %}'>Tìm đội</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href='{% url "coach" %}'  class="dropdown">HLV</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_coach" %}'>Tạo HLV</a>
+                        <a href='{% url "coach_list" %}'>Tìm HLV</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href='{% url "player" %}'  class="dropdown">Cầu thủ</a>
+                    <div class="dropdown-content">
+                        <a href='{% url "create_player" %}'>Tạo Cầu thủ</a>
+                        <a href='{% url "player_list" %}'>Tìm Cầu thủ</a>
+                    </div>
+                </div>
+                <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>
+                <div class="auth-links">
+                    {% if user.username %}
+                        <div class="dropdown">
+                            <a href="#" class="dropdown">Xin chào {{ user.username }}</a>
+                            <div class="dropdown-content">
+                                <a href='{% url "edit_profile" %}'>Sửa thông tin</a>
+                                <a href='{% url "change_password" %}'>Đổi mật khẩu</a>
+                                <a href="{% url 'logout' %}">Đăng Xuất</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="dropdown">Đăng nhập</a>
+                        <a href="{% url 'register' %}" class="dropdown">Đăng ký</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="league-detail-container">
+        <div class="league-detail">
+            {% if league.LOGO %}
+                <img src="{{ league.LOGO.url }}" alt="{{ league.LEAGUE_NAME }}">
+            {% endif %}
+            <div class="club-list">
+                {% for club in clubs %}
+                    <div class="club-item">
+                        {% if club.LOGO %}
+                            <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBNAME }}">
+                        {% endif %}
+                        <h3>{{ club.CLUBNAME }}</h3>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="ranking-list">
+            <h2>Bảng xếp hạng</h2>
+            <table class="ranking-table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Đội</th>
+                        <th>Số Trận</th>
+                        <th>Thắng</th>
+                        <th>Hòa</th>
+                        <th>Thua</th>
+                        <th>Bàn thắng</th>
+                        <th>Bàn thua</th>
+                        <th>Hiệu số</th>
+                        <th>Điểm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ranking in rankings %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ ranking.CLUB.CLUBNAME }}</td>
+                            <td>{{ ranking.PLAYED }}</td>
+                            <td>{{ ranking.WON }}</td>
+                            <td>{{ ranking.DRAWN }}</td>
+                            <td>{{ ranking.LOST }}</td>
+                            <td>{{ ranking.GOALS_FOR }}</td>
+                            <td>{{ ranking.GOALS_AGAINST }}</td>
+                            <td>{{ ranking.GOAL_DIFFERENCE }}</td>
+                            <td>{{ ranking.POINTS }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="match-list">
+            <div class="match-list-header">
+                <h2>Các trận đấu</h2>
+                <a href="{% url 'match_create' league.LEAGUE_ID %}" class="create-btn">Tạo trận đấu</a>
+            </div>
+            <div class="match-list-grid">
+                {% for match in matches %}
+                    <div class="match-item">
+                        <p>{{ match.HOMETEAM}} vs {{ match.AWAYTEAM}}</p>
+                        <p>Vòng {{match.ROUND}}</p>
+                        <p>{{ match.DATE|date:"d/m/Y" }}</p>
+                        <p>{{ match.TIME|time:"H:i" }}</p>
+                        <p>Sân vận động: {{ match.STADIUM }}</p>
+                        <p>Trọng tài: {{ match.REFEREE }}</p>
+                        {% if match.HOMESCORE is not None and match.AWAYSCORE is not None %}
+                            <p><strong>Tỷ số:</strong> {{ match.HOMESCORE }} - {{ match.AWAYSCORE }}</p>
+                        {% else %}
+                            <a href="{% url 'match_update' match.MATCHID %}"><button>Cập nhật tỷ số</button></a>
+                        {% endif %}
+                        <div class="action-buttons">
+                            <a href="{% url 'match_edit' match.MATCHID %}" class="edit-btn">Sửa</a>
+                            <a href="{% url 'match_delete' match.MATCHID %}" class="delete-btn">Xóa</a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>Không có trận đấu nào.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Phần Footer -->
+    <footer>
+        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
+        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
+    </footer>
+</body>
+</html>

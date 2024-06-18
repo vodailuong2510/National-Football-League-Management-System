@@ -8,7 +8,7 @@ def create_club(request):
         form = ClubForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request,'Thành công!')
+            messages.success(request,' ')
         else:
             print(form.errors)
     else:
@@ -29,7 +29,7 @@ def club_edit(request, club_id):
         if form.is_valid():
             new_club_id = form.cleaned_data['CLUBID']
             if new_club_id != club_id and Club.objects.filter(CLUBID=new_club_id).exists():
-                form.add_error('CLUBID', 'ID đã tồn tại')
+                form.add_error('CLUBID', 'ID đội bóng đã tồn tại')
             else:
                 form.save()
                 return redirect('club_list')

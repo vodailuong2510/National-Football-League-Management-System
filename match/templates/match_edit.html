@@ -3,99 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa thông tin trận đấu</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
-    <title>Tìm kiếm giải đấu</title>
     <style>
         body {
             background-color: #FFFFFF;
             margin: 0;
             padding: 0;
         }
-        .form-container {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        .form-container input[type="text"] {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px 0 0 5px;
-            width: 300px;
-        }
-        .form-container button {
-            padding: 10px;
-            border: 1px solid #4CAF50;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 0 5px 5px 0;
-            cursor: pointer;
-        }
-        .form-container button:hover {
-            background-color: #45a049;
-        }
-        .league-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 50px auto;
             padding: 20px;
-        }
-        .league-item {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 20px;
-            width: 300px;
-            text-align: center;
+            background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            margin-right: 30px;
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
-        .league-item img {
-            width: 200px;
-            height: 200px;
-            object-fit: contain;
-            border-radius: 10px;
-            margin-bottom: 15px;
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
         }
-        .league-item h2 {
-            font-size: 1.5em;
-            margin: 10px 0;
-        }
-        .league-item p {
-            margin: 5px 0;
-            color: #555;
-        }
-        .league-item .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .league-item .action-buttons a {
-            padding: 10px 15px;
-            color: white;
-            text-decoration: none;
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
             border-radius: 5px;
         }
-        .league-item .edit-btn {
-            background-color: #4CAF50;
+        .form-group input[type="file"] {
+            padding: 3px;
         }
-        .league-item .edit-btn:hover {
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .form-actions button, .form-actions a {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .form-actions .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .form-actions .btn-primary:hover {
             background-color: #45a049;
         }
-        .league-item .delete-btn {
-            background-color: #f44336;
+        .form-actions .btn-secondary {
+            background-color: #ccc;
+            color: #333;
         }
-        .league-item .delete-btn:hover {
-            background-color: #e53935;
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #333;
-            color: white;
+        .form-actions .btn-secondary:hover {
+            background-color: #bbb;
         }
     </style>
 </head>
@@ -112,7 +93,7 @@
             <nav>
                 <a href="/" class="dropdown">Trang chủ</a>
                 <div class="dropdown">
-                    <a href="{% url 'league' %}" class="dropdown">Giải đấu</a>
+                    <a href="{% url 'league_list' %}" class="dropdown">Giải đấu</a>
                     <div class="dropdown-content">
                         <a href='{% url "create_league" %}'>Tạo giải đấu</a>
                         <a href='{% url "league_list" %}'>Tìm giải đấu</a>
@@ -158,36 +139,29 @@
             </nav>
         </div>
     </header>
-    
-    <!-- Form tìm kiếm -->
-    <div class="form-container">
-        <form method="GET" action="{% url 'league_list' %}">
-            <input type="text" name="search" placeholder="Nhập tên giải đấu">
-            <button type="submit">Tìm kiếm</button>
-        </form>
-    </div>
 
-    <!-- Danh sách giải đấu -->
-    <div class="league-list">
-        {% for league in leagues %}
-            <div class="league-item">
-                {% if league.LOGO %}
-                    <img src="{{ league.LOGO.url }}" alt="{{ league.LEAGUE_NAME }}">
-                {% endif %}
-                <h2>{{ league.LEAGUE_NAME }}</h2>
-                <p>Tổng số câu lạc bộ: {{ league.TOTAL_CLUB }}</p>
-                <p>Hiệp hội: {{ league.ASSOCIATION }}</p>
-                <p>Ngày thành lập: {{ league.FOUNDED }}</p>
-                <p>Thời gian bắt đầu: {{ league.START_TIME }}</p>
-                <p>Thời gian kết thúc: {{ league.END_TIME }}</p>
-                <div class="action-buttons">
-                    <a href="{% url 'league_edit' league.LEAGUE_ID %}" class="edit-btn">Sửa</a>
-                    <a href="{% url 'league_delete' league.LEAGUE_ID %}" class="delete-btn">Xóa</a>
-                </div>
+    <div class="container">
+        <h1>Chỉnh sửa thông tin trận đấu</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-grid">
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="error">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
             </div>
-        {% empty %}
-            <p>Không tìm thấy giải đấu nào.</p>
-        {% endfor %}
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Lưu thay đổi</button>
+                <a href="{% url 'league_list' %}" class="btn-secondary">Hủy</a>
+            </div>
+        </form>
     </div>
 
     <!-- Phần Footer -->
