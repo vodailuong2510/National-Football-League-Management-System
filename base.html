@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
+    {% load static %} <!-- Tải các tệp tĩnh từ Django -->
+    <title>Trang chủ</title>
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
-    {% block styles %}{% endblock %}
-    <link rel="icon" type="image/png" href="{% static 'home/images/icon.png' %}">
-    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
     <!-- Phần Header -->
@@ -19,17 +17,17 @@
             <div class="domain">
                 <a href="/"><p>MyLeagueUIT</p></a>
             </div>
-            <nav class="nav-home">
+            <nav>
                 <a href="/" class="dropdown">Trang chủ</a>
                 <div class="dropdown">
-                    <a href="{% url 'league' %}" class="dropdown">Giải đấu</a>
+                    <a href="#" class="dropdown">Giải đấu</a>
                     <div class="dropdown-content">
-                        <a href='{% url "create_league" %}'>Tạo giải đấu</a>
-                        <a href='{% url "league_list" %}'>Tìm giải đấu</a>
+                        <a href="#">Tạo giải đấu</a>
+                        <a href="#">Tìm giải đấu</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href='{% url "club" %}' class="dropdown">Đội thi đấu</a>
+                    <a href="#" class="dropdown">Đội thi đấu</a>
                     <div class="dropdown-content">
                         <a href='{% url "create_club" %}'>Tạo đội</a>
                         <a href='{% url "club_list" %}'>Tìm đội</a>
@@ -50,14 +48,11 @@
                     </div>
                 </div>
                 <a href='{% url "introduction" %}' class="dropdown">Giới thiệu</a>
-            </nav>
-            <nav>
                 <div class="auth-links">
                     {% if user.username %}
                         <div class="dropdown">
                             <a href="#" class="dropdown">Xin chào {{ user.username }}</a>
                             <div class="dropdown-content">
-                                <a href='{% url "profile" %}'>Yêu thích</a>
                                 <a href='{% url "edit_profile" %}'>Sửa thông tin</a>
                                 <a href='{% url "change_password" %}'>Đổi mật khẩu</a>
                                 <a href="{% url 'logout' %}">Đăng Xuất</a>
@@ -71,8 +66,6 @@
             </nav>
         </div>
     </header>
-
-{% block content %}
     <!-- Phần banner chính -->
     <div class="main-banner">
         <div class="banner-overlay"></div> <!-- Lớp phủ đen -->
@@ -84,8 +77,6 @@
             <p>Đây là nơi bạn có thể theo dõi và quản lý các giải đấu bóng đá một cách dễ dàng và hiệu quả.</p>
         </section>
     </main>
-{% endblock %}
-
     <!-- Phần Footer -->
     <footer>
         <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>

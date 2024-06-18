@@ -1,29 +1,19 @@
-# views.py
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.http import HttpResponseForbidden
 from .forms import CoachForm
 from .models import Coach
+from django.contrib import messages
 
+# Create your views here.
 def coach_view(request):
     coaches = Coach.objects.all()
-
-    # Xử lý yêu cầu tìm kiếm
-    search_query = request.GET.get('search')
-    if search_query:
-        coaches = coaches.filter(COACHNAME__icontains=search_query)
     return render(request, 'coach/coach.html', {'coaches': coaches})
 
-@login_required
 def coach_create(request):
     if request.method == 'POST':
         form = CoachForm(request.POST, request.FILES)
         if form.is_valid():
-            coach = form.save(commit=False)
-            coach.owner = request.user
-            coach.save()
-            messages.success(request, 'Đã thêm huấn luyện viên thành công.')
+            form.save()
+            messages.success(request, 'Bạn đã đăng ký tài khoản thành công.')
             return redirect('coach_list')
     else:
         form = CoachForm()
@@ -39,51 +29,25 @@ def coach_list_view(request):
 
     return render(request, 'coach/coach_list.html', {'coaches': coaches})
 
-def coach_reject(request):
-    return render(request, 'coach/coach_reject.html')
-
-@login_required
 def coach_edit_view(request, coach_id):
-    coach = get_object_or_404(Coach, COACHID=coach_id)
-    
-    # Kiểm tra xem người dùng hiện tại có phải là chủ sở hữu không
-    if coach.owner != request.user:
-        return redirect('coach_reject')
-    
+    if coach_id:
+        coach = get_object_or_404(Coach, COACHID=coach_id)
+        disable_coachid = True
+    else:
+        coach = None
+        disable_coachid = False
+
     if request.method == 'POST':
-        form = CoachForm(request.POST, request.FILES, instance=coach)
+        form = CoachForm(request.POST, request.FILES, instance=coach, disable_coachid=disable_coachid)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Đã cập nhật thông tin huấn luyện viên.')
             return redirect('coach_list')
     else:
-        form = CoachForm(instance=coach)
-    
+        form = CoachForm(instance=coach, disable_coachid=disable_coachid)
+
     return render(request, 'coach/edit_coach.html', {'form': form})
 
-@login_required
 def coach_delete_view(request, coach_id):
     coach = get_object_or_404(Coach, COACHID=coach_id)
-    
-    # Kiểm tra xem người dùng hiện tại có phải là chủ sở hữu không
-    if coach.owner != request.user:
-        return redirect('coach_reject')
-    
-    if request.method == 'POST':
-        coach.delete()
-        messages.success(request, 'Đã xóa huấn luyện viên thành công.')
-        return redirect('coach_list')
-    
-    return render(request, 'coach/delete_coach.html', {'coach': coach})
-
-@login_required
-def toggle_follow_coach(request, coach_id):
-    coach = get_object_or_404(Coach, pk=coach_id)
-    user = request.user
-
-    if user in coach.followers.all():
-        coach.followers.remove(user)
-    else:
-        coach.followers.add(user)
-
-    return redirect('coach')
+    coach.delete()
+    return redirect('coach_list')

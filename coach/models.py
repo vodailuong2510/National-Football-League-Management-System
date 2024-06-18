@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+
 # Create your models here.
 class Coach(models.Model):
     COACHID = models.CharField(primary_key = True, max_length=3)
@@ -8,5 +8,4 @@ class Coach(models.Model):
     NATIONALITY = models.CharField(max_length=20)
     CLUB = models.CharField(max_length=30)
     IMAGE = models.ImageField(upload_to='images/')
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    followers = models.ManyToManyField(User, related_name='following_coach', blank=True)
+    CARDS = models.CharField(max_length=6, default='None', null=True, blank=True)

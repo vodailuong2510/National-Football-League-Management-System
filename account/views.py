@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponseRedirect
 from .forms import RegistrationForm
@@ -6,11 +6,6 @@ from django.urls import reverse
 from django.contrib import messages
 from .forms import CustomPasswordChangeForm
 from .forms import UserUpdateForm
-from django.contrib.auth.decorators import login_required
-from player.models import Player
-from league.models import League
-from club.models import Club
-from coach.models import Coach
 # Create your views here.
 # views.py
 
@@ -50,91 +45,3 @@ def edit_profile(request):
     else:
         form = UserUpdateForm(instance=request.user)
     return render(request, 'edit_profile.html', {'form': form})
-
-@login_required
-def profile(request):
-    players = Player.objects.all()
-    leagues = League.objects.all()
-    coaches = Coach.objects.all()
-    clubs = Club.objects.all()
-    return render(request, 'profile/profile.html', {'players': players, 'leagues': leagues, 'coaches': coaches, 'clubs': clubs})
-
-@login_required
-def toggle_follow_player_profile(request, player_id):
-    player = get_object_or_404(Player, pk=player_id)
-    user = request.user
-
-    if user in player.followers.all():
-        player.followers.remove(user)
-    else:
-        player.followers.add(user)
-
-    return redirect('followed_player')
-
-@login_required
-def toggle_follow_league_profile(request, league_id):
-    league = get_object_or_404(League, pk=league_id)
-    user = request.user
-
-    if user in league.followers.all():
-        league.followers.remove(user)
-    else:
-        league.followers.add(user)
-
-    return redirect('followed_league')
-
-@login_required
-def toggle_follow_club_profile(request, club_id):
-    club = get_object_or_404(Club, pk=club_id)
-    user = request.user
-
-    if user in club.followers.all():
-        club.followers.remove(user)
-    else:
-        club.followers.add(user)
-
-    return redirect('followed_club')
-
-@login_required
-def toggle_follow_coach_profile(request, coach_id):
-    coach = get_object_or_404(Coach, pk=coach_id)
-    user = request.user
-
-    if user in coach.followers.all():
-        coach.followers.remove(user)
-    else:
-        coach.followers.add(user)
-
-    return redirect('followed_coach')
-
-@login_required
-def followed_league(request):
-    leagues = League.objects.all()
-    search_query = request.GET.get('search')
-    if search_query:
-        leagues = leagues.filter(LEAGUE_NAME__icontains=search_query)
-    return render(request, 'profile/followed_league.html', {'leagues': leagues})
-
-@login_required
-def followed_coach(request):
-    coaches = Coach.objects.all()
-    search_query = request.GET.get('search')
-    if search_query:
-        coaches = coaches.filter(COACHNAME__icontains=search_query)
-    return render(request, 'profile/followed_coach.html', {'coaches': coaches})
-
-@login_required
-def followed_player(request):
-    players = Player.objects.all()
-    search_query = request.GET.get('search')
-    if search_query:
-        players = players.filter(PLAYERNAME__icontains=search_query)
-    return render(request, 'profile/followed_player.html', {'players': players})
-
-@login_required
-def followed_club(request):
-    clubs = Club.objects.all()
-    search_query = request.GET.get('search')
-    if search_query:
-        clubs = clubs.filter(CLUBNAME__icontains=search_query)
-    return render(request, 'profile/followed_club.html', {'clubs': clubs})

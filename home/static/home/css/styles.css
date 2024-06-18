@@ -26,11 +26,12 @@ header {
     display: flex; /* Sử dụng flexbox layout */
     align-items: center; /* Căn các phần tử con theo trục dọc */
     width: 100%; /* Chiều rộng của container */
+    max-width: 1050px; /* Đặt chiều rộng tối đa cho container */
     margin: 10 auto; /* Canh giữa container */
 }
 /* CSS cho thanh điều hướng */
 nav {
-    display: flex; /* Hiển thị dạng inline-block để dễ canh chỉnh */
+    display: inline-block; /* Hiển thị dạng inline-block để dễ canh chỉnh */
     vertical-align: middle; /* Căn giữa theo chiều dọc */
     gap: 15px; /* Khoảng cách giữa các phần tử con */
     margin-left: auto; /* Đẩy thanh điều hướng về bên phải */
@@ -45,25 +46,6 @@ nav a {
     font-size: 20px;
 }
 
-/* CSS cho thanh điều hướng */
-.nav-home {
-    display: flex; /* Hiển thị dạng inline-block để dễ canh chỉnh */
-    position: absolute;
-    z-index: 10;
-    vertical-align: middle; /* Căn giữa theo chiều dọc */
-    gap: 15px; /* Khoảng cách giữa các phần tử con */
-    left: 50%; /* Đặt vị trí bắt đầu từ giữa màn hình */
-    transform: translateX(-50%); /* Dịch chuyển phần tử điều hướng để nó căn giữa */
-}
-
-/* CSS cho các liên kết trong thanh điều hướng */
-.nav-home a {
-    color: #fff; /* Màu chữ */
-    text-decoration: none; /* Loại bỏ gạch chân */
-    font-weight: bold; /* Chữ đậm */
-    padding: 10px; /* Khoảng cách bên trong */
-    font-size: 20px;
-}
 /* Đổi màu chữ khi di chuột vào liên kết */
 nav .dropdown:hover {
     color: rgba(255, 255, 255, 0.7); /* Màu chữ thay đổi với độ mờ 70% */
