@@ -8,8 +8,6 @@ class Club(models.Model):
     FOUNDED = models.DateField()
     EMAIL = models.EmailField()
     PHONE = models.CharField(max_length=15)
-    COACH = models.CharField(max_length=100)
-    CAPTAIN = models.CharField(max_length=100)
     STADIUM = models.CharField(max_length=100)
     CAPACITY = models.PositiveIntegerField()
     TOTALPLAYERS = models.PositiveIntegerField()

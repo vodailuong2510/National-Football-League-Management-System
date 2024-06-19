@@ -124,6 +124,28 @@
         .player-item .delete-btn:hover {
             background-color: #e53935;
         }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .form-container input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+            width: 300px;
+        }
+        .form-container button {
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
     </style>
 {% endblock %}   
 
@@ -134,24 +156,18 @@
                     <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBNAME }}">
                 {% endif %}
                 <h2>{{ club.CLUBNAME }}</h2>
-                <p>Ngày Thành Lập: {{ club.FOUNDED }}</p>
-                <p>Email: {{ club.EMAIL }}</p>
-                <p>SĐT: {{ club.PHONE }}</p>
-                <p>Huấn Luyện Viên: {{ club.COACH }}</p>
-                <p>Đội Trưởng: {{ club.CAPTAIN }}</p>
                 <p>Sân Vận Động: {{ club.STADIUM }}</p>
-                <p>Sức Chứa: {{ club.CAPACITY }}</p>
                 <p>Số Lượng Cầu Thủ: {{ club.TOTALPLAYERS }}</p>
                 <p>Giải đấu tham gia: {{ club.LEAGUEPLAYING }}</p>
                 <div class="action-buttons">
-                    <a href="{% url 'create_coach' %}" class="edit-btn">Thêm Huấn luyện viên</a>
+                    <a href="{% url 'create_coach' %}" class="edit-btn">Thêm HLV</a>
                     <a href="{% url 'create_player' %}" class="edit-btn">Thêm Cầu thủ</a>
                 </div>
             </div>
     </div>
     
     <div class="player-info">
-        <h2>Huấn luyện viên</h2>
+        <center><h2>Huấn luyện viên</h2></center>
         {% if coach %}
             <div class="player-item">
                 {% if coach.IMAGE %}
@@ -167,10 +183,16 @@
                 </div>
             </div>
         {% else %}
-            <p>Không tìm thấy huấn luyện viên nào.</p>
+            <center><p>• Không tìm thấy huấn luyện viên nào.</p></center>
         {% endif %}
     </div>
-    <h2>Danh sách cầu thủ</h2>
+    <center><h2>Danh sách cầu thủ</h2></center>
+    <div class="form-container">
+        <form method="GET" action="{% url 'player_list' %}">
+            <input type="text" name="search" placeholder="Nhập tên cầu thủ">
+            <button type="submit">Search</button>
+        </form>
+    </div>
         {% for player in players %}
             <div class="player-item">
                 {% if player.IMAGE %}
@@ -195,7 +217,7 @@
                 </div>
             </div>
         {% empty %}
-            <p>Không tìm thấy cầu thủ nào.</p>
+            <<center><p>• Không tìm thấy cầu thủ nào.</p></center>
         {% endfor %}
     </div>
 {% endblock %}

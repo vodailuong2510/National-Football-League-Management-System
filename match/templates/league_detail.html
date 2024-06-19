@@ -135,20 +135,23 @@
 {% endblock %}
 
 {% block content %}
-    <div class="league-detail-container">
-        <div class="league-detail">
-            {% if league.LOGO %}
-                <img src="{{ league.LOGO.url }}" alt="{{ league.LEAGUE_NAME }}">
-            {% endif %}
-            <div class="club-list">
-                {% for club in clubs %}
-                    <div class="club-item">
-                        {% if club.LOGO %}
-                            <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBNAME }}">
-                        {% endif %}
-                        <h3>{{ club.CLUBNAME }}</h3>
-                    </div>
-                {% endfor %}
+        <div class="league-detail-container">
+            <div class="league-detail">
+                {% if league.LOGO %}
+                    <img src="{{ league.LOGO.url }}" alt="{{ league.LEAGUE_NAME }}">
+                {% endif %}
+                <div class="club-list">
+                    {% for club in clubs %}
+                        <div class="club-item">
+                            {% if club.LOGO %}
+                                <a href="{% url 'view_club' club.CLUBID %}">
+                                    <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBNAME }}">
+                                </a>
+                            {% endif %}
+                            <h3><a href="{% url 'view_club' club.CLUBID %}">{{ club.CLUBNAME }}</a></h3>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         <div class="ranking-list">
@@ -211,7 +214,7 @@
                         </div>
                     </div>
                 {% empty %}
-                    <p>Không có trận đấu nào.</p>
+                    <p>• Không có trận đấu nào.</p>
                 {% endfor %}
             </div>
         </div>

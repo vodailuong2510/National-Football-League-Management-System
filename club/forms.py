@@ -6,8 +6,7 @@ class ClubForm(forms.ModelForm):
     class Meta:
         model = Club
         fields = [
-            'CLUBID', 'CLUBNAME', 'LOGO', 'FOUNDED', 'EMAIL', 'PHONE', 
-            'COACH', 'CAPTAIN', 'STADIUM', 'CAPACITY', 'TOTALPLAYERS', 'LEAGUEPLAYING'
+            'CLUBID', 'CLUBNAME', 'LOGO', 'FOUNDED', 'EMAIL', 'PHONE', 'STADIUM', 'CAPACITY', 'TOTALPLAYERS', 'LEAGUEPLAYING'
         ]
     def __init__(self, *args, **kwargs):
         super(ClubForm, self).__init__(*args, **kwargs)

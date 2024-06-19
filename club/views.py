@@ -90,6 +90,10 @@ def view_club(request, club_id):
     players = Player.objects.filter(CLUBID=club_id)
     coach = Coach.objects.filter(CLUBID=club_id).first()  # Lấy huấn luyện viên của câu lạc bộ
 
+    search_query = request.GET.get('search')
+    if search_query:
+        players = players.filter(PLAYERNAME__icontains=search_query)
+
     context = {
         'club': club,
         'players': players,
