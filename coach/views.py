@@ -2,7 +2,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseForbidden
 from .forms import CoachForm
 from .models import Coach
 
@@ -21,10 +20,14 @@ def coach_create(request):
         form = CoachForm(request.POST, request.FILES)
         if form.is_valid():
             coach = form.save(commit=False)
-            coach.owner = request.user
-            coach.save()
-            messages.success(request, 'Đã thêm huấn luyện viên thành công.')
-            return redirect('coach_list')
+            club = coach.CLUBID  # Lấy club từ coach
+            if Coach.objects.filter(CLUBID=club).exists():
+                messages.error(request, 'Đăng ký không thành công.')
+            else:
+                coach.owner = request.user  # Lưu người dùng hiện tại là chủ sở hữu
+                coach.save()
+                messages.success(request, 'Đăng ký thành công.')
+                return redirect('coach_list')
     else:
         form = CoachForm()
     return render(request, 'coach/create_coach.html', {'form': form})

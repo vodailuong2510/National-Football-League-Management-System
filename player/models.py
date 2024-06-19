@@ -1,11 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
+from club.models import Club
 class Player(models.Model):
     PLAYERID = models.CharField(primary_key=True, max_length=3)
     PLAYERNAME = models.CharField(max_length=30)
     BIRTHDAY = models.DateField()
     NATIONALITY = models.CharField(max_length=20)
     CLUB = models.CharField(max_length=30)
+    CLUBID = models.ForeignKey(Club, on_delete=models.CASCADE, null = True, blank = True)
     IMAGE = models.ImageField(upload_to='images/')
     
     # Additional fields

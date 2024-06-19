@@ -135,6 +135,7 @@
                     <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBNAME }}">
                 {% endif %}
                 <h2>{{ club.CLUBNAME }}</h2>
+                <p>Mã đội tuyển: {{club.CLUBID}}
                 <p>Ngày Thành Lập: {{ club.FOUNDED }}</p>
                 <p>Email: {{ club.EMAIL }}</p>
                 <p>SĐT: {{ club.PHONE }}</p>
@@ -145,6 +146,7 @@
                 <p>Số Lượng Cầu Thủ: {{ club.TOTALPLAYERS }}</p>
                 <p>Giải đấu tham gia: {{ club.LEAGUEPLAYING }}</p>
                 <div class="action-buttons">
+                    <a href="{% url 'view_club' club.CLUBID %}" class="edit-btn">Xem</a>
                     <a href="{% url 'club_edit' club.CLUBID %}" class="edit-btn">Sửa</a>
                     <a href="{% url 'club_delete' club.CLUBID %}" class="delete-btn">Xóa</a>
                     {% if request.user.is_authenticated %}

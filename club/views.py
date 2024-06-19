@@ -3,7 +3,8 @@ from .forms import ClubForm
 from .models import Club
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
+from player.models import Player
+from coach.models import Coach
 
 def club_view(request):
     clubs = Club.objects.all()
@@ -83,3 +84,15 @@ def toggle_follow_club(request, club_id):
         club.followers.add(user)
 
     return redirect('club')
+
+def view_club(request, club_id):
+    club = get_object_or_404(Club, pk=club_id)
+    players = Player.objects.filter(CLUBID=club_id)
+    coach = Coach.objects.filter(CLUBID=club_id).first()  # Lấy huấn luyện viên của câu lạc bộ
+
+    context = {
+        'club': club,
+        'players': players,
+        'coach': coach,
+    }
+    return render(request, 'club/templates/view_club.html', context)

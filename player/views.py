@@ -3,8 +3,6 @@ from .forms import PlayerForm
 from .models import Player
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
-
 def player_view(request):
     players = Player.objects.all()
 
@@ -20,10 +18,14 @@ def player_create(request):
         form = PlayerForm(request.POST, request.FILES)
         if form.is_valid():
             player = form.save(commit=False)
-            player.owner = request.user  # Lưu người dùng hiện tại là chủ sở hữu
-            player.save()
-            messages.success(request, 'Đăng ký thành công.')
-            return redirect('player_list')
+            club = player.CLUBID  # Lấy club từ player
+            if Player.objects.filter(CLUBID=club).count() >= club.TOTALPLAYERS:
+                messages.error(request, 'Đăng ký không thành công.')
+            else:
+                player.owner = request.user  # Lưu người dùng hiện tại là chủ sở hữu
+                player.save()
+                messages.success(request, 'Đăng ký thành công.')
+                return redirect('player_list')
     else:
         form = PlayerForm()
     return render(request, 'player/create_player.html', {'form': form})
