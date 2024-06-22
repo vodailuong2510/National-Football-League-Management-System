@@ -2,136 +2,204 @@
 
 {% load static %}
 
-{% block title %}Chỉnh sửa huấn luyện viên{% endblock %}
+{% block title %}Tạo huấn luyện viên{% endblock %}
+
 {% block styles %}
     <style>
-        .form-container {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-            display: flex;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        body {
+            background-color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .dash-line-box {
-            border: 2px dashed #00264D;
-            padding: 50px;
-            width: 200px;
-            height: 230px;
-            text-align: center;
+        .form-container {
             display: flex;
             justify-content: center;
-            align-items: center;
-            margin: 5px auto;
-        }
-        
-        .image-input {
-            display: inline-block;
-            position: relative;
-            cursor: pointer;
+            padding: 20px 50px;
         }
 
-        .image-input img {
-            display: block;
-        }
-
-        .image-input input[type="file"] {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .form-box {
             width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .input {
-            font-size: 30px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        
-        .form-grid label {
-            grid-column: 1 / 2;
-            margin: 7px;
-        }
-        
-        .form-grid div,
-        .form-grid input[type="submit"] {
-            grid-column: 2 / 3;
-        }
-
-        form {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            max-width: 1000px;
             background-color: #f9f9f9;
-            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"], 
+        .form-group input[type="date"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
             border-radius: 5px;
         }
 
-        input[type="submit"] {
-            background-color: #00264D;
+        .form-group input[type="file"] {
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
         }
 
-        input[type="submit"]:hover {
-            background-color: #003366;
+        .form-group input[type="submit"]:hover {
+            background-color: #45a049;
         }
-        
-        .form-grid input[type="text"], .form-grid select {
-            width: 88%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }    
+
+        footer {
+            text-align: center;
+            padding: 20px 50px;
+            background-color: #333;
+            color: white;
+            margin-top: 20px;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .errorlist {
+            color: red;
+            list-style-type: none;
+        }
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .message-box .icon {
+            font-size: 50px;
+        }
+
+        .message-box .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: #3c763d;
+        }
+
+        .show {
+            display: block;
+            animation: fadeIn 0.5s, fadeOut 0.5s 4.5s;
+        }
+
+        @keyframes fadeIn {
+            from{opacity: 0;}
+            to{opacity: 1;}
+        }
+
+        @keyframes fadeOut {
+            from{opacity: 1;}
+            to{opacity: 0;}
+        }
     </style>
+
 {% endblock %}
 
 {% block content %}
-    <div class="main-banner">
-        <div class="banner-overlay"> 
-            <div class="banner-content">
-                <h1>Tạo huấn luyện viên</h1>
-            </div>
-            <form method="POST" enctype="multipart/form-data" class="mt-4">
-                {% csrf_token %}
-                <div class="form-container">
-                    <div class = "dash-line-box">
-                        <div class="image-input">
-                            {{ form.IMAGE }}
-                        </div>
-                    </div>
+    <h1 class="form-title">Thông tin huấn luyện viên</h1>
 
-                    <div class = "input">
-                        <div class="form-grid">
-                            <label for="name">Họ & Tên:</label>
-                            <div>{{ form.COACHNAME }}</div>
-                            <label for="birthday">Ngày sinh:</label>
-                            <div>{{ form.BIRTHDAY }}</div>
-                            <label for="nationality">Quốc tịch:</label>
-                            <div>{{ form.NATIONALITY }}</div>
-                            <label for="club">Đội tuyển:</label>
-                            <div>{{ form.CLUB }}</div>
-                            <label for="cards">Thẻ:</label>
-                            <div>{{ form.CARDS }}</div>
-                            <input type='submit' value='Tạo'/>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
+    <div class="form-container">
+        <form method="POST" enctype="multipart/form-data" class="form-box">
+            {% csrf_token %}
+            {% if form.errors %}
+                <ul class="errorlist">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <div class="form-group">
+                <label for="id_image">Hình ảnh</label>
+                {{ form.IMAGE }}
+            </div>
+            <div class="form-group">
+                <label for="id_coachid">ID</label>
+                {{ form.COACHID }}
+            </div>
+            <div class="form-group">
+                <label for="id_coachname">Tên HLV</label>
+                {{ form.COACHNAME }}
+            </div>
+            <div class="form-group">
+                <label for="id_birthday">Ngày sinh</label>
+                {{ form.BIRTHDAY }}
+            </div>
+            <div class="form-group">
+                <label for="id_nationality">Quốc tịch</label>
+                {{ form.NATIONALITY }}
+            </div>
+            <div class="form-group">
+                <label for="id_club">Câu lạc bộ</label>
+                {{ form.CLUB }}
+            </div>
+            <div class="form-group">
+                <label for="id_club">Mã câu lạc bộ</label>
+                {{ form.CLUBID }}
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Tạo HLV">
+            </div>
+        </form>
     </div>
+    
+    <div id="messageBox" class="message-box">
+        <div class="icon">✔</div>
+        <p>Thành công!</p>
+        <button class="close-btn" onclick="document.getElementById('messageBox').style.display='none'">&times;</button>
+    </div>
+
+    <script>
+        function showMessage() {
+            var messageBox = document.getElementById('messageBox');
+            messageBox.classList.add('show');
+            setTimeout(function() {
+                messageBox.classList.remove('show');
+            }, 3000);
+        }
+
+        window.onload = function() {
+            {% if messages %}
+                showMessage();
+            {% endif %}
+        }
+    </script>
 {% endblock %}

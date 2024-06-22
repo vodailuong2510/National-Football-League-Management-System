@@ -160,8 +160,13 @@
                 <p>Số Lượng Cầu Thủ: {{ club.TOTALPLAYERS }}</p>
                 <p>Giải đấu tham gia: {{ club.LEAGUEPLAYING }}</p>
                 <div class="action-buttons">
-                    <a href="{% url 'create_coach' %}" class="edit-btn">Thêm HLV</a>
-                    <a href="{% url 'create_player' %}" class="edit-btn">Thêm Cầu thủ</a>
+                    {% if club.owner == request.user %}
+                        <a href="{% url 'create_coach' %}" class="edit-btn">Thêm HLV</a>
+                        <a href="{% url 'create_player'%}" class="edit-btn">Thêm Cầu thủ</a>
+                    {% else %}
+                        <a href="{% url 'club_reject' %}" class="edit-btn">Thêm HLV</a>
+                        <a href="{% url 'club_reject' %}" class="edit-btn">Thêm Cầu thủ</a>
+                    {% endif %}
                 </div>
             </div>
     </div>

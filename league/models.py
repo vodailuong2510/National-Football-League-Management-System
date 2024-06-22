@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 class League(models.Model):
     LEAGUE_ID = models.CharField(primary_key=True, max_length=3)
     LEAGUE_NAME = models.CharField(max_length=30)
-    LOGO = models.ImageField(upload_to='league/')
+    LOGO = models.ImageField(upload_to='league/', null = True)
     TOTAL_CLUB = models.IntegerField(default=0)
     ASSOCIATION = models.CharField(max_length=50)
     FOUNDED = models.DateField()
