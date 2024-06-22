@@ -6,130 +6,122 @@
 
 {% block styles %}
     <style>
-        body {
-            background-color: #FFFFFF;
-            margin: 0;
-            padding: 0;
-        }
-        .league-detail-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px;
-        }
-        .match-list, .ranking-list {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 20px;
-            width: 80%;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        .league-detail {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            width: 100%;
-        }
-        .league-detail img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-        }
-        .club-list {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            width: 100%;
-        }
-        .club-item {
-            text-align: center;
-        }
-        .club-item img {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-            margin-bottom: 10px;
-        }
-        .club-item h3 {
-            font-size: 1em;
-            margin: 5px 0;
-        }
-        .match-list-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .match-list-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 120px;
-            width: 94%;
-        }
-        .match-item {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            width: 110%;
-        }
-        .create-btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-        .create-btn:hover {
-            background-color: #45a049;
-        }
-        .edit-btn, .delete-btn {
-            padding: 10px 15px;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            margin: 5px;
-        }
-        .edit-btn {
-            background-color: #4CAF50;
-        }
-        .edit-btn:hover {
-            background-color: #45a049;
-        }
-        .delete-btn {
-            background-color: #f44336;
-        }
-        .delete-btn:hover {
-            background-color: #e53935;
-        }
-        .action-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        .ranking-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        .ranking-table th, .ranking-table td {
-            border: 1px solid #ddd;
-            padding: 5px;
-            text-align: center;
-        }
-        .ranking-table th {
-            background-color: #4CAF50;
-            color: white;
-        }
+body {
+    background-color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+.league-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    width: 100%;
+}
+.league-detail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+.league-detail img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+.club-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+.club-item {
+    text-align: center;
+}
+.club-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+.club-item h3 {
+    font-size: 1em;
+    margin: 5px 0;
+}
+.match-list-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.match-list-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+}
+.match-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.create-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+.create-btn:hover {
+    background-color: #45a049;
+}
+.edit-btn, .delete-btn {
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 5px;
+}
+.edit-btn {
+    background-color: #4CAF50;
+}
+.edit-btn:hover {
+    background-color: #45a049;
+}
+.delete-btn {
+    background-color: #f44336;
+}
+.delete-btn:hover {
+    background-color: #e53935;
+}
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.ranking-table th, .ranking-table td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+}
+.ranking-table th {
+    background-color: #4CAF50;
+    color: white;
+}
     </style>
 
 {% endblock %}
