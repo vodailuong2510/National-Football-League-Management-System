@@ -6,14 +6,18 @@ class ClubForm(forms.ModelForm):
     class Meta:
         model = Club
         fields = [
-            'CLUBID', 'CLUBNAME', 'LOGO', 'FOUNDED', 'EMAIL', 'PHONE', 'STADIUM', 'CAPACITY', 'TOTALPLAYERS', 'LEAGUEPLAYING'
+            'CLUBID', 'LOGO', 'FOUNDED', 'EMAIL', 'PHONE', 'STADIUM', 'CAPACITY', 'TOTALPLAYERS', 'LEAGUEPLAYING'
         ]
     def __init__(self, *args, **kwargs):
         super(ClubForm, self).__init__(*args, **kwargs)
-        self.fields['CLUBID'].widget.attrs.update({'class': 'form-control'})
-        super(ClubForm, self).__init__(*args, **kwargs)
-        for field_name in self.fields:
-            self.fields[field_name].widget.attrs.update({'class': 'my-input'})
+        self.fields['CLUBID'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Tên đội bóng'})
+        self.fields['LOGO'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Logo'})
+        self.fields['FOUNDED'].widget.attrs.update({'class': 'form-control', 'placeholder': 'dd/mm/YYYY'})
+        self.fields['EMAIL'].widget.attrs.update({'class': 'form-control', 'placeholder': 'example@mail.com'})
+        self.fields['PHONE'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Số điện thoại'})
+        self.fields['STADIUM'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Sân vận động'})
+        self.fields['CAPACITY'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Sức chứa'})
+        self.fields['TOTALPLAYERS'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Tổng số cầu thủ'})
             
     def clean_FOUNDED(self):
         founded = self.cleaned_data.get('FOUNDED')

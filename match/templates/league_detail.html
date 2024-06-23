@@ -130,17 +130,17 @@ body {
         <div class="league-detail-container">
             <div class="league-detail">
                 {% if league.LOGO %}
-                    <img src="{{ league.LOGO.url }}" alt="{{ league.LEAGUE_NAME }}">
+                    <img src="{{ league.LOGO.url }}" alt="{{ league.LEAGUE_ID}">
                 {% endif %}
                 <div class="club-list">
                     {% for club in clubs %}
                         <div class="club-item">
                             {% if club.LOGO %}
                                 <a href="{% url 'view_club' club.CLUBID %}">
-                                    <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBNAME }}">
+                                    <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBID }}">
                                 </a>
                             {% endif %}
-                            <h3><a href="{% url 'view_club' club.CLUBID %}">{{ club.CLUBNAME }}</a></h3>
+                            <h3><a href="{% url 'view_club' club.CLUBID %}">{{ club.CLUBID }}</a></h3>
                         </div>
                     {% endfor %}
                 </div>
@@ -167,7 +167,7 @@ body {
                     {% for ranking in rankings %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td>{{ ranking.CLUB.CLUBNAME }}</td>
+                            <td>{{ ranking.CLUB.CLUBID }}</td>
                             <td>{{ ranking.PLAYED }}</td>
                             <td>{{ ranking.WON }}</td>
                             <td>{{ ranking.DRAWN }}</td>

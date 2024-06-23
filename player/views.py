@@ -25,7 +25,8 @@ def player_create(request):
                 player.owner = request.user  # Lưu người dùng hiện tại là chủ sở hữu
                 player.save()
                 messages.success(request, 'Đăng ký thành công.')
-                return redirect('player_list')
+                clubid = player.CLUBID
+                return redirect('view_club', club_id=str(clubid))
     else:
         form = PlayerForm()
     return render(request, 'player/create_player.html', {'form': form})
@@ -52,7 +53,8 @@ def player_edit_view(request, player_id):
         form = PlayerForm(request.POST, request.FILES, instance=player)
         if form.is_valid():
             form.save()
-            return redirect('player_list')
+            clubid = player.CLUBID
+            return redirect('view_club', club_id=str(clubid))
     else:
         form = PlayerForm(instance=player)
 
@@ -61,14 +63,14 @@ def player_edit_view(request, player_id):
 @login_required
 def player_delete(request, player_id):
     player = get_object_or_404(Player, PLAYERID=player_id)
-
+    clubid = player.CLUBID
     # Kiểm tra xem người dùng hiện tại có phải là chủ sở hữu không
     if player.owner != request.user:
         return redirect('player_reject')
 
     if request.method == 'POST':
         player.delete()
-        return redirect('player_list')
+        return redirect('view_club', club_id=str(clubid))
 
     return render(request, 'player/delete_player.html', {'player': player})
 

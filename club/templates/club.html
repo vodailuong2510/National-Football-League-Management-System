@@ -132,9 +132,9 @@
         {% for club in clubs %}
             <div class="club-item">
                 {% if club.LOGO %}
-                    <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBNAME }}">
+                    <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBID }}">
                 {% endif %}
-                <h2>{{ club.CLUBNAME }}</h2>
+                <h2>{{ club.CLUBID }}</h2>
                 <p>Mã đội tuyển: {{club.CLUBID}}
                 <p>Ngày Thành Lập: {{ club.FOUNDED }}</p>
                 <p>Email: {{ club.EMAIL }}</p>

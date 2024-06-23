@@ -170,9 +170,9 @@
             {% if request.user in club.followers.all %}
                 <div class="profile-item">
                     {% if club.LOGO %}
-                        <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBNAME }}">
+                        <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBID }}">
                     {% endif %}
-                    <h2>{{ club.CLUBNAME }}</h2>
+                    <h2>{{ club.CLUBID }}</h2>
                     <p>Ngày Thành Lập: {{ club.FOUNDED }}</p>
                     <p>Email: {{ club.EMAIL }}</p>
                     <p>SĐT: {{ club.PHONE }}</p>

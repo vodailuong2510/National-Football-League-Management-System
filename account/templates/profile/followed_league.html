@@ -170,9 +170,9 @@
             {% if request.user in league.followers.all %}
                 <div class="profile-item">
                     {% if league.LOGO %}
-                        <img src="{{ league.LOGO.url }}" alt="{{ league.LEAGUE_NAME }}">
+                        <img src="{{ league.LOGO.url }}" alt="{{ league.LEAGUE_ID }}">
                     {% endif %}
-                    <h2>{{ league.LEAGUE_NAME }}</h2>
+                    <h2>{{ league.LEAGUE_ID }}</h2>
                     <p>Số câu lạc bộ: {{ league.TOTAL_CLUB }}</p>
                     <p>Hiệp hội: {{ league.ASSOCIATION }}</p>
                     <p>Ngày thành lập: {{ league.FOUNDED }}</p>

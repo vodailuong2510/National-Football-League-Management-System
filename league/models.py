@@ -2,8 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 class League(models.Model):
-    LEAGUE_ID = models.CharField(primary_key=True, max_length=3)
-    LEAGUE_NAME = models.CharField(max_length=30)
+    LEAGUE_ID = models.CharField(primary_key=True, max_length=50)
     LOGO = models.ImageField(upload_to='league/', null = True)
     TOTAL_CLUB = models.IntegerField(default=0)
     ASSOCIATION = models.CharField(max_length=50)
@@ -14,7 +13,7 @@ class League(models.Model):
     followers = models.ManyToManyField(User, related_name='following_league', blank=True)
 
     def __str__(self):
-        return self.LEAGUE_NAME
+        return self.LEAGUE_ID
     def formatted_founded(self):
         return self.FOUNDED.strftime('%d/%m/%Y')
     def formatted_start_time(self):

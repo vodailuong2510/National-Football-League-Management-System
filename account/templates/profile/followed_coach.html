@@ -171,9 +171,9 @@
             {% if request.user in coach.followers.all %}
                 <div class="profile-item">
                     {% if coach.IMAGE %}
-                        <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}">
+                        <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHID }}">
                     {% endif %}
-                    <h2>{{ coach.COACHNAME }}</h2>
+                    <h2>{{ coach.COACHID }}</h2>
                     <p>Tuổi: {{ coach.BIRTHDAY }}</p>
                     <p>Quốc tịch: {{ coach.NATIONALITY }}</p>
                     <p>Câu lạc bộ: {{ coach.CLUB }}</p>

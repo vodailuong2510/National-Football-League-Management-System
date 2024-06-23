@@ -153,9 +153,9 @@
     <div class="club-list">
             <div class="club-item">
                 {% if club.LOGO %}
-                    <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBNAME }}">
+                    <img src="{{ club.LOGO.url }}" alt="{{ club.CLUBID }}">
                 {% endif %}
-                <h2>{{ club.CLUBNAME }}</h2>
+                <h2>{{ club.CLUBID }}</h2>
                 <p>Sân Vận Động: {{ club.STADIUM }}</p>
                 <p>Số Lượng Cầu Thủ: {{ club.TOTALPLAYERS }}</p>
                 <p>Giải đấu tham gia: {{ club.LEAGUEPLAYING }}</p>
@@ -163,9 +163,11 @@
                     {% if club.owner == request.user %}
                         <a href="{% url 'create_coach' %}" class="edit-btn">Thêm HLV</a>
                         <a href="{% url 'create_player'%}" class="edit-btn">Thêm Cầu thủ</a>
+                        <a href="{% url 'register_league' club.CLUBID %}" class="edit-btn">Đăng ký thi đấu</a>
                     {% else %}
                         <a href="{% url 'club_reject' %}" class="edit-btn">Thêm HLV</a>
                         <a href="{% url 'club_reject' %}" class="edit-btn">Thêm Cầu thủ</a>
+                        <a href="{% url 'club_reject' %}" class="edit-btn">Đăng ký thi đấu</a>
                     {% endif %}
                 </div>
             </div>
@@ -176,12 +178,12 @@
         {% if coach %}
             <div class="player-item">
                 {% if coach.IMAGE %}
-                    <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHNAME }}">
+                    <img src="{{ coach.IMAGE.url }}" alt="{{ coach.COACHID }}">
                 {% endif %}
-                <h2>{{ coach.COACHNAME }}</h2>
+                <h2>{{ coach.COACHID }}</h2>
                 <p>Tuổi: {{ coach.BIRTHDAY }}</p>
                 <p>Quốc tịch: {{ coach.NATIONALITY }}</p>
-                <p>Câu lạc bộ: {{ coach.CLUBID.CLUBNAME }}</p>
+                <p>Câu lạc bộ: {{ coach.CLUBID.CLUBID }}</p>
                 <div class="action-buttons">
                     <a href="{% url 'coach_edit' coach.COACHID %}" class="edit-btn">Sửa</a>
                     <a href="{% url 'coach_delete' coach.COACHID %}" class="delete-btn">Xóa</a>
@@ -201,12 +203,12 @@
         {% for player in players %}
             <div class="player-item">
                 {% if player.IMAGE %}
-                    <img src="{{ player.IMAGE.url }}" alt="{{ player.PLAYERNAME }}">
+                    <img src="{{ player.IMAGE.url }}" alt="{{ player.PLAYERID }}">
                 {% endif %}
-                <h2>{{ player.PLAYERNAME }}</h2>
+                <h2>{{ player.PLAYERID }}</h2>
                 <p>Ngày sinh: {{ player.BIRTHDAY }}</p>
                 <p>Quốc tịch: {{ player.NATIONALITY }}</p>
-                <p>Đội tuyển: {{ player.CLUB }}</p>
+                <p>Đội tuyển: {{ player.CLUBID }}</p>
                 <p>Thẻ: {{ player.CARDS }}</p>
                 <p>Vị trí: {{ player.POSITION }}</p>
                 <p>Số áo: {{ player.SHIRTNUM }}</p>

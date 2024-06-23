@@ -6,7 +6,6 @@ class Player(models.Model):
     PLAYERNAME = models.CharField(max_length=30)
     BIRTHDAY = models.DateField()
     NATIONALITY = models.CharField(max_length=20)
-    CLUB = models.CharField(max_length=30)
     CLUBID = models.ForeignKey(Club, on_delete=models.CASCADE, null = True, blank = True)
     IMAGE = models.ImageField(upload_to='images/')
     

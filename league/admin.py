@@ -3,6 +3,6 @@ from .models import League
 
 # Register your models here.
 class LeagueAdmin(admin.ModelAdmin):
-    list_display = ('LEAGUE_ID', 'LEAGUE_NAME', 'LOGO', 'TOTAL_CLUB', 'ASSOCIATION', 'FOUNDED', 'START_TIME', 'END_TIME')
+    list_display = ('LEAGUE_ID', 'LOGO', 'TOTAL_CLUB', 'ASSOCIATION', 'FOUNDED', 'START_TIME', 'END_TIME')
 
 admin.site.register(League, LeagueAdmin)

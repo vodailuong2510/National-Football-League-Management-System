@@ -155,12 +155,8 @@
                 </ul>
             {% endif %}
             <div class="form-group">
-                <label for="leagueid">ID</label>
+                <label for="leagueid">Tên giải đấu</label>
                 {{ form.LEAGUE_ID }}
-            </div>
-            <div class="form-group">
-                <label for="leaguename">Tên Giải Đấu</label>
-                {{ form.LEAGUE_NAME }}
             </div>
             <div class="form-group">
                 <label for="logo">Logo</label>
@@ -197,12 +193,6 @@
         <p>Thành công!</p>
         <button class="close-btn" onclick="document.getElementById('messageBox').style.display='none'">&times;</button>
     </div>
-    
-    <!-- Phần Footer -->
-    <footer>
-        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
-        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
-    </footer>
 
     <script>
         function showMessage() {

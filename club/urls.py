@@ -8,6 +8,7 @@ urlpatterns = [
     path('club_edit/<str:club_id>/', views.club_edit, name='club_edit'),
     path('club_delete/<str:club_id>/', views.club_delete, name='club_delete'),
     path('club_reject/', views.club_reject, name='club_reject'),
-    path('toggle_follow/<int:club_id>/', views.toggle_follow_club, name='toggle_follow_club'),
+    path('toggle_follow/<str:club_id>/', views.toggle_follow_club, name='toggle_follow_club'),
     path('view_club/<str:club_id>/', views.view_club, name='view_club'),
+    path('club/<str:club_id>/register/', views.register_league, name='register_league'),
 ]

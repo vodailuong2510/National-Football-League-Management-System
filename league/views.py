@@ -12,7 +12,7 @@ def league_view(request):
     # Xử lý yêu cầu tìm kiếm
     search_query = request.GET.get('search')
     if search_query:
-        leagues = leagues.filter(LEAGUE_NAME__icontains=search_query)
+        leagues = leagues.filter(LEAGUE_ID__icontains=search_query)
 
     return render(request, 'league.html', {'leagues': leagues})
 
@@ -38,7 +38,7 @@ def league_list_view(request):
     # Xử lý yêu cầu tìm kiếm
     search_query = request.GET.get('search')
     if search_query:
-        leagues = leagues.filter(LEAGUE_NAME__icontains=search_query)
+        leagues = leagues.filter(LEAGUE_ID__icontains=search_query)
 
     return render(request, 'league_list.html', {'leagues': leagues})
 

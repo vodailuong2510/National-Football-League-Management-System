@@ -135,10 +135,10 @@
             <div class="league-item">
                 {% if league.LOGO %}
                     <a href = "{% url 'league_detail' league.LEAGUE_ID %}">
-                        <img src="{{ league.LOGO.url }}" alt="{{ league.LEAGUE_NAME }}">
+                        <img src="{{ league.LOGO.url }}" alt="{{ league.LEAGUE_ID }}">
                     </a>
                 {% endif %}
-                <h2><a href="{% url 'league_detail' league.LEAGUE_ID %}" class="no-decoration">{{ league.LEAGUE_NAME }}</a></h2>
+                <h2><a href="{% url 'league_detail' league.LEAGUE_ID %}" class="no-decoration">{{ league.LEAGUE_ID }}</a></h2>
                 <p>Số câu lạc bộ: {{ league.TOTAL_CLUB }}</p>
                 <p>Hiệp hội: {{ league.ASSOCIATION }}</p>
                 <p>Ngày thành lập: {{ league.FOUNDED }}</p>

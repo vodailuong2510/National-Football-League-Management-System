@@ -8,14 +8,14 @@ from django.contrib import messages
 # Create your views here.
 def league_detail(request, league_id):
     league = get_object_or_404(League, LEAGUE_ID=league_id)
-    clubs = Club.objects.filter(LEAGUEPLAYING=league.LEAGUE_NAME)
+    clubs = Club.objects.filter(LEAGUEPLAYING=league.LEAGUE_ID)
     matches = Match.objects.filter(LEAGUEID=league)
     rankings = Ranking.objects.filter(LEAGUE=league).select_related('CLUB')
     return render(request, 'league_detail.html', {'league': league, 'clubs': clubs, 'matches': matches, 'rankings': rankings})
 
 def match_create(request, league_id):
     league = get_object_or_404(League, LEAGUE_ID=league_id)
-    clubs = Club.objects.filter(LEAGUEPLAYING=league.LEAGUE_NAME)
+    clubs = Club.objects.filter(LEAGUEPLAYING=league.LEAGUE_ID)
     if request.method == 'POST':
         form = MatchForm(request.POST, league=league)
         if form.is_valid():
