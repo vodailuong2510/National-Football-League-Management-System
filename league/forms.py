@@ -10,9 +10,14 @@ class LeagueForm(forms.ModelForm):
         disable_league_id = kwargs.pop('disable_league_id', False)
         super(LeagueForm, self).__init__(*args, **kwargs)
         
-        self.fields['LEAGUE_ID'].widget.attrs.update({'class': 'form-control'})
-        for field_name in self.fields:
-            self.fields[field_name].widget.attrs.update({'class': 'my-input'})
+        self.fields['LEAGUE_ID'].widget.attrs.update({'class': 'form-control', 'placeholder': 'ID giải đấu'})
+        self.fields['LEAGUE_NAME'].widget.attrs.update({'class': 'my-input', 'placeholder': 'Tên giải đấu'})
+        self.fields['LOGO'].widget.attrs.update({'class': 'my-input', 'placeholder': 'Logo'})
+        self.fields['TOTAL_CLUB'].widget.attrs.update({'class': 'my-input', 'placeholder': 'Số đội bóng'})
+        self.fields['ASSOCIATION'].widget.attrs.update({'class': 'my-input', 'placeholder': 'Hiệp hội'})
+        self.fields['FOUNDED'].widget.attrs.update({'class': 'my-input', 'placeholder': 'dd/mm/YYYY'})
+        self.fields['START_TIME'].widget.attrs.update({'class': 'my-input', 'placeholder': 'dd/mm/YYYY'})
+        self.fields['END_TIME'].widget.attrs.update({'class': 'my-input', 'placeholder': 'dd/mm/YYYY'})
                 
         if disable_league_id:
             self.fields['LEAGUE_ID'].disabled = True

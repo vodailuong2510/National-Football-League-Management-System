@@ -10,10 +10,16 @@ class CoachForm(forms.ModelForm):
         disable_coachid = kwargs.pop('disable_coachid', False)
         super(CoachForm, self).__init__(*args, **kwargs)
         
-        self.fields['COACHID'].widget.attrs.update({'class': 'form-control'})
+        self.fields['COACHID'].widget.attrs.update({'class': 'form-control', 'placeholder': 'ID HLV'})
         for field_name in self.fields:
             if field_name != 'CARDS':
-                self.fields[field_name].widget.attrs.update({'class': 'my-input'})
+                self.fields[field_name].widget.attrs.update({'class': 'my-input', 'placeholder': 'YELLOW/RED'})
+        self.fields['COACHNAME'].widget.attrs.update({'class': 'my-input', 'placeholder': 'Tên HLV'})
+        self.fields['BIRTHDAY'].widget.attrs.update({'class': 'my-input', 'placeholder': 'dd/mm/YYYY'})
+        self.fields['NATIONALITY'].widget.attrs.update({'class': 'my-input', 'placeholder': 'Quốc tịch'})
+        self.fields['CLUB'].widget.attrs.update({'class': 'my-input', 'placeholder': 'Đội bóng'})
+        self.fields['CLUBID'].widget.attrs.update({'class': 'my-input', 'placeholder': 'ID đội bóng'})
+        self.fields['IMAGE'].widget.attrs.update({'class': 'my-input', 'placeholder': 'Ảnh'})        
                 
         if disable_coachid:
             self.fields['COACHID'].disabled = True

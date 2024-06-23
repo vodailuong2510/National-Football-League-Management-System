@@ -145,15 +145,6 @@
         {% endif %}
         <form method="POST" enctype="multipart/form-data" class="form-box">
             {% csrf_token %}
-            {% if form.errors %}
-                <ul class="errorlist">
-                    {% for field, errors in form.errors.items %}
-                        {% for error in errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    {% endfor %}
-                </ul>
-            {% endif %}
             <div class="form-group">
                 <label for="leagueid">ID</label>
                 {{ form.LEAGUE_ID }}
@@ -197,12 +188,6 @@
         <p>Thành công!</p>
         <button class="close-btn" onclick="document.getElementById('messageBox').style.display='none'">&times;</button>
     </div>
-    
-    <!-- Phần Footer -->
-    <footer>
-        <p>Đây là trang web quản lý giải đấu bóng đá, nơi bạn có thể theo dõi các giải đấu, đội thi đấu và các thông tin liên quan.</p>
-        <p>&copy; 2024 MyLeagueUIT.com. All rights reserved.</p>
-    </footer>
 
     <script>
         function showMessage() {
