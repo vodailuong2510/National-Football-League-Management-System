@@ -158,11 +158,18 @@
                 <h2>{{ club.CLUBNAME }}</h2>
                 <p>Sân Vận Động: {{ club.STADIUM }}</p>
                 <p>Số Lượng Cầu Thủ: {{ club.TOTALPLAYERS }}</p>
-                <p>Giải đấu tham gia: {{ club.LEAGUEPLAYING }}</p>
+                {% if club.LEAGUEPLAYING %}
+                    <p>Giải đấu tham gia: {{ club.LEAGUEPLAYING }}</p>
+                {% else %}
+                    <p>Giải đấu tham gia: Chưa đăng ký</p>
+                {% endif %}
                 <div class="action-buttons">
                     {% if club.owner == request.user %}
                         <a href="{% url 'create_coach' %}" class="edit-btn">Thêm HLV</a>
                         <a href="{% url 'create_player'%}" class="edit-btn">Thêm Cầu thủ</a>
+                        {% if not club.LEAGUEPLAYING %}
+                            <a href="{% url 'register_league' club.CLUBID %}" class="edit-btn">Đăng ký thi đấu</a>
+                        {% endif %}
                     {% else %}
                         <a href="{% url 'club_reject' %}" class="edit-btn">Thêm HLV</a>
                         <a href="{% url 'club_reject' %}" class="edit-btn">Thêm Cầu thủ</a>
@@ -181,7 +188,6 @@
                 <h2>{{ coach.COACHNAME }}</h2>
                 <p>Tuổi: {{ coach.BIRTHDAY }}</p>
                 <p>Quốc tịch: {{ coach.NATIONALITY }}</p>
-                <p>Câu lạc bộ: {{ coach.CLUBID.CLUBNAME }}</p>
                 <div class="action-buttons">
                     <a href="{% url 'coach_edit' coach.COACHID %}" class="edit-btn">Sửa</a>
                     <a href="{% url 'coach_delete' coach.COACHID %}" class="delete-btn">Xóa</a>
@@ -206,13 +212,8 @@
                 <h2>{{ player.PLAYERNAME }}</h2>
                 <p>Ngày sinh: {{ player.BIRTHDAY }}</p>
                 <p>Quốc tịch: {{ player.NATIONALITY }}</p>
-                <p>Đội tuyển: {{ player.CLUB }}</p>
-                <p>Thẻ: {{ player.CARDS }}</p>
                 <p>Vị trí: {{ player.POSITION }}</p>
                 <p>Số áo: {{ player.SHIRTNUM }}</p>
-                <p>Bàn thắng: {{ player.GOALS }}</p>
-                <p>Kiến tạo: {{ player.ASSISTS }}</p>
-                <p>Tình trạng: {{ player.CONDITION }}</p>
                 <p>Chiều cao: {{ player.HEIGHT }}</p>
                 <p>Cân nặng: {{ player.WEIGHT }}</p>
                 <p>Chân thuận: {{ player.PREFERFOOT }}</p>

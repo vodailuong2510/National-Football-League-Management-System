@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from player.models import Player
 from coach.models import Coach
+from league.models import League
 
 def club_view(request):
     clubs = Club.objects.all()
@@ -100,3 +101,22 @@ def view_club(request, club_id):
         'coach': coach,
     }
     return render(request, 'club/templates/view_club.html', context)
+
+@login_required
+def register_league(request, club_id):
+    club = get_object_or_404(Club, CLUBID=club_id)
+    leagues = League.objects.all()
+    
+    if request.method == 'POST':
+        league_id = request.POST.get('league')
+        league = get_object_or_404(League, LEAGUE_ID=league_id)
+        club.LEAGUEPLAYING = league.LEAGUE_NAME
+        club.save()
+        messages.success(request, 'Đăng ký thi đấu thành công!')
+        return redirect('view_club', club_id=club_id)
+
+    context = {
+        'club': club,
+        'leagues': leagues
+    }
+    return render(request, 'register_league.html', context)
