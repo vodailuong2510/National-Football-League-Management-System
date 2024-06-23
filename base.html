@@ -51,7 +51,12 @@
                                 {% if user.is_staff %}
                                     <a href="/admin/">Admin</a>
                                 {% endif %}
-                                <a href="{% url 'logout' %}">Đăng Xuất</a>
+
+                                <form action="{% url 'logout' %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit">Đăng xuất</button>
+                                </form>
+
                             </div>
                         </div>
                     {% else %}
