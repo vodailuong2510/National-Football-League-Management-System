@@ -270,21 +270,14 @@ footer p {
     z-index: 10; /* Đảm bảo dropdown menu nằm trên các phần tử khác */
 }
 
-.dropdown-content a,
-.dropdown-content form button {
+.dropdown-content a {
     color: white;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-    background: none;
-    border: none;
-    text-align: left;
-    width: 100%;
-    cursor: pointer;
 }
 
-.dropdown-content a:hover,
-.dropdown-content form button:hover {
+.dropdown-content a:hover {
     background-color: #45a049;
 }
 
@@ -294,9 +287,4 @@ footer p {
 
 .dropdown:hover .dropbtn {
     background-color: red;
-}
-
-.dropdown-content form {
-    margin: 0;
-    padding: 0;
 }
