@@ -1,86 +1,86 @@
 # National Football League Management System ⚽
 
-Hệ thống quản lý giải đấu bóng đá quốc gia là một ứng dụng web Django toàn diện cho phép quản lý và theo dõi các giải đấu bóng đá, câu lạc bộ, cầu thủ, huấn luyện viên và trận đấu một cách hiệu quả.
+The National Football League Management System is a comprehensive Django web application that allows efficient management and tracking of football leagues, clubs, players, coaches, and matches.
 
-## 🌟 Tính năng chính
+## 🌟 Key Features
 
-- **Quản lý Giải đấu**: Tạo, chỉnh sửa và theo dõi các giải đấu bóng đá
-- **Quản lý Câu lạc bộ**: Quản lý thông tin đội bóng, sân vận động và cầu thủ
-- **Quản lý Cầu thủ**: Theo dõi thông tin chi tiết cầu thủ, vị trí, thống kê
-- **Quản lý Huấn luyện viên**: Quản lý thông tin HLV và liên kết với câu lạc bộ
-- **Quản lý Trận đấu**: Lập lịch, cập nhật kết quả và tính toán bảng xếp hạng
-- **Hệ thống Người dùng**: Đăng ký, đăng nhập và quản lý hồ sơ cá nhân
-- **Theo dõi**: Người dùng có thể theo dõi câu lạc bộ, cầu thủ, HLV và giải đấu yêu thích
-- **Giao diện thân thiện**: Thiết kế responsive và dễ sử dụng
+- **League Management**: Create, edit, and track football leagues
+- **Club Management**: Manage team information, stadiums, and players
+- **Player Management**: Track detailed player information, positions, and statistics
+- **Coach Management**: Manage coach information and club associations
+- **Match Management**: Schedule, update results, and calculate rankings
+- **User System**: Registration, login, and personal profile management
+- **Follow System**: Users can follow their favorite clubs, players, coaches, and leagues
+- **User-Friendly Interface**: Responsive design and easy-to-use interface
 
-## 🏗️ Kiến trúc hệ thống
+## 🏗️ System Architecture
 
 ```
 National-Football-League-Management-System/
-├── Web/                     # Cấu hình Django chính
-│   ├── settings.py         # Cài đặt Django
-│   ├── urls.py             # URL routing chính
+├── Web/                     # Main Django configuration
+│   ├── settings.py         # Django settings
+│   ├── urls.py             # Main URL routing
 │   └── wsgi.py             # WSGI configuration
-├── home/                   # Ứng dụng trang chủ
-│   ├── views.py           # Views trang chủ
-│   ├── templates/         # Templates HTML
+├── home/                   # Home page application
+│   ├── views.py           # Home page views
+│   ├── templates/         # HTML templates
 │   └── static/            # CSS, JS, Images
-├── account/               # Quản lý tài khoản người dùng
-│   ├── models.py          # Models người dùng
-│   ├── views.py           # Views đăng nhập/đăng ký
-│   └── templates/         # Templates tài khoản
-├── club/                  # Quản lý câu lạc bộ
-│   ├── models.py          # Model Club
-│   ├── views.py           # Views CRUD câu lạc bộ
-│   └── templates/         # Templates câu lạc bộ
-├── player/                # Quản lý cầu thủ
-│   ├── models.py          # Model Player
-│   ├── views.py           # Views CRUD cầu thủ
-│   └── templates/         # Templates cầu thủ
-├── coach/                 # Quản lý huấn luyện viên
-│   ├── models.py          # Model Coach
-│   ├── views.py           # Views CRUD HLV
-│   └── templates/         # Templates HLV
-├── league/                # Quản lý giải đấu
-│   ├── models.py          # Model League
-│   ├── views.py           # Views CRUD giải đấu
-│   └── templates/         # Templates giải đấu
-├── match/                 # Quản lý trận đấu
-│   ├── models.py          # Models Match & Ranking
-│   ├── views.py           # Views quản lý trận đấu
-│   ├── signals.py         # Signals tự động cập nhật
-│   └── templates/         # Templates trận đấu
-├── media/                 # Lưu trữ file upload
+├── account/               # User account management
+│   ├── models.py          # User models
+│   ├── views.py           # Login/registration views
+│   └── templates/         # Account templates
+├── club/                  # Club management
+│   ├── models.py          # Club model
+│   ├── views.py           # Club CRUD views
+│   └── templates/         # Club templates
+├── player/                # Player management
+│   ├── models.py          # Player model
+│   ├── views.py           # Player CRUD views
+│   └── templates/         # Player templates
+├── coach/                 # Coach management
+│   ├── models.py          # Coach model
+│   ├── views.py           # Coach CRUD views
+│   └── templates/         # Coach templates
+├── league/                # League management
+│   ├── models.py          # League model
+│   ├── views.py           # League CRUD views
+│   └── templates/         # League templates
+├── match/                 # Match management
+│   ├── models.py          # Match & Ranking models
+│   ├── views.py           # Match management views
+│   ├── signals.py         # Automatic update signals
+│   └── templates/         # Match templates
+├── media/                 # File upload storage
 ├── manage.py              # Django management script
-├── requirements.txt       # Dependencies Python
+├── requirements.txt       # Python dependencies
 └── dockerfile            # Docker configuration
 ```
 
-## 🛠️ Công nghệ sử dụng
+## 🛠️ Technologies Used
 
 ### Backend
-- **Django 5.1.4**: Web framework chính
-- **SQLite**: Cơ sở dữ liệu (có thể chuyển sang PostgreSQL/MySQL)
-- **Python 3.10+**: Ngôn ngữ lập trình
+- **Django 5.1.4**: Main web framework
+- **SQLite**: Database (can be migrated to PostgreSQL/MySQL)
+- **Python 3.10+**: Programming language
 
 ### Frontend
-- **HTML5/CSS3**: Giao diện người dùng
-- **JavaScript**: Tương tác client-side
-- **Bootstrap**: Framework CSS (nếu sử dụng)
+- **HTML5/CSS3**: User interface
+- **JavaScript**: Client-side interactions
+- **Bootstrap**: CSS framework (if used)
 
-### AI/ML (Tùy chọn)
+### AI/ML (Optional)
 - **TensorFlow**: Machine learning
-- **OpenCV**: Xử lý hình ảnh
-- **spaCy**: Xử lý ngôn ngữ tự nhiên
+- **OpenCV**: Image processing
+- **spaCy**: Natural language processing
 
-## 🚀 Cài đặt và thiết lập
+## 🚀 Installation and Setup
 
-### Yêu cầu hệ thống
+### System Requirements
 - Python 3.10+
 - pip (Python package manager)
 - Git
 
-### Cài đặt
+### Installation
 
 1. **Clone repository**
 ```bash
@@ -88,7 +88,7 @@ git clone <repository-url>
 cd National-Football-League-Management-System
 ```
 
-2. **Tạo môi trường ảo**
+2. **Create virtual environment**
 ```bash
 python -m venv venv
 # Windows
@@ -97,174 +97,174 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-3. **Cài đặt dependencies**
+3. **Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **Chạy migrations**
+4. **Run migrations**
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-5. **Tạo superuser (tùy chọn)**
+5. **Create superuser (optional)**
 ```bash
 python manage.py createsuperuser
 ```
 
-6. **Chạy server**
+6. **Run server**
 ```bash
 python manage.py runserver
 ```
 
-7. **Truy cập ứng dụng**
-- Mở trình duyệt và truy cập: `http://localhost:8000`
+7. **Access application**
+- Open browser and navigate to: `http://localhost:8000`
 - Admin panel: `http://localhost:8000/admin/`
 
-## 📊 Cấu trúc cơ sở dữ liệu
+## 📊 Database Structure
 
-### Models chính
+### Main Models
 
-#### Club (Câu lạc bộ)
-- CLUBID: ID duy nhất
-- LOGO: Logo câu lạc bộ
-- FOUNDED: Ngày thành lập
-- EMAIL, PHONE: Thông tin liên hệ
-- STADIUM, CAPACITY: Sân vận động
-- TOTALPLAYERS: Số cầu thủ
-- LEAGUEPLAYING: Giải đấu đang tham gia
+#### Club
+- CLUBID: Unique identifier
+- LOGO: Club logo
+- FOUNDED: Foundation date
+- EMAIL, PHONE: Contact information
+- STADIUM, CAPACITY: Stadium details
+- TOTALPLAYERS: Number of players
+- LEAGUEPLAYING: Current participating league
 
-#### Player (Cầu thủ)
-- PLAYERID: ID duy nhất
-- PLAYERNAME: Tên cầu thủ
-- BIRTHDAY: Ngày sinh
-- NATIONALITY: Quốc tịch
-- CLUBID: Liên kết với câu lạc bộ
-- POSITION: Vị trí (GK/DF/MF/FW)
-- SHIRTNUM: Số áo
-- HEIGHT, WEIGHT: Chiều cao, cân nặng
-- PREFERFOOT: Chân thuận
+#### Player
+- PLAYERID: Unique identifier
+- PLAYERNAME: Player name
+- BIRTHDAY: Date of birth
+- NATIONALITY: Nationality
+- CLUBID: Club association
+- POSITION: Position (GK/DF/MF/FW)
+- SHIRTNUM: Jersey number
+- HEIGHT, WEIGHT: Physical attributes
+- PREFERFOOT: Preferred foot
 
-#### Coach (Huấn luyện viên)
-- COACHID: ID duy nhất
-- COACHNAME: Tên HLV
-- BIRTHDAY: Ngày sinh
-- NATIONALITY: Quốc tịch
-- CLUBID: Liên kết với câu lạc bộ
+#### Coach
+- COACHID: Unique identifier
+- COACHNAME: Coach name
+- BIRTHDAY: Date of birth
+- NATIONALITY: Nationality
+- CLUBID: Club association
 
-#### League (Giải đấu)
-- LEAGUE_ID: ID duy nhất
-- LOGO: Logo giải đấu
-- TOTAL_CLUB: Số câu lạc bộ tham gia
-- ASSOCIATION: Hiệp hội
-- FOUNDED: Ngày thành lập
-- START_TIME, END_TIME: Thời gian diễn ra
+#### League
+- LEAGUE_ID: Unique identifier
+- LOGO: League logo
+- TOTAL_CLUB: Number of participating clubs
+- ASSOCIATION: Association
+- FOUNDED: Foundation date
+- START_TIME, END_TIME: Duration
 
-#### Match (Trận đấu)
-- MATCHID: ID duy nhất
-- LEAGUEID: Liên kết với giải đấu
-- HOMETEAM, AWAYTEAM: Đội nhà và đội khách
-- ROUND: Vòng đấu
-- DATE, TIME: Ngày và giờ thi đấu
-- STADIUM: Sân vận động
-- REFEREE: Trọng tài
-- HOMESCORE, AWAYSCORE: Tỷ số
+#### Match
+- MATCHID: Unique identifier
+- LEAGUEID: League association
+- HOMETEAM, AWAYTEAM: Home and away teams
+- ROUND: Match round
+- DATE, TIME: Match date and time
+- STADIUM: Venue
+- REFEREE: Referee
+- HOMESCORE, AWAYSCORE: Score
 
-#### Ranking (Bảng xếp hạng)
-- LEAGUE, CLUB: Liên kết với giải đấu và câu lạc bộ
-- PLAYED, WON, DRAWN, LOST: Số trận đã đấu, thắng, hòa, thua
-- GOALS_FOR, GOALS_AGAINST: Bàn thắng ghi được và bị thủng lưới
-- GOAL_DIFFERENCE: Hiệu số bàn thắng
-- POINTS: Điểm số
+#### Ranking
+- LEAGUE, CLUB: League and club associations
+- PLAYED, WON, DRAWN, LOST: Matches played, won, drawn, lost
+- GOALS_FOR, GOALS_AGAINST: Goals scored and conceded
+- GOAL_DIFFERENCE: Goal difference
+- POINTS: Points
 
-## 🔧 Tính năng chi tiết
+## 🔧 Detailed Features
 
-### Quản lý Giải đấu
-- Tạo giải đấu mới với thông tin chi tiết
-- Chỉnh sửa thông tin giải đấu
-- Xem danh sách tất cả giải đấu
-- Xóa giải đấu (với xác nhận)
+### League Management
+- Create new leagues with detailed information
+- Edit league information
+- View all leagues list
+- Delete leagues (with confirmation)
 
-### Quản lý Câu lạc bộ
-- Đăng ký câu lạc bộ mới
-- Cập nhật thông tin câu lạc bộ
-- Upload logo câu lạc bộ
-- Xem danh sách câu lạc bộ
-- Theo dõi câu lạc bộ yêu thích
+### Club Management
+- Register new clubs
+- Update club information
+- Upload club logos
+- View clubs list
+- Follow favorite clubs
 
-### Quản lý Cầu thủ
-- Thêm cầu thủ mới với thông tin chi tiết
-- Chỉnh sửa thông tin cầu thủ
-- Upload ảnh cầu thủ
-- Phân loại theo vị trí
-- Theo dõi cầu thủ yêu thích
+### Player Management
+- Add new players with detailed information
+- Edit player information
+- Upload player photos
+- Categorize by position
+- Follow favorite players
 
-### Quản lý Trận đấu
-- Tạo trận đấu mới
-- Cập nhật kết quả trận đấu
-- Tự động tính toán bảng xếp hạng
-- Xem lịch thi đấu
-- Quản lý thông tin trọng tài
+### Match Management
+- Create new matches
+- Update match results
+- Automatic ranking calculation
+- View match schedule
+- Manage referee information
 
-### Hệ thống Người dùng
-- Đăng ký tài khoản mới
-- Đăng nhập/Đăng xuất
-- Quản lý hồ sơ cá nhân
-- Đổi mật khẩu
-- Theo dõi các đối tượng yêu thích
+### User System
+- Register new accounts
+- Login/Logout
+- Manage personal profiles
+- Change passwords
+- Follow favorite entities
 
-## 🎯 Sử dụng
+## 🎯 Usage
 
-### 1. Truy cập hệ thống
-- Mở trình duyệt và truy cập: `http://localhost:8000`
-- Đăng ký tài khoản mới hoặc đăng nhập
+### 1. Access the system
+- Open browser and navigate to: `http://localhost:8000`
+- Register a new account or login
 
-### 2. Quản lý giải đấu
-- Tạo giải đấu mới từ menu "Giải đấu"
-- Thêm câu lạc bộ tham gia
-- Lập lịch thi đấu
+### 2. Manage leagues
+- Create new leagues from the "Leagues" menu
+- Add participating clubs
+- Schedule matches
 
-### 3. Quản lý câu lạc bộ
-- Đăng ký câu lạc bộ mới
-- Thêm cầu thủ và huấn luyện viên
-- Cập nhật thông tin
+### 3. Manage clubs
+- Register new clubs
+- Add players and coaches
+- Update information
 
-### 4. Theo dõi trận đấu
-- Xem lịch thi đấu
-- Cập nhật kết quả
-- Xem bảng xếp hạng tự động
+### 4. Track matches
+- View match schedule
+- Update results
+- View automatic rankings
 
-## 🔧 Phát triển
+## 🔧 Development
 
-### Cấu trúc project
-- **Web/**: Cấu hình Django chính
-- **home/**: Ứng dụng trang chủ
-- **account/**: Quản lý tài khoản
-- **club/**: Quản lý câu lạc bộ
-- **player/**: Quản lý cầu thủ
-- **coach/**: Quản lý huấn luyện viên
-- **league/**: Quản lý giải đấu
-- **match/**: Quản lý trận đấu
+### Project structure
+- **Web/**: Main Django configuration
+- **home/**: Home page application
+- **account/**: Account management
+- **club/**: Club management
+- **player/**: Player management
+- **coach/**: Coach management
+- **league/**: League management
+- **match/**: Match management
 
 ### API Endpoints
-- `/`: Trang chủ
+- `/`: Home page
 - `/admin/`: Admin panel
-- `/account/`: Quản lý tài khoản
-- `/club/`: Quản lý câu lạc bộ
-- `/player/`: Quản lý cầu thủ
-- `/coach/`: Quản lý huấn luyện viên
-- `/league/`: Quản lý giải đấu
-- `/match/`: Quản lý trận đấu
+- `/account/`: Account management
+- `/club/`: Club management
+- `/player/`: Player management
+- `/coach/`: Coach management
+- `/league/`: League management
+- `/match/`: Match management
 
-### Thêm tính năng mới
-1. Tạo model trong app tương ứng
-2. Tạo views và forms
-3. Tạo templates HTML
-4. Cập nhật URLs
-5. Chạy migrations
+### Adding new features
+1. Create model in corresponding app
+2. Create views and forms
+3. Create HTML templates
+4. Update URLs
+5. Run migrations
 
-## 🐳 Docker (Tùy chọn)
+## 🐳 Docker (Optional)
 
 ### Build image
 ```bash
@@ -276,29 +276,29 @@ docker build -t nfl-management-system .
 docker run -p 8000:8000 nfl-management-system
 ```
 
-## 📝 Ghi chú
+## 📝 Notes
 
-- Hệ thống sử dụng SQLite làm cơ sở dữ liệu mặc định
-- Có thể chuyển sang PostgreSQL hoặc MySQL cho production
-- Tất cả file upload được lưu trong thư mục `media/`
-- Hệ thống hỗ trợ đa ngôn ngữ (hiện tại chủ yếu tiếng Việt)
+- The system uses SQLite as the default database
+- Can be migrated to PostgreSQL or MySQL for production
+- All uploaded files are stored in the `media/` directory
+- The system supports multiple languages (currently primarily Vietnamese)
 
-## 🤝 Đóng góp
+## 🤝 Contributing
 
-1. Fork project
-2. Tạo feature branch (`git checkout -b feature/AmazingFeature`)
+1. Fork the project
+2. Create feature branch (`git checkout -b feature/AmazingFeature`)
 3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Mở Pull Request
+5. Open Pull Request
 
-## 📄 Giấy phép
+## 📄 License
 
-Dự án này được phân phối dưới giấy phép MIT. Xem file `LICENSE` để biết thêm chi tiết.
+This project is distributed under the MIT License. See the `LICENSE` file for more details.
 
-## 📞 Liên hệ
-- Email: support@myleagueuit.com
+## 📞 Contact
+- Email: vodailuong2510@gmail.com
 - Project Link: [https://github.com/your-username/national-football-league-management-system](https://github.com/your-username/national-football-league-management-system)
 
 ---
 
-**MyLeagueUIT.com** - Hệ thống quản lý giải đấu bóng đá chuyên nghiệp ⚽
+**MyLeagueUIT.com** - Professional Football League Management System ⚽
